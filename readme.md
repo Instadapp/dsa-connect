@@ -8,7 +8,7 @@ TODO:
 
 The only required functions:
 - build()
-- cast()
+- cast() (with flashloan implementation)
 - spells()
 - getAccounts()
 - getAuthById()
