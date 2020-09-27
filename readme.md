@@ -5,3 +5,12 @@ TODO:
 - remove unused addresses and ABIs
 - code cleanup
 - any further improvements
+
+The only required functions:
+- build()
+- cast()
+- spells()
+- getAccounts()
+- getAuthById()
+- getAuthByAddress()
+- estimateGas()
