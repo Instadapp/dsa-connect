@@ -4,9 +4,17 @@ const ABI = require("./constant/abis.js");
 
 // internal
 const Internal = require("./internal.js");
+
+// utils
+const Erc20 = require("./utils/erc20.js");
 const Cast = require("./utils/cast.js");
 const Txn = require("./utils/txn.js");
+const Math = require("./utils/math.js");
+
+// resolvers
 const Account = require("./resolvers/account.js");
+
+const Tokens = require("./resolvers/tokens.js");
 
 module.exports = class DSA {
   /**
@@ -22,7 +30,7 @@ module.exports = class DSA {
     this.mode = config.mode ? config.mode.toLowerCase() : "browser";
     if (this.mode == "node") {
       if (!config.privateKey)
-        return console.error("private-key-not-defined");
+        return console.error("Private key is not defined.");
       this.privateKey =
         config.privateKey.slice(0, 2) != "0x"
           ? "0x" + config.privateKey
@@ -39,13 +47,20 @@ module.exports = class DSA {
     this.origin = address.genesis;
 
     this.internal = new Internal(this);
+    this.math = new Math(this);
+    this.tokens = new Tokens(this);
+
     this.castUtil = new Cast(this);
     this.txnUtil = new Txn(this);
+    this.erc20 = new Erc20(this);
+
     this.account = new Account(this);
 
     // defining methods to simplify the calls for frontend developers
     this.sendTxn = this.txnUtil.send; // send transaction // node || browser
+    this.transfer = this.erc20.transfer;
     this.castEncoded = this.castUtil.encoded;
+    // this.estimateCastGas = this.castUtil.estimateGas;
     this.encodeCastABI = this.castUtil.encodeABI;
     this.count = this.account.count;
     this.getAccounts = this.account.getAccounts;
@@ -65,29 +80,18 @@ module.exports = class DSA {
    * @param _d.spells cast spells
    */
   async estimateCastGas(_d) {
-    let type = this.instance.config.type;
     return new Promise(async (resolve, reject) => {
-      if (type == 0) {
-        await this.castUtil
-          .estimateGas(_d)
-          .then((gas) => resolve(gas))
-          .catch((err) => reject(err));
-      } else if (type == 1) {
-        _d.gnosisSafe = this.instance.config.gnosisSafe;
-        await this.gnosisSafe
-          .estimateGnosisSafeGas(_d)
-          .then((gas) => resolve(gas))
-          .catch((err) => reject(err));
-      }
+      await this.castUtil
+        .estimateGas(_d)
+        .then((gas) => resolve(gas))
+        .catch((err) => reject(err));
     });
   }
 
   /**
    * sets the current DSA instance
    */
-  async setInstance(_o, _c) {    
-
-    let _id;
+  async setInstance(_o, _c) {
     if (typeof _o == "object") {
       if (!_o.id) throw new Error("`dsaId` is not defined.");
       _id = _o.id;
@@ -133,20 +137,20 @@ module.exports = class DSA {
 
   /**
    * sets the origin of interactions
-   * @param address the origin address for affiliation and on-chain analytics
+   * @param {address} address the origin address for affiliation and on-chain analytics
    */
   setOrigin(_origin) {
     this.origin = _origin;
   }
 
   /**
-   * build new wallet
-   * @param _d.authority (optional)
-   * @param _d.origin (optional)
-   * @param _d.from (optional)
-   * @param _d.gasPrice (optional) not optional in "node"
-   * @param _d.gas (optional) not optional in "node"
-   * @param _d.nonce (optional) not optional in "node"
+   * build new DSA
+   * @param {address} _d.authority (optional)
+   * @param {address} _d.origin (optional)
+   * @param {address} _d.from (optional)
+   * @param {number|string} _d.gasPrice (optional) not optional in "node"
+   * @param {number|string} _d.gas (optional) not optional in "node"
+   * @param {number|string} _d.nonce (optional) not optional in "node"
    */
   async build(_d) {
     let _addr = await this.internal.getAddress();
@@ -175,12 +179,12 @@ module.exports = class DSA {
   }
 
   /**
-   * build new txn object
-   * @param _d.authority (optional)
-   * @param _d.origin (optional)
-   * @param _d.gasPrice (optional) not optional in "node"
-   * @param _d.gas (optional) not optional in "node"
-   * @param _d.nonce (optional) not optional in "node"
+   * build new DSA txObj
+   * @param {address} _d.authority (optional)
+   * @param {address} _d.origin (optional)
+   * @param {number|string} _d.gasPrice (optional) not optional in "node"
+   * @param {number|string} _d.gas (optional) not optional in "node"
+   * @param {number|string} _d.nonce (optional) not optional in "node"
    */
   async buildTxObj(_d) {
     if (!_d) _d = {};
@@ -213,7 +217,7 @@ module.exports = class DSA {
    * @param _d.value (optional)
    * @param _d.gasPrice (optional only for "browser" mode)
    * @param _d.gas (optional)
-   * @param _d.nonce (optional) txn nonce (mostly for node implementation)
+   * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
    */
   async cast(_d) {
     let _addr = await this.internal.getAddress();
@@ -221,7 +225,6 @@ module.exports = class DSA {
     if (!_d.to) _d.to = this.instance.address;
     if (!_d.from) _d.from = _addr;
     if (!_d.origin) _d.origin = this.origin;
-    _d.type = this.instance.config.type;
 
     let _c = new this.web3.eth.Contract(
       this.ABI.core.account,
@@ -232,35 +235,12 @@ module.exports = class DSA {
 
     return new Promise(async (resolve, reject) => {
       let txObj = await this.internal.getTxObj(_d);
-      if (_d.type == 0) {
-        console.log("Casting spells to DSA.");
-        return this.sendTxn(txObj)
-          .then((tx) => {
-            resolve(tx);
-          })
-          .catch((err) => reject(err));
-      } else if (_d.type == 1) {
-        if (this.node == "node")
-          reject("Gnosis-Safe integration is not available on `node` mode");
-        console.log("Casting spells to Gnosis Safe.");
-        let safeAddr = this.instance.config.gnosisSafe;
-        if (!safeAddr)
-          throw new Error(
-            "`safeAddress` is not defined. Run `await dsa.setInstance(dsaId, { gnosisSafe: safeAddr })`"
-          );
-        this.gnosisSafe
-          .createTransaction({
-            safeAddress: safeAddr,
-            from: txObj.from,
-            to: txObj.to,
-            valueInWei: txObj.value,
-            txData: txObj.data,
-          })
-          .then((tx) => resolve(tx))
-          .catch((err) => reject(err));
-      } else {
-        throw new Error("`type` is not vaild");
-      }
+      console.log("Casting spells to DSA.");
+      return this.sendTxn(txObj)
+        .then((tx) => {
+          resolve(tx);
+        })
+        .catch((err) => reject(err));
     });
   }
 
@@ -274,7 +254,7 @@ module.exports = class DSA {
    * @param _d.value (optional)
    * @param _d.gasPrice (optional only for "browser" mode)
    * @param _d.gas (optional)
-   * @param _d.nonce (optional) txn nonce (mostly for node implementation)
+   * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
    */
   async castTxObj(_d) {
     let _espell = this.internal.encodeSpells(_d);
