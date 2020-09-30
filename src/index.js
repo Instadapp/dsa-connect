@@ -1,20 +1,11 @@
-// constant
 const address = require("./constant/addresses.js");
 const ABI = require("./constant/abis.js");
 
-// internal
 const Internal = require("./internal.js");
-
-// utils
-const Erc20 = require("./utils/erc20.js");
-const Cast = require("./utils/cast.js");
+const Cast = require("./cast.js");
 const Txn = require("./utils/txn.js");
 const Math = require("./utils/math.js");
-
-// resolvers
-const Account = require("./resolvers/account.js");
-
-const Tokens = require("./resolvers/tokens.js");
+const Account = require("./accounts.js");
 
 module.exports = class DSA {
   /**
@@ -48,12 +39,8 @@ module.exports = class DSA {
 
     this.internal = new Internal(this);
     this.math = new Math(this);
-    this.tokens = new Tokens(this);
-
     this.castUtil = new Cast(this);
     this.txnUtil = new Txn(this);
-    this.erc20 = new Erc20(this);
-
     this.account = new Account(this);
 
     // defining methods to simplify the calls for frontend developers
