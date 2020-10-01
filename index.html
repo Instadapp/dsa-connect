@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Playground</title>
+  </head>
+  <body>
+    Open console for testing
+
+    <!-- Usage in modern browsers -->
+    <script type="module">
+      import { DSA } from './dist/index.es.js'
+
+      const dsa = new DSA({})
+
+      console.log(dsa)
+    </script>
+
+    <!-- Usage for old browsers (nomodule can be omitted) -->
+    <script src="dist/index.bundle.js"></script>
+    <script nomodule>
+      const dsa = new DSA({})
+
+      console.log(dsa)
+    </script>
+  </body>
+</html>
