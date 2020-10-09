@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - '8'
+# Cache node_modules
+cache:
+  directories:
+    - 'node_modules'
+install:
+  - npm install
+script:
+  # do a full build
+  - npm run build
+  # run tests
+  - npm run test

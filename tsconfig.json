@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ES6",
+    "moduleResolution": "Node",
+    "sourceMap": true,
+    "lib": [],
+    "esModuleInterop": true,
+    "strict": true,
+    "declaration": true,
+    "noImplicitAny": true
+  },
+  "include": ["src/index.ts"],
+  "exclude": ["node_modules"]
+}

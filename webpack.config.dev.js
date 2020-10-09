@@ -45,7 +45,7 @@ module.exports = {
       title: 'Testing Page For SDK',
       header: 'Use the console to test the DSA SDK',
       template: './dev/index.html',
-      filename: 'index.html' 
+      filename: 'index.html'
     }),
     new webpack.BannerPlugin(banner),
   ],
