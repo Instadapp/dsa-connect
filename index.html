@@ -5,24 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Playground</title>
   </head>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.6/dist/web3.min.js"></script>
+  <script src="https://apis.instadapp.io/js/web3Modal/config.js"></script>
+  <script src="https://apis.instadapp.io/js/web3Modal/connect.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+
   <body>
     Open console for testing
-
+    
     <!-- Usage in modern browsers -->
     <script type="module">
       import { DSA } from './dist/index.es.js'
 
-      const dsa = new DSA({})
+      InitWeb3()
+      // window.dsa = new DSA(window.web3)
+      $(window).on( "load", async function(e) {
+        e.preventDefault();
+        await InitWeb3()
+        window.dsa = new DSA(window.web3)
+        console.log(window.dsa)
+      });
 
-      console.log(dsa)
     </script>
 
     <!-- Usage for old browsers (nomodule can be omitted) -->
     <script src="dist/index.bundle.js"></script>
     <script nomodule>
-      const dsa = new DSA({})
 
-      console.log(dsa)
+      $(window).on( "load", async function(e) {
+        e.preventDefault();
+        await InitWeb3()
+        window.dsa = new DSA(window.web3)
+        console.log(window.dsa)
+      });
+
     </script>
   </body>
 </html>
