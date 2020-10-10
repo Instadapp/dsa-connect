@@ -1,9 +1,9 @@
 import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
+import { DSA } from '.'
 import { Abi } from './abi'
 import { Addresses } from './data/addresses'
 import { TokenInfo } from './data/token-info'
-import { DSA } from './dsa'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
 
@@ -25,9 +25,6 @@ export type EstimateGasParams = {
 } & Required<Pick<TransactionConfig, 'from' | 'to' | 'value'>>
 
 export class Internal {
-  /**
-   * @param dsa The DSA instance to access data stores.
-   */
   constructor(private dsa: DSA) {}
 
   /**
@@ -45,7 +42,7 @@ export class Internal {
    * @param params.gasPrice (optional only for "browser" mode)
    * @param params.nonce (optional) mostly for "node" mode
    */
-  async getTransactionConfig(params: GetTransactionConfigParams) {
+  getTransactionConfig = async (params: GetTransactionConfigParams) => {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
     if (!params.to) throw new Error("Parameter 'to' is not defined.")
     if (!params.data) throw new Error("Parameter 'data' is not defined.")
@@ -71,18 +68,18 @@ export class Internal {
     return transactionConfig
   }
 
-  private async getNonce(from: string | number) {
+  private getNonce = async (from: string | number) => {
     return await this.dsa.web3.eth.getTransactionCount(String(from))
   }
 
-  private async getGas(transactionConfig: TransactionConfig) {
+  private getGas = async (transactionConfig: TransactionConfig) => {
     return ((await this.dsa.web3.eth.estimateGas(transactionConfig)) * 1.1).toFixed(0) // increasing gas cost by 10% for margin
   }
 
   /**
    * Returns the ABI interface for any DSA contract.
    */
-  getInterface(abiItems: AbiItem[], method: string) {
+  getInterface = (abiItems: AbiItem[], method: string) => {
     const abiItem = abiItems.find((abiItem) => abiItem.name === method)
 
     if (!abiItem) {
@@ -96,7 +93,7 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod(params: { connector: Connector; method: string; args: string[] }) {
+  encodeMethod = (params: { connector: Connector; method: string; args: string[] }) => {
     const connectorInterface = this.getInterface(Abi.connectors[params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
@@ -111,7 +108,7 @@ export class Internal {
    * OR
    * @param params.spells the spells instance
    */
-  encodeSpells(params: Spells | { spells: Spells }) {
+  encodeSpells = (params: Spells | { spells: Spells }) => {
     const spells = this.getSpells(params)
 
     const targets = spells.data.map((spell) => this.getTarget(spell.connector))
@@ -120,14 +117,14 @@ export class Internal {
     return { targets, spells: encodedMethods }
   }
 
-  private getSpells(params: Spells | { spells: Spells }) {
+  private getSpells = (params: Spells | { spells: Spells }) => {
     return params instanceof Spells ? params : params.spells
   }
 
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget(connector: Connector) {
+  private getTarget = (connector: Connector) => {
     const target = Addresses.connectors[connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
@@ -138,7 +135,7 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  async getAddress() {
+  getAddress = async () => {
     // otherwise, browser
     const addresses = await this.dsa.web3.eth.getAccounts()
 
@@ -153,7 +150,7 @@ export class Internal {
   /**
    * Returns the address from token key OR checksum the address if not.
    */
-  filterAddress(token: keyof typeof TokenInfo) {
+  filterAddress = (token: keyof typeof TokenInfo) => {
     var isAddress = this.dsa.web3.utils.isAddress(token.toLowerCase())
     if (isAddress) {
       return this.dsa.web3.utils.toChecksumAddress(token.toLowerCase())
@@ -175,7 +172,7 @@ export class Internal {
    * @param params.args the method arguments
    * @param params.value the call ETH value
    */
-  async estimateGas(params: EstimateGasParams) {
+  estimateGas = async (params: EstimateGasParams) => {
     const data = this.dsa.web3.eth.abi.encodeFunctionCall(params.abi, params.args)
 
     try {

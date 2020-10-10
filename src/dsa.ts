@@ -38,7 +38,7 @@ interface Instance {
  */
 type CastParams = {
   spells: Spells
-  origin: string
+  origin?: string
 } & Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
 
 /**
@@ -65,10 +65,6 @@ export class DSA {
   get mode() {
     return this.config.mode
   }
-  get privateKey() {
-    if (this.config.mode === 'node') return this.config.privateKey
-    return undefined
-  }
 
   origin: string = Addresses.genesis
 
@@ -90,37 +86,27 @@ export class DSA {
   // value of uint(-1).
   public readonly maxValue = '115792089237316195423570985008687907853269984665640564039457584007913129639935'
 
-  readonly internal: Internal
-  private readonly castHelpers: CastHelpers
-  private readonly accounts: Accounts
-  private readonly transaction: Transaction
+  // Extensions
+  readonly internal = new Internal(this)
+  readonly castHelpers = new CastHelpers(this)
+  readonly transaction = new Transaction(this)
+  readonly accounts = new Accounts(this)
 
-  public sendTransaction: Transaction['send']
-  public encodeSpells: Internal['encodeSpells']
-  public encodeCastABI: CastHelpers['encodeABI']
-  public estimateCastGas: CastHelpers['estimateGas']
-  public count: Accounts['count']
-  public getAccounts: Accounts['getAccounts']
-  public getAuthById: Accounts['getAuthoritiesById']
+  // Aliases
+  public encodeSpells = (...args: Parameters<Internal['encodeSpells']>) => this.internal.encodeSpells(...args)
+  public sendTransaction = (...args: Parameters<Transaction['send']>) => this.transaction.send(...args)
+  public count = (...args: Parameters<Accounts['count']>) => this.accounts.count(...args)
+  public getAccounts = (...args: Parameters<Accounts['getAccounts']>) => this.accounts.getAccounts(...args)
+  public getAuthById = (...args: Parameters<Accounts['getAuthoritiesById']>) =>
+    this.accounts.getAuthoritiesById(...args)
+  public encodeCastABI = (...args: Parameters<CastHelpers['encodeABI']>) => this.castHelpers.encodeABI(...args)
+  public estimateCastGas = (...args: Parameters<CastHelpers['estimateGas']>) => this.castHelpers.estimateGas(...args)
 
   /**
    * @param config A `web3` instance or a DSAConfig
    */
   constructor(config: Web3 | DSAConfig) {
     this.config = getDSAConfig(config)
-
-    this.internal = new Internal(this)
-    this.castHelpers = new CastHelpers(this)
-    this.transaction = new Transaction(this)
-    this.accounts = new Accounts(this)
-
-    this.sendTransaction = this.transaction.send // send transaction // node || browser
-    this.encodeSpells = this.internal.encodeSpells
-    this.encodeCastABI = this.castHelpers.encodeABI
-    this.estimateCastGas = this.castHelpers.estimateGas
-    this.count = this.accounts.count
-    this.getAccounts = this.accounts.getAccounts
-    this.getAuthById = this.accounts.getAuthoritiesById
   }
 
   /**
@@ -160,7 +146,7 @@ export class DSA {
    * @param id DSA ID
    */
   async setAccount(id: number) {
-    return this.setInstance(id)
+    return await this.setInstance(id)
   }
 
   /**
@@ -194,7 +180,7 @@ export class DSA {
       nonce: mergedParams.nonce,
     })
 
-    const transaction = await this.sendTransaction(transactionConfig)
+    const transaction = await this.transaction.send(transactionConfig)
 
     return transaction
   }
@@ -259,18 +245,18 @@ export class DSA {
     const vm = this
 
     // Add cast functionality for fluid API through anonymous class.
-    return new (class DSASpells extends Spells {
+    return new (class extends Spells {
       constructor() {
         super()
       }
 
-      cast(params?: Omit<CastParams, 'spells'>) {
+      cast = async (params?: Omit<CastParams, 'spells'>) => {
         if (!this.data.length) {
-          console.warn('No spells casted. Add spells with `.add(...)`.')
+          console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
 
-        vm.cast(!!params ? { ...params, spells: this } : this)
+        return await vm.cast(!!params ? { ...params, spells: this } : this)
       }
     })()
   }
@@ -301,15 +287,17 @@ export class DSA {
 
     console.log('Casting spells to DSA.')
 
-    const transaction = await this.sendTransaction(transactionConfig)
+    const transaction = await this.transaction.send(transactionConfig)
 
     return transaction
   }
 
-  private async getData(params: { spells: Spells; origin: string }) {
+  private async getData(params: { spells: Spells; origin?: string }) {
     const encodedSpells = this.internal.encodeSpells(params)
     const contract = new this.web3.eth.Contract(Abi.core.account, this.instance.address)
-    const data = contract.methods.cast(encodedSpells.targets, encodedSpells.spells, params.origin).encodeABI()
+    const data = contract.methods
+      .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
+      .encodeABI()
 
     return data
   }
@@ -325,6 +313,8 @@ function getDSAConfig(config: Web3 | DSAConfig): DSAConfig {
   if (!config) throw new Error('Invalid config. Pass web3 instance or DSAConfig.')
 
   if (isWeb3(config)) return { web3: config, mode: 'browser' }
+
+  if (!config.web3) throw new Error('Invalid config. Pass web3 instance or DSAConfig.')
 
   if (config.mode === 'node') {
     if (!config.privateKey) throw new Error(`Property 'privateKey' is not defined in config.`)

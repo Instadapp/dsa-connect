@@ -2,19 +2,13 @@ import { TransactionConfig } from 'web3-core'
 import { Addresses } from './data/addresses'
 import { DSA } from './dsa'
 
-/**
- * Transaction utils.
- */
 export class Transaction {
-  /**
-   * @param dsa The dsa instance to access data stores
-   */
   constructor(private dsa: DSA) {}
 
   /**
    * Send transaction and get transaction hash.
    */
-  async send(transactionConfig: TransactionConfig): Promise<string> {
+  send = async (transactionConfig: TransactionConfig): Promise<string> => {
     if (transactionConfig.to == Addresses.genesis)
       throw Error(
         `Please configure the DSA instance by calling dsa.setInstance(dsaId). More details: https://docs.instadapp.io/setup`
@@ -46,7 +40,7 @@ export class Transaction {
    * @param params.gasPrice .
    * @returns Transaction hash.
    */
-  async cancel(params: Required<Pick<TransactionConfig, 'nonce' | 'gasPrice'>>) {
+  cancel = async (params: Required<Pick<TransactionConfig, 'nonce' | 'gasPrice'>>) => {
     if (!params.nonce) throw new Error("Parameter 'nonce' not defined.")
     if (!params.gasPrice) throw new Error("Parameter 'gasPrice' not defined.")
 
@@ -73,7 +67,10 @@ export class Transaction {
    * @param params.gasPrice - Transaction hash.
    * @returns Transaction hash.
    */
-  async speedUp(params: { transactionHash: string; gasPrice: NonNullable<TransactionConfig['gasPrice']> }) {
+  speedUp = async (
+    dsa: DSA,
+    params: { transactionHash: string; gasPrice: NonNullable<TransactionConfig['gasPrice']> }
+  ) => {
     if (!params.transactionHash) throw new Error("Parameter 'transactionHash' is not defined.")
     if (!params.gasPrice) throw new Error("Parameter 'gasPrice' is not defined.")
 
@@ -107,7 +104,7 @@ export class Transaction {
    *
    * @param transactionHash Transaction hash to get nonce.
    */
-  async getNonce(transactionHash: string) {
+  getNonce = async (transactionHash: string) => {
     const transaction = await this.dsa.web3.eth.getTransaction(transactionHash)
 
     return transaction.nonce
@@ -119,7 +116,7 @@ export class Transaction {
    * @param address Address to get transaction count for.
    * @returns Transaction count for address
    */
-  async getTransactionCount(address: string) {
+  getTransactionCount = async (address: string) => {
     const transactionCount = await this.dsa.web3.eth.getTransactionCount(address)
 
     return transactionCount

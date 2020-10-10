@@ -2,19 +2,13 @@ import { Abi } from './abi'
 import { Addresses } from './data/addresses'
 import { DSA } from './dsa'
 
-/**
- * Account resolver.
- */
 export class Accounts {
-  /**
-   * @param dsa The DSA instance to access data stores.
-   */
   constructor(private dsa: DSA) {}
 
   /**
    * Global number of DSAs.
    */
-  async count() {
+  count = async () => {
     const contract = new this.dsa.web3.eth.Contract(Abi.core.list, Addresses.core.list)
     const count = await contract.methods.accounts().call({ from: Addresses.genesis })
 
@@ -26,8 +20,8 @@ export class Accounts {
    *
    * @param authority The ethereum address or .eth name
    */
-  async getAccounts(authority: string) {
-    const address = await this.getAddress(authority)
+  getAccounts = async (authority: string) => {
+    const address = await this.getAuthorityAddress(authority)
 
     const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
 
@@ -47,7 +41,7 @@ export class Accounts {
     return accounts
   }
 
-  private async getAddress(authority: string) {
+  private getAuthorityAddress = async (authority: string) => {
     if (!authority) return await this.dsa.internal.getAddress()
 
     if (authority.includes('.eth')) return await this.dsa.web3.eth.ens.getAddress(authority)
@@ -60,7 +54,7 @@ export class Accounts {
    *
    * @param id The DSA ID.
    */
-  async getAuthoritiesById(id: number) {
+  getAuthoritiesById = async (id: number) => {
     const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
 
     // TODO: Return type instead of any?
@@ -74,7 +68,7 @@ export class Accounts {
    *
    * @param address The DSA address
    */
-  async getAuthoritiesByAddress(address: string) {
+  private getAuthoritiesByAddress = async (address: string) => {
     const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
 
     // TODO: Return type instead of any?
@@ -88,7 +82,7 @@ export class Accounts {
    *
    * @param address The DSA address.
    */
-  async getAuthoritiesTypes(address: string) {
+  private getAuthoritiesTypes = async (address: string) => {
     const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
 
     // TODO: Return type instead of any?
