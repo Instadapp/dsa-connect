@@ -64,9 +64,8 @@ test('Cast with fluid api', async () => {
   expect(txHash).toBeDefined()
 })
 
-test('getNonce', async () => {
-  // TODO: @thrilok Returned error: invalid argument 0: hex string has length 40, want 64 for common.Hash
-  const nonce = await dsa.transaction.getNonce(process.env.PUBLIC_ADDRESS as string)
+test('get transaction count', async () => {
+  const nonce = await dsa.transaction.getTransactionCount(process.env.PUBLIC_ADDRESS as string)
 
   expect(nonce).toBeDefined()
 })
