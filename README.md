@@ -1,2 +1,3 @@
-# Mock SDK
-Mock SDK for DeFi Smart Account
+# DSA Connect
+
+The official DSA SDK for JavaScript, available for browsers and Node.js backends.
