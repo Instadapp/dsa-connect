@@ -23,10 +23,10 @@
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
     "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS%"
   },
-  "bugs": "https://github.com/instadapp/dsa-sdk/issues",
+  "bugs": "https://github.com/InstaDApp/dsa-connect/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/instadapp/dsa-sdk"
+    "url": "https://github.com/InstaDApp/dsa-connect"
   },
   "author": {
     "name": "INSTADAPP LABS LLC",
