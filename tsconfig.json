@@ -8,7 +8,8 @@
     "esModuleInterop": true,
     "strict": true,
     "declaration": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "noImplicitThis": true
   },
   "include": ["src/index.ts"],
   "exclude": ["node_modules"]
