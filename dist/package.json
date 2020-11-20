@@ -2,14 +2,13 @@
   "name": "dsa-connect",
   "version": "0.0.4",
   "description": "Build DeFi apps instantly",
-  "main": "dist/index",
-  "module": "dist/index.es.js",
-  "browser": "dist/index.bundle.js",
+  "main": "index",
+  "module": "index.es.js",
+  "browser": "index.bundle.js",
   "files": [
-    "dist",
     "README.md"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "private": false,
   "scripts": {
     "dev": "concurrently -c yellow,blue -n RLP,SRV \"npm:build:watch\" \"npm:serve\"",
@@ -17,16 +16,16 @@
     "build:watch": "rollup -cw",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
-    "serve": "npx light-server --serve . -w \"index.html\" -w \"app.js\" -w \"dist/index.es.js\" -w \"dist/index.bundle.js\"",
+    "serve": "npx light-server --serve . -w \"index.html\" -w \"app.js\" -w \"index.es.js\" -w \"index.bundle.js\"",
     "trypublish": "npm publish || true",
     "postversion": "git push && git push --tags && npm publish && npm run open-releases",
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
     "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS%"
   },
-  "bugs": "https://github.com/InstaDApp/dsa-connect/issues",
+  "bugs": "https://github.com/instadapp/dsa-connect/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/InstaDApp/dsa-connect"
+    "url": "https://github.com/instadapp/dsa-connect"
   },
   "author": {
     "name": "INSTADAPP LABS LLC",
