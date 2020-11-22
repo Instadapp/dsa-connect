@@ -1,6 +1,6 @@
 import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
-import { DSA } from '.'
+import { DSA } from './dsa'
 import { Abi } from './abi'
 import { Addresses } from './data/addresses'
 import { TokenInfo } from './data/token-info'

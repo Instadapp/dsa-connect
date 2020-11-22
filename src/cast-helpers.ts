@@ -1,5 +1,5 @@
 import { TransactionConfig } from 'web3-core'
-import { DSA } from '.'
+import { DSA } from './dsa'
 import { Abi } from './abi'
 import { Addresses } from './data/addresses'
 import { Spells } from './spells'
