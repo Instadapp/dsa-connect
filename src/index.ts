@@ -1,1 +1,2 @@
-export { DSA } from './dsa'
+import {DSA} from "./dsa"
+module.exports = DSA
