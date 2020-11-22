@@ -28,7 +28,7 @@ if(!process.env.ROLLUP_WATCH)
     format: {
       // only permit banner comment
       comments: function (node, comment) {
-        if (comment.type == 'comment2') {
+        if (comment.type === 'comment2') {
           // multiline comment
           return /@bannerend/i.test(comment.value)
         }
@@ -43,30 +43,11 @@ export default [
     output: [
       {
         file: pkg.main,
-        format: 'cjs',
+        format: 'es',
         banner,
-      },
-      {
-        file: pkg.module,
-        format: 'es', // the preferred format
-        banner,
-      },
+      }
     ],
     external,
     plugins,
-  },
-  // Create iife with DSA as default export
-  {
-    input: 'src/index.default.ts',
-    output: [
-      {
-        file: pkg.browser,
-        format: 'iife',
-        name: 'DSA', // the global which can be used in a browser
-        banner,
-      },
-    ],
-    external,
-    plugins,
-  },
+  }
 ]

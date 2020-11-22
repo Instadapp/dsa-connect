@@ -2,10 +2,9 @@
   "name": "dsa-connect",
   "version": "0.0.4",
   "description": "Build DeFi apps instantly",
-  "main": "index",
-  "module": "index.es.js",
-  "browser": "index.bundle.js",
+  "main": "index.js",
   "files": [
+    "index.js",
     "README.md"
   ],
   "types": "./index.d.ts",
