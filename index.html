@@ -8,7 +8,6 @@
   <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.2.6/dist/web3.min.js"></script>
   <script src="https://apis.instadapp.io/js/web3Modal/config.js"></script>
   <script src="https://apis.instadapp.io/js/web3Modal/connect.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
   <body>
     Open console for testing
@@ -19,12 +18,15 @@
 
       InitWeb3()
       // window.dsa = new DSA(window.web3)
-      $(window).on( "load", async function(e) {
+      window.onload = async function(e) {
         e.preventDefault();
-        await InitWeb3()
-        window.dsa = new DSA(window.web3)
-        console.log(window.dsa)
-      });
+        await InitWeb3().then(()=> {
+          window.dsa = new DSA(window.web3)
+          console.log(window.dsa)
+        }).catch(e=> {
+          console.error(e);
+        })
+      };
 
     </script>
 
@@ -32,12 +34,15 @@
     <script src="dist/index.bundle.js"></script>
     <script nomodule>
 
-      $(window).on( "load", async function(e) {
+      window.onload = async function(e) { 
         e.preventDefault();
-        await InitWeb3()
-        window.dsa = new DSA(window.web3)
-        console.log(window.dsa)
-      });
+        InitWeb3().then(()=> {
+          window.dsa = new DSA(window.web3)
+          console.log(window.dsa)
+        }).catch(e=> {
+          console.error(e);
+        })
+      };
 
     </script>
   </body>

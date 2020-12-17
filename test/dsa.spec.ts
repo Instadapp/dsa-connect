@@ -7,13 +7,13 @@ config()
 let web3: Web3
 let dsa: DSA
 
-// TODO: Use beforeEach if nessecary or define individually
+// TODO: Use beforeEach if necessary or define individually
 beforeAll(() => {
   web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
   dsa = new DSA({ web3 })
 })
 
-test('initalization of DSA', () => {
+test('initialization of DSA', () => {
   expect(dsa).toBeDefined()
 })
 
