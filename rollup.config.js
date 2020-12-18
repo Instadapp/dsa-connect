@@ -1,4 +1,4 @@
-import {terser} from 'rollup-plugin-terser'
+import { terser } from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
@@ -23,18 +23,20 @@ const plugins = [
   }),
 ]
 
-if(!process.env.ROLLUP_WATCH)
-   plugins.push(terser({
-    format: {
-      // only permit banner comment
-      comments: function (node, comment) {
-        if (comment.type === 'comment2') {
-          // multiline comment
-          return /@bannerend/i.test(comment.value)
-        }
+if (!process.env.ROLLUP_WATCH)
+  plugins.push(
+    terser({
+      format: {
+        // only permit banner comment
+        comments: function (node, comment) {
+          if (comment.type === 'comment2') {
+            // multiline comment
+            return /@bannerend/i.test(comment.value)
+          }
+        },
       },
-    },
-  }))
+    })
+  )
 
 export default [
   // Create CommonJS and ES Module for Node and modern browsers
@@ -45,9 +47,14 @@ export default [
         file: pkg.main,
         format: 'es',
         banner,
-      }
+      },
+      {
+        file: pkg.main_bundle,
+        format: 'iife',
+        name: 'DSA',
+      },
     ],
     external,
     plugins,
-  }
+  },
 ]

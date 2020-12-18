@@ -15,7 +15,7 @@
     "build:watch": "rollup -cw",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
-    "serve": "npx light-server --serve . -w \"index.html\" -w \"app.js\" -w \"index.es.js\" -w \"index.bundle.js\"",
+    "serve": "npx light-server --serve . -w \"index.html\" -w \"app.js\" -w \"index.js\" -w \"index.bundle.js\"",
     "trypublish": "npm publish || true",
     "postversion": "git push && git push --tags && npm publish && npm run open-releases",
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
