@@ -69,3 +69,24 @@ test('get transaction count', async () => {
 
   expect(nonce).toBeDefined()
 })
+
+
+test('test', async () => {
+  var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+  await dsa.setAccount(5); 
+
+  var spells = dsa.Spell();
+
+  spells.add({
+      connector: "compound",
+      method: "withdraw",
+      args: [usdc_address, dsa.maxValue, 0, 0] // withdraw all USDC
+  });
+
+  console.log(await dsa.encodeCastABI(spells))
+  console.log(await dsa.estimateCastGas(spells)) //. Error over here.
+
+  await dsa.cast(spells)
+
+  //expect(nonce).toBeDefined()
+})
