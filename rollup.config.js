@@ -56,17 +56,17 @@ export default [
     plugins,
   },
   // Create iife with DSA as default export
-  {
-    input: 'src/index.default.ts',
-    output: [
-      {
-        file: pkg.browser,
-        format: 'iife',
-        name: 'DSA', // the global which can be used in a browser
-        banner,
-      },
-    ],
-    external,
-    plugins,
-  },
+  // {
+  //   input: 'src/index.default.ts',
+  //   output: [
+  //     {
+  //       file: pkg.browser,
+  //       format: 'iife',
+  //       name: 'DSA', // the global which can be used in a browser
+  //       banner,
+  //     },
+  //   ],
+  //   external,
+  //   plugins,
+  // },
 ]
