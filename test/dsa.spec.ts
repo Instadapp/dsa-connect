@@ -1,6 +1,6 @@
 import { config } from 'dotenv'
 import Web3 from 'web3'
-import { DSA } from '../src'
+import DSA from '../src'
 
 config()
 
@@ -84,7 +84,7 @@ test('test', async () => {
   });
 
   console.log(await dsa.encodeCastABI(spells))
-  console.log(await dsa.estimateCastGas(spells)) //. Error over here.
+  console.log(await dsa.estimateCastGas({spells, from: '0x03d70891b8994feB6ccA7022B25c32be92ee3725'})) //. Error over here.
 
   await dsa.cast(spells)
 

@@ -1,5 +1,5 @@
 import { TransactionConfig } from 'web3-core'
-import { DSA } from '.'
+import DSA from '.'
 import { Abi } from './abi'
 import { Addresses } from './data/addresses'
 import { Spells } from './spells'
@@ -22,10 +22,10 @@ export class CastHelpers {
    * @param params.spells cast spells
    */
   estimateGas = async (
-    dsa: DSA,
-    params: { spells: Spells } & Required<Pick<TransactionConfig, 'from' | 'to' | 'value'>>
+    params: { spells: Spells } & Pick<TransactionConfig, 'from' | 'to' | 'value'>
   ) => {
-    const to = params.to ?? dsa.instance.address
+
+    const to = params.to ?? this.dsa.instance.address
 
     if (to === Addresses.genesis)
       throw new Error(
@@ -33,17 +33,21 @@ export class CastHelpers {
       )
 
     const { targets, spells } = this.dsa.internal.encodeSpells(params)
+    const args = [targets, spells, this.dsa.origin]
+    let from = params.from;
+    if (!from) {
+      const fromFetch = await this.dsa.internal.getAddress()
+      from = fromFetch ? fromFetch : ''
+    }
 
-    const args = [targets, spells, dsa.origin]
-    const from = params.from ?? (await this.dsa.internal.getAddress())
     const value = params.value ?? '0'
     const abi = this.dsa.internal.getInterface(Abi.core.account, 'cast')
-
+   
     if (!abi) throw new Error('Abi is not defined.')
 
     const estimatedGas = await this.dsa.internal.estimateGas({ abi, to, from, value, args })
-
-    return estimatedGas
+     
+    return estimatedGas     
   }
 
   /**

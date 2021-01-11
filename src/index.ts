@@ -1,1 +1,2 @@
-export { DSA } from './dsa'
+import { DSA } from './dsa'
+export default DSA;
