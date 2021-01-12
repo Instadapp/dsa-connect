@@ -51,6 +51,12 @@ export default [
         format: 'es', // the preferred format
         banner,
       },
+      {
+        file: pkg.browser,
+        format: 'umd',
+        name: 'DSA', // the global which can be used in a browser
+        banner,
+      }
     ],
     external,
     plugins,
