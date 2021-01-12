@@ -28,7 +28,7 @@ if(!process.env.ROLLUP_WATCH)
     format: {
       // only permit banner comment
       comments: function (node, comment) {
-        if (comment.type == 'comment2') {
+        if (comment.type === 'comment2') {
           // multiline comment
           return /@bannerend/i.test(comment.value)
         }
@@ -43,7 +43,7 @@ export default [
     output: [
       {
         file: pkg.main,
-        format: 'cjs',
+        format: 'es',
         banner,
       },
       {
