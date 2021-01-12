@@ -100,7 +100,9 @@ export class DSA {
   public getAuthById = (...args: Parameters<Accounts['getAuthoritiesById']>) =>
     this.accounts.getAuthoritiesById(...args)
   public encodeCastABI = (...args: Parameters<CastHelpers['encodeABI']>) => this.castHelpers.encodeABI(...args)
-  public estimateCastGas = (...args: Parameters<CastHelpers['estimateGas']>) => this.castHelpers.estimateGas(...args)
+  public estimateCastGas = (...args: Parameters<CastHelpers['estimateGas']>) => {
+    return this.castHelpers.estimateGas(...args)
+  }
 
   /**
    * @param config A `web3` instance or a DSAConfig

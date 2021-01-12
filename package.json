@@ -1,8 +1,10 @@
 {
   "name": "dsa-connect",
-  "version": "0.0.5",
-  "description": "Build DeFi apps instantly",
+  "version": "0.0.7",
+  "description": "DSA connect",
   "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "browser": "dist/index.bundle.js",
   "files": [
     "dist",
     "README.md"

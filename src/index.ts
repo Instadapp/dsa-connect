@@ -1,2 +1,2 @@
-import {DSA} from "./dsa"
-module.exports = DSA
+import { DSA } from './dsa'
+export default DSA;
