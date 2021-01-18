@@ -257,10 +257,25 @@ export class DSA {
           console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
-
         return await vm.cast(!!params ? { ...params, spells: this } : this)
       }
-    })()
+
+      estimateCastGas = async (params?: Omit<CastHelpers['estimateGas'], 'spells'>) => {
+        if (!this.data.length) {
+          console.log('No spells casted. Add spells with `.add(...)`.')
+          return
+        }
+        return await vm.castHelpers.estimateGas({spells: this, ...params})
+      }
+
+    encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
+      if (!this.data.length) {
+        console.log('No spells casted. Add spells with `.add(...)`.')
+        return
+      }
+      return await vm.encodeCastABI({spells: this, ...params})
+    }
+  })()
   }
 
   async cast(params: Spells | CastParams) {
