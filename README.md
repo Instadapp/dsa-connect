@@ -26,7 +26,7 @@ if (window.ethereum) {
 ```js
 // in nodejs
 const Web3 = require('web3')
-const DSA = require('dsa-sdk');
+const DSA = require('dsa-connect');
 const web3 = new Web3(new Web3.providers.HttpProvider(ETH_NODE_URL))
 ```
 
