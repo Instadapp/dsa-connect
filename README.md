@@ -6,11 +6,15 @@ The official DSA SDK for JavaScript, available for browsers and Node.js backends
 
 To get started, install the DSA Connect package from npm:
 
-`npm install dsa-connect`
+```bash
+npm install dsa-connect
+```
 
 For browsers, via jsDelivr CDN:
 
-`<script src="https://cdn.jsdelivr.net/npm/dsa-connect@latest/dist/index.bundle.min.js"></script>`
+```html
+<script src="https://cdn.jsdelivr.net/npm/dsa-connect@latest/dist/index.bundle.min.js"></script>
+```
 
 ### Usage
 
