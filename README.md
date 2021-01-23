@@ -8,6 +8,10 @@ To get started, install the DSA Connect package from npm:
 
 `npm install dsa-connect`
 
+For browsers, via jsDelivr CDN:
+
+`<script src="https://cdn.jsdelivr.net/npm/dsa-connect@0.0.5/index.js"></script>`
+
 ### Usage
 
 To enable web3 calls via SDK, instantiate [web3 library](https://github.com/ChainSafe/web3.js#installation)
@@ -190,17 +194,16 @@ At last, cast your spell using `cast()` method.
 
 ```js
 // in async functions
-let transactionHash = await dsa.cast(spells)
+let transactionHash = await spells.cast();
 
 // or
-dsa.cast(spells).then(console.log) // returns transaction hash
+spells.cast().then(console.log) // returns transaction hash
 ```
 
 You can also pass an object to send **optional** parameters like sending ETH along with the transaction.
 
 ```js
-dsa.cast({
-  spells: spells,
+spells.cast({
   gasPrice: web3.utils.toWei(gasPrice, 'gwei'), // in gwei, used in node implementation.
   value: "1000000000000000000", // sending 1 Eth along the transaction.
   nonce: nonce
@@ -208,8 +211,7 @@ dsa.cast({
 ```
 
 | **Parameter (optional)** | **Type**        | **Description**                                                                                                                                                                |
-|--------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `spells`                 | *object*        | Instance of the `spells()` method speed.                                                                                                                                       |
+|--------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|                                                                                                       
 | `gasPrice`               | *string/number* | The gas price in gwei. Mostly used in Node implementation to configure the transaction confirmation speed.                                                                     |
 | `value`                  | *string/number* | Amount of ETH which you want to send along with the transaction (in wei).                                                                                                      |
 | `nonce`                  | *string/number* | Nonce of your sender account. Mostly used in Node implementation to send transaction with a particular nonce either to override unconfirmed transaction or some other purpose. |
