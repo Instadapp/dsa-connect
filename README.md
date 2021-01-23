@@ -10,7 +10,7 @@ To get started, install the DSA Connect package from npm:
 
 For browsers, via jsDelivr CDN:
 
-`<script src="https://cdn.jsdelivr.net/npm/dsa-connect@0.0.5/index.js"></script>`
+`<script src="https://cdn.jsdelivr.net/npm/dsa-connect@latest/dist/index.bundle.min.js"></script>`
 
 ### Usage
 
