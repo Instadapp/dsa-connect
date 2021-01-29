@@ -109,7 +109,7 @@ export class Internal {
    * @param params.spells the spells instance
    */
   encodeSpells = (params: Spells | { spells: Spells }) => {
-    const spells = this.getSpells(params)
+    const spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
     const targets = spells.data.map((spell) => this.getTarget(spell.connector))
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell))
