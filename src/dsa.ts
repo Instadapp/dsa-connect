@@ -8,6 +8,7 @@ import { Internal } from './internal'
 import { Spells } from './spells'
 import { Transaction } from './transaction'
 import { wrapIfSpells } from './utils'
+import { Instapool_v2 } from './resolvers/instapool_v2'
 
 type DSAConfig =
   | {
@@ -90,6 +91,7 @@ export class DSA {
   readonly internal = new Internal(this)
   readonly castHelpers = new CastHelpers(this)
   readonly transaction = new Transaction(this)
+  readonly instapool_v2 = new Instapool_v2(this)
   readonly accounts = new Accounts(this)
 
   // Aliases
@@ -268,13 +270,13 @@ export class DSA {
         return await vm.castHelpers.estimateGas({spells: this, ...params})
       }
 
-    encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
-      if (!this.data.length) {
-        console.log('No spells casted. Add spells with `.add(...)`.')
-        return
+      encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
+        if (!this.data.length) {
+          console.log('No spells casted. Add spells with `.add(...)`.')
+          return
+        }
+        return await vm.encodeCastABI({spells: this, ...params})
       }
-      return await vm.encodeCastABI({spells: this, ...params})
-    }
   })()
   }
 

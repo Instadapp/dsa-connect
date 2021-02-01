@@ -10,7 +10,7 @@ let dsa: DSA
 // TODO: Use beforeEach if nessecary or define individually
 beforeAll(() => {
   web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-  dsa = new DSA({ web3 })
+  dsa = new DSA(web3)
 })
 
 test('initalization of DSA', () => {
@@ -42,6 +42,99 @@ test('Cast', async () => {
   expect(calldata).toBeDefined()
 
   const txHash = await dsa.cast({ spells: spells, from: process.env.PUBLIC_ADDRESS })
+
+})
+
+test('Cast with flashloan', async () => {
+  const usdc_address = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+
+  const myAddr = process.env.PUBLIC_ADDRESS
+
+  const spells = dsa.Spell()
+
+  spells.add({
+    connector: 'basic',
+    method: 'withdraw',
+    args: [usdc_address, 0, myAddr, 0, 0],
+  })
+
+  spells.add({
+    connector: 'instapool_v2',
+    method: 'flashBorrow',
+    args: [usdc_address, "10000000", 0],
+  })
+  
+  spells.add({
+    connector: "instapool_v2",
+    method: "flashPayback",
+    args: [usdc_address, "10000000", 0, 0]
+  })
+
+  await dsa.setAccount(Number(process.env.DSA_ID))
+  const calldata = await dsa.encodeCastABI(spells)
+  expect(calldata).toBeDefined()
+
+  const txHash = await dsa.cast({ spells: spells, from: process.env.PUBLIC_ADDRESS })
+
+})
+
+test('Cast with flashloan with multiple', async () => {
+  const usdc_address = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+  const dai_address = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
+  const eth_address = '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE'
+
+  const myAddr = process.env.PUBLIC_ADDRESS
+
+  const spells = dsa.Spell()
+
+  spells.add({
+    connector: 'basic',
+    method: 'withdraw',
+    args: [usdc_address, 0, myAddr, 0, 0],
+  })
+
+  spells.add({
+    connector: 'instapool_v2',
+    method: 'flashBorrow',
+    args: [usdc_address, "10000000", 0],
+  })
+  
+
+  spells.add({
+    connector: 'compound',
+    method: 'withdraw',
+    args: [eth_address, "100000000000", 0, 0],
+  })
+
+  spells.add({
+    connector: 'instapool_v2',
+    method: 'flashBorrow',
+    args: [dai_address, "1000000000000000", 0],
+  })
+
+  spells.add({
+    connector: 'aave',
+    method: 'borrow',
+    args: [dai_address, "1000000000000000", 0, 0],
+  })
+
+  spells.add({
+    connector: "instapool_v2",
+    method: "flashPayback",
+    args: [dai_address, "1000000000000000", 0, 0]
+  })
+
+  spells.add({
+    connector: "instapool_v2",
+    method: "flashPayback",
+    args: [usdc_address, "10000000", 0, 0]
+  })
+
+  await dsa.setAccount(Number(process.env.DSA_ID))
+  const calldata = await dsa.encodeCastABI(spells)
+  expect(calldata).toBeDefined()
+
+  // const txHash = await dsa.cast({ spells: spells, from: process.env.PUBLIC_ADDRESS }) // Throws error due to connector
 
 })
 
@@ -95,20 +188,20 @@ test('get transaction count', async () => {
 })
 
 
-// test('test', async () => {
-//   var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
-//   await dsa.setAccount(5); 
+test('test', async () => {
+  var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+  await dsa.setAccount(5); 
 
-//   var spells = dsa.Spell();
+  var spells = dsa.Spell();
 
-//   spells.add({
-//       connector: "compound",
-//       method: "withdraw",
-//       args: [usdc_address, dsa.maxValue, 0, 0] // withdraw all USDC
-//   });
+  spells.add({
+      connector: "compound",
+      method: "withdraw",
+      args: [usdc_address, dsa.maxValue, 0, 0] // withdraw all USDC
+  });
 
-//   console.log(await dsa.encodeCastABI(spells))
-//   console.log(await dsa.estimateCastGas({spells, from: '0x03d70891b8994feB6ccA7022B25c32be92ee3725'})) //. Error over here.
+  console.log(await dsa.encodeCastABI(spells))
+  console.log(await dsa.estimateCastGas({spells, from: '0x03d70891b8994feB6ccA7022B25c32be92ee3725'})) //. Error over here.
 
-//   await dsa.cast(spells)
-// })
+  await dsa.cast(spells)
+})
