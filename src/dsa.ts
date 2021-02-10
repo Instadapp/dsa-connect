@@ -190,6 +190,31 @@ export class DSA {
   }
 
   /**
+   * Build new DSA txObj
+   */
+  async buildTxObj(params: BuildParams) {
+    if (!params.authority) throw new Error("Parameter 'authority' is not defined.")
+    if (!params.from) throw new Error("Parameter 'from' is not defined.")
+
+    const to = Addresses.core.index
+    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
+    const data = contract.methods.build(
+      params.authority, 
+      params.version || 1, 
+      params.origin || Addresses.genesis,
+    ).encodeABI()
+   
+    return this.internal.getTransactionConfig({
+      from: params.from,
+      to,
+      data,
+      gas: params.gas,
+      gasPrice: params.gasPrice,
+      nonce: params.nonce,
+    })
+  }
+
+  /**
    * Build new DSA transactionConfiguration.
    *
    * @param {address} _d.authority (optional)
