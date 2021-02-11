@@ -9,6 +9,7 @@ import { Spells } from './spells'
 import { Transaction } from './transaction'
 import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
+import { Erc20 } from './utils/erc20'
 
 type DSAConfig =
   | {
@@ -88,6 +89,7 @@ export class DSA {
   public readonly maxValue = '115792089237316195423570985008687907853269984665640564039457584007913129639935'
 
   // Extensions
+  readonly erc20 = new Erc20(this)
   readonly internal = new Internal(this)
   readonly castHelpers = new CastHelpers(this)
   readonly transaction = new Transaction(this)
