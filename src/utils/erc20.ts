@@ -3,6 +3,7 @@ import { DSA } from '../dsa'
 import { Addresses } from '../data/addresses'
 import { TokenInfo } from '../data/token-info'
 import * as Math from './math';
+import { TransactionConfig } from 'web3-core'
 
 /**
  * generic ERC20 token methods
@@ -10,11 +11,19 @@ import * as Math from './math';
 
  export class Erc20 {
    constructor(private dsa: DSA) {}
+    /**
+     * Transfer
+     */
+   async transfer(params: any): Promise<string> {
+    const txObj: TransactionConfig = await this.transferTxObj(params);
+    
+    return this.dsa.sendTransaction(txObj);
+   }
 
    /**
     * Transfer Tx object
     */
-   async transferTxObj(params: any) {
+   async transferTxObj(params: any): Promise<TransactionConfig> {
     if (!params.token) {
       throw new Error("Parameter 'token' is not defined.")
     }
@@ -37,7 +46,7 @@ import * as Math from './math';
       from = await this.dsa.internal.getAddress()
     }
 
-    let txObj;
+    let txObj: TransactionConfig;
 
     if (["eth", TokenInfo.eth.address].includes(params.token.toLowerCase())) {
       if (["-1", this.dsa.maxValue].includes(params.amount)) {
@@ -79,9 +88,18 @@ import * as Math from './math';
    }
 
    /**
+    * Approve
+    */
+   async approve(params: any): Promise<string> {
+    const txObj: TransactionConfig = await this.approveTxObj(params);
+    
+    return this.dsa.sendTransaction(txObj);
+   }
+
+   /**
     * Approve Token Tx Obj
     */
-   async approveTxObj(params: any) {
+   async approveTxObj(params: any): Promise<TransactionConfig> {
      if (!params.token) {
        throw new Error("Parameter 'token' is missing")
      }
@@ -95,7 +113,7 @@ import * as Math from './math';
        params.from = await this.dsa.internal.getAddress()
      }
 
-     let txObj;
+     let txObj: TransactionConfig;
 
      if (["eth", TokenInfo.eth.address].includes(params.token.toLowerCase())) {
        throw new Error("ETH does not require approve.") 
