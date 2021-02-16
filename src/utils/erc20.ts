@@ -33,15 +33,16 @@ import { TransactionConfig } from 'web3-core'
 
     if (!params.to) {
       to = this.dsa.instance.address;
+    }
 
-      if (to === Addresses.genesis) {
-        throw new Error("'to' is not defined and instance is not set.")
-      }
+    if (to === Addresses.genesis) {
+      throw new Error("'to' is not defined and instance is not set.")
     }
 
     if (!params.amount) {
       throw new Error("'amount' is not defined");
     }
+    
     if(!params.from) {
       from = await this.dsa.internal.getAddress()
     }
