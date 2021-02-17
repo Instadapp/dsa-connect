@@ -9,6 +9,7 @@ import { Spells } from './spells'
 import { Transaction } from './transaction'
 import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
+import { Erc20 } from './utils/erc20'
 
 type DSAConfig =
   | {
@@ -88,6 +89,7 @@ export class DSA {
   public readonly maxValue = '115792089237316195423570985008687907853269984665640564039457584007913129639935'
 
   // Extensions
+  readonly erc20 = new Erc20(this)
   readonly internal = new Internal(this)
   readonly castHelpers = new CastHelpers(this)
   readonly transaction = new Transaction(this)
@@ -187,6 +189,31 @@ export class DSA {
     const transaction = await this.transaction.send(transactionConfig)
 
     return transaction
+  }
+
+  /**
+   * Build new DSA txObj
+   */
+  async buildTxObj(params: BuildParams) {
+    if (!params.authority) throw new Error("Parameter 'authority' is not defined.")
+    if (!params.from) throw new Error("Parameter 'from' is not defined.")
+
+    const to = Addresses.core.index
+    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
+    const data = contract.methods.build(
+      params.authority, 
+      params.version || 1, 
+      params.origin || Addresses.genesis,
+    ).encodeABI()
+   
+    return this.internal.getTransactionConfig({
+      from: params.from,
+      to,
+      data,
+      gas: params.gas,
+      gasPrice: params.gasPrice,
+      nonce: params.nonce,
+    })
   }
 
   /**
