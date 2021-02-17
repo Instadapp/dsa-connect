@@ -201,7 +201,42 @@ test('test', async () => {
   });
 
   console.log(await dsa.encodeCastABI(spells))
-  console.log(await dsa.estimateCastGas({spells, from: '0x03d70891b8994feB6ccA7022B25c32be92ee3725'})) //. Error over here.
+  console.log(await dsa.estimateCastGas({spells, from: '0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3'})) //. Error over here.
 
-  await dsa.cast(spells)
+  await dsa.cast({spells, from: '0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3'})
+})
+
+test('Give USDC allowance', async () => {
+  var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+
+  var data = {
+    token: usdc_address,
+    amount: "10000000",
+    to: dsa.instance.address
+  }
+  await dsa.erc20.approve(data)
+})
+
+test('Transfer 10 USDC to DSA', async () => {
+  var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+
+  var data = {
+    token: usdc_address,
+    amount: "10000000",
+    to: dsa.instance.address,
+    from: "0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3"
+  }
+  await dsa.erc20.transfer(data)
+})
+
+test('Transfer -1 USDC to DSA', async () => {
+  var usdc_address = "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48";
+
+  var data = {
+    token: usdc_address,
+    amount: dsa.maxValue,
+    to: dsa.instance.address,
+    from: "0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3"
+  }
+  await dsa.erc20.transfer(data)
 })
