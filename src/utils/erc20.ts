@@ -28,8 +28,8 @@ import { TransactionConfig } from 'web3-core'
       throw new Error("Parameter 'token' is not defined.")
     }
 
-    let to;
-    let from;
+    let to = params.to;
+    let from = params.from;
 
     if (!params.to) {
       to = this.dsa.instance.address;
@@ -67,8 +67,8 @@ import { TransactionConfig } from 'web3-core'
       } as any)
     } else {
       params.toAddr = to
-      to = this.dsa.internal.filterAddress(params.token)
-      const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, to)
+      params.to = this.dsa.internal.filterAddress(params.token)
+      const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
 
       if (["-1", this.dsa.maxValue].includes(params.amount)) {
         await contract.methods
@@ -79,7 +79,7 @@ import { TransactionConfig } from 'web3-core'
             throw new Error(`Error while getting token balance: ${err}`);
           });
       }
-      params.callData = contract.methods
+      params.data = contract.methods
         .transfer(params.toAddr, Math.bigNumInString(params.amount))
         .encodeABI();
       txObj = await this.dsa.internal.getTransactionConfig(params);
@@ -122,7 +122,7 @@ import { TransactionConfig } from 'web3-core'
        params.toAddr = params.to
        params.to = this.dsa.internal.filterAddress(params.token)
        const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
-       params.callData = contract.methods
+       params.data = contract.methods
          .approve(params.toAddr, params.amount)
          .encodeABI()
 
