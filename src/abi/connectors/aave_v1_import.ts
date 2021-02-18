@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils';
 
-export const aaveV1_import: AbiItem[] = [
+export const aave_v1_import: AbiItem[] = [
   {
     inputs: [],
     name: 'connectorID',
