@@ -87,6 +87,7 @@ export class DSA {
 
   // value of uint(-1).
   public readonly maxValue = '115792089237316195423570985008687907853269984665640564039457584007913129639935'
+  public readonly maxVal = () =>'115792089237316195423570985008687907853269984665640564039457584007913129639935'
 
   // Extensions
   readonly erc20 = new Erc20(this)
@@ -303,6 +304,14 @@ export class DSA {
           return
         }
         return await vm.encodeCastABI({spells: this, ...params})
+      }
+
+      encodeSpells = async (params?: Omit<Internal['encodeSpells'], 'spells'>) => {
+        if (!this.data.length) {
+          console.log('No spells casted. Add spells with `.add(...)`.')
+          return
+        }
+        return await vm.encodeSpells({spells: this, ...params})
       }
   })()
   }
