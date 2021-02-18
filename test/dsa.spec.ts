@@ -174,7 +174,7 @@ test('Cast with fluid api', async () => {
     .add({
       connector: 'basic',
       method: 'withdraw',
-      args: [usdc_address, dsa.maxValue, myAddr, 0, 0],
+      args: [usdc_address, dsa.maxVal(), myAddr, 0, 0],
     })
     .cast({ from: process.env.PUBLIC_ADDRESS })
 
