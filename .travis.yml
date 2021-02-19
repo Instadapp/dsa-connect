@@ -1,14 +1,14 @@
 language: node_js
 node_js:
-  - '15'
-# Cache node_modules
+- '15'
 cache:
   directories:
-    - 'node_modules'
+  - node_modules
 install:
-  - npm install
+- npm install
 script:
-  # do a full build
-  - npm run build
-  # run tests
-  - npm run test
+- npm run build
+- npm run ganache:fork:travis &
+- npm run test
+env:
+  secure: VYdmULXDyZm3RqJULI7lTGOaVjbNemODbueypgcQJy4INnOYxkA3sU443sBZ/5Vr4L1QpuFqqaE8n0+i8dwumbeeVt1W91uGW5Dh8wJEBM15rkp7rztSAx4R8BDMi6ZydSgyAVK7utRuu6Hbr+vEOlVBkPndDnG9irJU1vl1Tanp9MnQRpDjjlITX7gigsxAPvVqd4r2sj/Ebylazs7NO01EOL8fqVO94ALvjwQqWDMaQX3ibARIi0OLGCq5sx4Pl1QcrMVryP14JRmge9VgWg6nalI3zkckT7fbyr/D2g6Y5lv64tMdGVo2rm6Ntzl4ozataHBGfS2Se7WRI8EwqwL+I2BHgwLDG9Y0t3ZvwefKOysBGlKOBNx/pa6aHR1yexpyQBNs0FfiFITF6IciY+d/p6BXod2sncuZOG2trU2HbBwcfY3iUOckw8Y5m5I+C+EHAcRgqw9rrfYMMzOJXvnMUeib+dumM3fZikfQZBy2iWe+l+Mx7HHq91ZYO96EZS7sXFsfmxesf3UBd1x/q1aZTLRUyUFbbiDeFu5AqRVoXmmDuwNntyZDQUVJgVnXshIWqGgIrg/GmjRCSlOAvhFX0LDh5zIwEe10csXnpK//OGahzmh2rNdaVvxD7+oaA8cSu9EdDnFXiLmQYnQV7wACjN65PQGqU43KQrOCZuI=
