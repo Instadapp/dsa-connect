@@ -4,6 +4,18 @@ import { Addresses } from '../data/addresses'
 import { TokenInfo } from '../data/token-info'
 import * as Math from './math';
 import { TransactionConfig } from 'web3-core'
+import { GetTransactionConfigParams } from '../internal'
+import { Contract } from 'web3-eth-contract';
+
+type ErcInputParams = {
+  amount: string,
+  from?: string | number,
+  gas?: string | number,
+  gasPrice?: string | number,
+  nonce?: number,
+  to?: string,
+  token: keyof typeof TokenInfo,
+}
 
 /**
  * generic ERC20 token methods
@@ -14,7 +26,7 @@ import { TransactionConfig } from 'web3-core'
     /**
      * Transfer
      */
-   async transfer(params: any): Promise<string> {
+   async transfer(params: ErcInputParams): Promise<string> {
     const txObj: TransactionConfig = await this.transferTxObj(params);
     
     return this.dsa.sendTransaction(txObj);
@@ -23,28 +35,21 @@ import { TransactionConfig } from 'web3-core'
    /**
     * Transfer Tx object
     */
-   async transferTxObj(params: any): Promise<TransactionConfig> {
-    if (!params.token) {
-      throw new Error("Parameter 'token' is not defined.")
-    }
-
-    let to = params.to;
-    let from = params.from;
-
+   async transferTxObj(params: ErcInputParams): Promise<TransactionConfig> {
     if (!params.to) {
-      to = this.dsa.instance.address;
+      params.to = this.dsa.instance.address;
+
+      if (params.to === Addresses.genesis) {
+        throw new Error("'to' is not defined and instance is not set.")
+      }
     }
 
-    if (to === Addresses.genesis) {
-      throw new Error("'to' is not defined and instance is not set.")
-    }
-
-    if (!params.amount) {
-      throw new Error("'amount' is not defined");
+    if (!Number.isNaN(params.amount)) {
+      throw new Error("'amount' is not a number")
     }
     
     if(!params.from) {
-      from = await this.dsa.internal.getAddress()
+      params.from = await this.dsa.internal.getAddress()
     }
 
     let txObj: TransactionConfig;
@@ -54,21 +59,19 @@ import { TransactionConfig } from 'web3-core'
         throw new Error("ETH amount value cannot be passed as '-1'.")
       }
 
-      params.value = params.amount
-      params.callData = "0x"
-
       txObj = await this.dsa.internal.getTransactionConfig({
-        from: from,
-        to,
+        from: params.from,
+        to: params.to,
         data: "0x",
         gas: params.gas,
         gasPrice: params.gasPrice,
         nonce: params.nonce,
-      } as any)
+        value: params.amount,
+      } as GetTransactionConfigParams)
     } else {
-      params.toAddr = to
+      const toAddr: string = params.to;
       params.to = this.dsa.internal.filterAddress(params.token)
-      const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
+      const contract: Contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
 
       if (["-1", this.dsa.maxValue].includes(params.amount)) {
         await contract.methods
@@ -79,10 +82,19 @@ import { TransactionConfig } from 'web3-core'
             throw new Error(`Error while getting token balance: ${err}`);
           });
       }
-      params.data = contract.methods
-        .transfer(params.toAddr, Math.bigNumInString(params.amount))
+      const data: string = contract.methods
+        .transfer(toAddr, Math.bigNumInString(Number(params.amount)))
         .encodeABI();
-      txObj = await this.dsa.internal.getTransactionConfig(params);
+
+      txObj = await this.dsa.internal.getTransactionConfig({
+        from: params.from,
+        to: params.to,
+        data: data,
+        gas: params.gas,
+        gasPrice: params.gasPrice,
+        nonce: params.nonce,
+        value: params.amount,
+      } as GetTransactionConfigParams);
     }
 
     return txObj;
@@ -91,7 +103,7 @@ import { TransactionConfig } from 'web3-core'
    /**
     * Approve
     */
-   async approve(params: any): Promise<string> {
+   async approve(params: ErcInputParams): Promise<string> {
     const txObj: TransactionConfig = await this.approveTxObj(params);
     
     return this.dsa.sendTransaction(txObj);
@@ -100,15 +112,9 @@ import { TransactionConfig } from 'web3-core'
    /**
     * Approve Token Tx Obj
     */
-   async approveTxObj(params: any): Promise<TransactionConfig> {
-     if (!params.token) {
-       throw new Error("Parameter 'token' is missing")
-     }
+   async approveTxObj(params: ErcInputParams): Promise<TransactionConfig> {
      if (!params.to) {
        throw new Error("Parameter 'to' is missing")
-    }
-     if (!params.amount) {
-       throw new Error("Parameter 'amount' is missing")
      }
      if (!params.from) {
        params.from = await this.dsa.internal.getAddress()
@@ -119,14 +125,22 @@ import { TransactionConfig } from 'web3-core'
      if (["eth", TokenInfo.eth.address].includes(params.token.toLowerCase())) {
        throw new Error("ETH does not require approve.") 
      } else {
-       params.toAddr = params.to
+       const toAddr: string = params.to
        params.to = this.dsa.internal.filterAddress(params.token)
        const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
-       params.data = contract.methods
-         .approve(params.toAddr, params.amount)
+       const data: string = contract.methods
+         .approve(toAddr, params.amount)
          .encodeABI()
 
-       txObj = await this.dsa.internal.getTransactionConfig(params)
+       txObj = await this.dsa.internal.getTransactionConfig({
+        from: params.from,
+        to: params.to,
+        data: data,
+        gas: params.gas,
+        gasPrice: params.gasPrice,
+        nonce: params.nonce,
+        value: params.amount,
+      } as GetTransactionConfigParams)
      }
 
      return txObj
