@@ -8,8 +8,7 @@ install:
 - npm install
 script:
 - npm run build
-- npm run ganache:fork:travis &
-- npm run test
+- sh -c ./.travis-ci-run-test.sh
 env:
   global:
   - secure: JRh09r0hy0WpgDTBURqSTyXn0ouZRudsZXRRlYzMEW40gjW7IPQg+GLlmkz9a/B84TLzT4k0gi0TYvQXP/nnm9LEBfJRsHQd1FOtABvIqsvPGQI2wWSWaxa3yXf+yeTNpohjSggsUlWbeRY+wi4wpLxxa/sSyRi0VN8v1SodMAOQS7endi5sJNSa3MXF0tJrH7S5Bb4m/78cwH/x4BpKiVtoVJTtccjJRLlKdipcdgbe77My/RQDcsgU7IAfsNJok7tGOknhUKcMgsmbhY318N8Vmb9yt6JcT86E25OyzJpumf3o7Io9NPMUEEH5l5AISOy5i80CwJEZkSacqVJxNKAEXQUAvOuPhRZQBpdd8/e4GaFOfYsSDPH5Wphl9uI0QiuG4DUdKSvECvFKZII767XGlBTQq4sBxOsPiHdBVA2B/TIWacXijtURSaW1gPzzVE3LhaNH5uqUPZMXBgXbymAHKI0t8O0h1q6lz0E755bKK+LkcmfMse4xL+BM88IYi0pZ2kIr6/Mr9nHGe2Wu0LspIkXcvbMc3raX+J8pcjqTwycmJfp8xp3sH/gjIuUql3jIYit+R4/inN+eq/MiCHoth7RGuIyYurJ1288hFvE2DB2ADot4gvaNVoxrlyP+FlOGqN5osQtEvV7i/GcT8A6eaz8Nsc+pSnvsGw+xup4=
