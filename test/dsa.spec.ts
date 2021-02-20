@@ -214,7 +214,7 @@ test('Give USDC allowance', async () => {
     amount: "10000000",
     to: dsa.instance.address
   }
-  await dsa.erc20.approve(data as any)
+  await dsa.erc20.approve(data)
 })
 
 test('Transfer 10 USDC to DSA', async () => {
@@ -226,7 +226,7 @@ test('Transfer 10 USDC to DSA', async () => {
     to: dsa.instance.address,
     from: "0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3"
   }
-  await dsa.erc20.transfer(data as any)
+  await dsa.erc20.transfer(data)
 })
 
 test('Transfer -1 USDC to DSA', async () => {
@@ -238,5 +238,5 @@ test('Transfer -1 USDC to DSA', async () => {
     to: dsa.instance.address,
     from: "0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3"
   }
-  await dsa.erc20.transfer(data as any)
+  await dsa.erc20.transfer(data)
 })
