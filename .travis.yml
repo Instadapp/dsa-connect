@@ -1,14 +1,16 @@
 language: node_js
 node_js:
-  - '15'
-# Cache node_modules
+- '14'
 cache:
   directories:
-    - 'node_modules'
+  - node_modules
 install:
-  - npm install
+- npm install
 script:
-  # do a full build
-  - npm run build
-  # run tests
-  - npm run test
+- npm run build
+- sh -c ./.travis-ci-run-test.sh
+env:
+  matrix:
+  - PUBLIC_ADDRESS=0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3 DSA_ID=5
+  global:
+    secure: BO7NG5SDnxDLV/BcvSzn3vjdMGG99D5eHp/ZubaDTKgMABlUBngesND8AYEM0U5oK8EeJ7vhABcpgSZKsyf8PwviWZeU47SiJGriPuV7hdBMjq9Ev8dt7Vxl5JiAE52NsguNwvXK2eBdk0imxHmlmntxAA9hpHvDls/4wGyrk7/WUaCUabaLXGzX3S09S++LtM/T6aRmjOJdqNOVjdVM+8sqQUJFYjiSh+B8R5ro4IkOXE1XxfIxY8YfXrXQknajZP0zeMa7F+xV4S78c1MX1N7mgU0EoMyVB+6WYud8gtx3D41CAiKsA6IwtHJk2TBjplZ6gId2bKFKt4sTUbkPkC8RO3dqocQNhvEgQGKDWT/fvwF/jjBia7J2uxZGwEBwNrvlXB9ibVoI4cWWfgDRdT7EAhJPWgOYpbfnLxh350GgH0B52zmV2I+Le05/DeFvOoMO7PKDxYA16R+/PCkB6VdUJHlHI7k9r5rZbPsl8bZJrv4s5IBYlCzIxrBEZLPFJ03gHsuOkd4Hly/yHfnOSvmawm34l6O2DLdMv6UZwjLJUn6AhXGv94G0LwT9gjwjET7mYhUvIFJlfoG9FBTaCGAP7Zg3rxWv6zbD0iX+qvytybMnyuPBmUb5r/fhFmHCAIYApXp4tEujQ711RLNq8V/edzrB3eg2XTdTTZaqSC4=
