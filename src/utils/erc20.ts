@@ -7,15 +7,19 @@ import { TransactionConfig } from 'web3-core'
 import { GetTransactionConfigParams } from '../internal'
 import { Contract } from 'web3-eth-contract';
 
-type ErcInputParams = {
+/**
+ * @param {address} _d.token token address or symbol
+ * @param {string} _d.amount token amount
+ * @param {address|string} _d.from (optional) token 
+ * @param {number|string} _d.to (optional) 
+ * @param {number|string} _d.gasPrice (optional) not optional in "node"
+ * @param {number|string} _d.gas (optional) not optional in "node"
+ * @param {number|string} _d.nonce (optional) not optional in "node"
+ */
+type Erc20InputParams = {
+  token: keyof typeof TokenInfo | string,
   amount: string,
-  from?: string | number,
-  gas?: string | number,
-  gasPrice?: string | number,
-  nonce?: number,
-  to?: string,
-  token: keyof typeof TokenInfo,
-}
+} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
 
 /**
  * generic ERC20 token methods
@@ -26,7 +30,7 @@ type ErcInputParams = {
     /**
      * Transfer
      */
-   async transfer(params: ErcInputParams): Promise<string> {
+   async transfer(params: Erc20InputParams): Promise<string> {
     const txObj: TransactionConfig = await this.transferTxObj(params);
     
     return this.dsa.sendTransaction(txObj);
@@ -35,13 +39,13 @@ type ErcInputParams = {
    /**
     * Transfer Tx object
     */
-   async transferTxObj(params: ErcInputParams): Promise<TransactionConfig> {
+   async transferTxObj(params: Erc20InputParams): Promise<TransactionConfig> {
     if (!params.to) {
       params.to = this.dsa.instance.address;
+    }
 
-      if (params.to === Addresses.genesis) {
-        throw new Error("'to' is not defined and instance is not set.")
-      }
+    if (params.to === Addresses.genesis) {
+      throw new Error("'to' is not defined and instance is not set.")
     }
 
     if (!Number.isNaN(params.amount)) {
@@ -103,7 +107,7 @@ type ErcInputParams = {
    /**
     * Approve
     */
-   async approve(params: ErcInputParams): Promise<string> {
+   async approve(params: Erc20InputParams): Promise<string> {
     const txObj: TransactionConfig = await this.approveTxObj(params);
     
     return this.dsa.sendTransaction(txObj);
@@ -112,7 +116,7 @@ type ErcInputParams = {
    /**
     * Approve Token Tx Obj
     */
-   async approveTxObj(params: ErcInputParams): Promise<TransactionConfig> {
+   async approveTxObj(params: Erc20InputParams): Promise<TransactionConfig> {
      if (!params.to) {
        throw new Error("Parameter 'to' is missing")
      }

@@ -150,12 +150,12 @@ export class Internal {
   /**
    * Returns the address from token key OR checksum the address if not.
    */
-  filterAddress = (token: keyof typeof TokenInfo) => {
+  filterAddress = (token: keyof typeof TokenInfo | string) => {
     var isAddress = this.dsa.web3.utils.isAddress(token.toLowerCase())
     if (isAddress) {
       return this.dsa.web3.utils.toChecksumAddress(token.toLowerCase())
     } else {
-      const info = TokenInfo[token]
+      const info = TokenInfo[token as keyof typeof TokenInfo]
 
       if (!info) throw new Error("'token' symbol not found.")
 
