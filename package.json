@@ -22,9 +22,7 @@
     "trypublish": "npm publish || true",
     "postversion": "git push && git push --tags && npm publish && npm run open-releases",
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
-    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS%",
-    "ganache:fork:travis": "npx ganache-cli --fork $ETH_NODE_URL --unlock $PUBLIC_ADDRESS"
-
+    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS%"
   },
   "bugs": "https://github.com/InstaDApp/dsa-connect/issues",
   "repository": {
@@ -56,7 +54,7 @@
     "dotenv": "^8.2.0",
     "cross-var": "^1.1.0",
     "dotenv-cli": "^3.2.0",
-    "ganache-cli": "^6.11.0",
+    "ganache-cli": "^6.12.0",
     "html-webpack-plugin": "^4.2.0",
     "jest": "^26.5.2",
     "light-server": "^2.8.0",
