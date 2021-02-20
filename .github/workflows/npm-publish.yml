@@ -14,9 +14,7 @@ jobs:
     - name: Publish if version has been updated
       uses: pascalgn/npm-publish-action@1.3.6
       with:
-        tag_name: "v%s"
-        tag_message: "v%s"
-        create_tag: "true"
+        create_tag: "false"
         workspace: "."
         publish_command: "npm"
         publish_args: "--non-interactive"
