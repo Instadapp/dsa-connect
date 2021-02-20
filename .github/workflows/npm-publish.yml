@@ -12,9 +12,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@1.3.6
+      uses: ishanjain28/npm-publish-action@0.0.1
       with:
-        create_tag: "false"
         workspace: "."
         publish_command: "npm"
         publish_args: "--non-interactive"
