@@ -48,7 +48,7 @@ type Erc20InputParams = {
       throw new Error("'to' is not defined and instance is not set.")
     }
 
-    if (!Number.isNaN(params.amount)) {
+    if (!params.amount) {
       throw new Error("'amount' is not a number")
     }
     
@@ -97,7 +97,7 @@ type Erc20InputParams = {
         gas: params.gas,
         gasPrice: params.gasPrice,
         nonce: params.nonce,
-        value: params.amount,
+        value: 0
       } as GetTransactionConfigParams);
     }
 
@@ -143,7 +143,7 @@ type Erc20InputParams = {
         gas: params.gas,
         gasPrice: params.gasPrice,
         nonce: params.nonce,
-        value: params.amount,
+        value: 0,
       } as GetTransactionConfigParams)
      }
 
