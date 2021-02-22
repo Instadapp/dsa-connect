@@ -30,7 +30,7 @@ export class Accounts {
       IDs: number[]
       accounts: string[]
       versions: number[]
-    } = contract.methods.getAuthorityDetails(address).call({ from: Addresses.genesis })
+    } = await contract.methods.getAuthorityDetails(address).call({ from: Addresses.genesis })
 
     const accounts = authorityDetails.IDs.map((id, index) => ({
       id,

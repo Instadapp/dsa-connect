@@ -1,4 +1,6 @@
 import { config } from 'dotenv'
+// import hre from 'hardhat'
+// import '@nomiclabs/hardhat-web3'
 import Web3 from 'web3'
 import DSA from '../src'
 
@@ -42,7 +44,6 @@ test('Cast', async () => {
   expect(calldata).toBeDefined()
 
   const txHash = await dsa.cast({ spells: spells, from: process.env.PUBLIC_ADDRESS })
-
 })
 
 test('Cast with flashloan', async () => {
