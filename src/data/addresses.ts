@@ -11,7 +11,6 @@ export const Addresses = {
   },
   connectors: {
     basic: "0xe5398f279175962E56fE4c5E0b62dc7208EF36c6",
-    auth: "0xd1aff9f2acf800c876c409100d6f39aea93fc3d9",
     authority: "0xd1aff9f2acf800c876c409100d6f39aea93fc3d9", // same address as of "auth" to not break things with upgrade
     compound: "0x15fdd1e902cac70786fe7d31013b1a806764b5a2",
     maker: "0x0F3979aC12b74878Af11cfee67B9bBB2520b3ba6",
