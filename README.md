@@ -1,7 +1,8 @@
-<img src="https://raw.githubusercontent.com/InstaDApp/dsa-connect/master/src/data/img.svg">
+
 
 # DSA Connect [![Build Status](https://travis-ci.com/InstaDApp/dsa-connect.svg?branch=master)](https://travis-ci.com/InstaDApp/dsa-connect)
 
+<img src="https://raw.githubusercontent.com/InstaDApp/dsa-connect/master/src/data/img.svg">
 
 The official DSA SDK for JavaScript, available for browsers and Node.js backends.
 
