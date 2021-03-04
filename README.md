@@ -1,4 +1,4 @@
-<img src="https://github.com/InstaDApp/dsa-connect/tree/master/src/data/img.svg?">
+<img src="https://raw.githubusercontent.com/InstaDApp/dsa-connect/master/src/data/img.svg">
 
 # DSA Connect [![Build Status](https://travis-ci.com/InstaDApp/dsa-connect.svg?branch=master)](https://travis-ci.com/InstaDApp/dsa-connect)
 
