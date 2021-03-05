@@ -66,7 +66,7 @@ Every user needs to create Smart Account to interact with DeFi Protocols seamles
 
 ### build()
 
-Create a DSA Account:
+Create a DSA Account. If the account is already created, you can use the `setInstance` method to activate a paricular DSA account and start casting spells.
 
 ```js
 // in async functions
@@ -228,5 +228,4 @@ This will send the transaction to blockchain in node implementation (or ask user
 
 ## Connectors
 
-You can see the list of connectors [here](src/data/addresses.ts#L-12)
-
+You can see the list of connectors [here](src/data/addresses.ts#L-12) & [here](https://github.com/InstaDApp/dsa-connectors-new/blob/main/README.md)
