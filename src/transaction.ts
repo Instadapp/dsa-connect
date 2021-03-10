@@ -23,13 +23,23 @@ export class Transaction {
       if (!signedTransaction.rawTransaction)
         throw new Error('Error while signing transaction. Please contact our support: https://docs.instadapp.io/')
 
-      const transactionReceipt = await this.dsa.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-
-      return transactionReceipt.transactionHash
+      this.dsa.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction).on("transactionHash", (txHash) => {
+        Promise.resolve(txHash);
+        return txHash;
+      })
+      .on("error", (error) => {
+        Promise.reject(error);
+        return;
+      });
     } else {
-      const transactionReceipt = await this.dsa.web3.eth.sendTransaction(transactionConfig)
-
-      return transactionReceipt.transactionHash
+      this.dsa.web3.eth.sendTransaction(transactionConfig).on("transactionHash", (txHash) => {
+        Promise.resolve(txHash);
+        return txHash;
+      })
+      .on("error", (error) => {
+        Promise.reject(error);
+        return;
+      });
     }
   }
 
