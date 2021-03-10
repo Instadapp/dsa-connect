@@ -9,28 +9,40 @@ export class Transaction {
    * Send transaction and get transaction hash.
    */
   send = async (transactionConfig: TransactionConfig): Promise<string> => {
-    if (transactionConfig.to == Addresses.genesis)
-      throw Error(
-        `Please configure the DSA instance by calling dsa.setInstance(dsaId). More details: https://docs.instadapp.io/setup`
-      )
+    return new Promise(async (resolve, reject)=>{
+      if (transactionConfig.to == Addresses.genesis)
+        throw Error(
+          `Please configure the DSA instance by calling dsa.setInstance(dsaId). More details: https://docs.instadapp.io/setup`
+        )
 
-    if (this.dsa.config.mode == 'node') {
-      const signedTransaction = await this.dsa.web3.eth.accounts.signTransaction(
-        transactionConfig,
-        this.dsa.config.privateKey
-      )
+      if (this.dsa.config.mode == 'node') {
+        
+        const signedTransaction = await this.dsa.web3.eth.accounts.signTransaction(
+          transactionConfig,
+          this.dsa.config.privateKey
+        )
 
-      if (!signedTransaction.rawTransaction)
-        throw new Error('Error while signing transaction. Please contact our support: https://docs.instadapp.io/')
-
-      const transactionReceipt = await this.dsa.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction)
-
-      return transactionReceipt.transactionHash
-    } else {
-      const transactionReceipt = await this.dsa.web3.eth.sendTransaction(transactionConfig)
-
-      return transactionReceipt.transactionHash
-    }
+        if (!signedTransaction.rawTransaction)
+          throw new Error('Error while signing transaction. Please contact our support: https://docs.instadapp.io/')
+        this.dsa.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction).on("transactionHash", (txHash) => {
+          resolve(txHash);
+          return txHash;
+        })
+        .on("error", (error) => {
+          reject(error);
+          return;
+        });
+      } else {
+        this.dsa.web3.eth.sendTransaction(transactionConfig).on("transactionHash", (txHash) => {
+          resolve(txHash);
+          return txHash;
+        })
+        .on("error", (error) => {
+          reject(error);
+          return;
+        });
+      }
+    })
   }
 
   /**
