@@ -25,7 +25,7 @@ export class Transaction {
 
       this.dsa.web3.eth.sendSignedTransaction(signedTransaction.rawTransaction).on("transactionHash", (txHash) => {
         Promise.resolve(txHash);
-        return txHash;
+        return;
       })
       .on("error", (error) => {
         Promise.reject(error);
@@ -34,7 +34,7 @@ export class Transaction {
     } else {
       this.dsa.web3.eth.sendTransaction(transactionConfig).on("transactionHash", (txHash) => {
         Promise.resolve(txHash);
-        return txHash;
+        return;
       })
       .on("error", (error) => {
         Promise.reject(error);
