@@ -39,7 +39,7 @@ export const Addresses = {
     swerve: "0x8b302dc8a97a63eb468715b8c30f7003b86e9f01",
     curve_three: "0x1568a9D336A7aC051DCC4bdcc4A0B09299DE5Daf",
     instapool_v2: "0xeb4bf86589f808f90eec8e964dbf16bd4d284905",
-    compoundImport_v2: "0x85b669261c2a65db4cd48e22ec134a09c2271568",
+    compoundImport_v2: "0x0AD8CC89bfB3b265a6De52438a26a44C6d66E74E",
     math: "0xa007f98ab41b0b4520701cb2ac75e802c460db4c",
     aave_v2: "0x53Edf7Fc8bB9c249694EA0a2174043553b34Db27",
     aave_migrate: "0xd3914a73367F8015070f073D5C69602F3a48B80D",
