@@ -12,7 +12,8 @@ export const Addresses = {
   connectors: {
     basic: "0xe5398f279175962E56fE4c5E0b62dc7208EF36c6",
     authority: "0xd1aff9f2acf800c876c409100d6f39aea93fc3d9", // same address as of "auth" to not break things with upgrade
-    compound: "0x15fdd1e902cac70786fe7d31013b1a806764b5a2",
+    compound: "0x94dFafCc80B8460AcF1cbC5cAc17bd83C95e9992",
+    compound_old: "0x15fdd1e902cac70786fe7d31013b1a806764b5a2",
     maker: "0x0F3979aC12b74878Af11cfee67B9bBB2520b3ba6",
     maker_old: "0xac02030d8a8F49eD04b2f52C394D3F901A10F8A9",
     instapool: "0xCeF5f3c402d4fef76A038e89a4357176963e1464",
