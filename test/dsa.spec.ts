@@ -224,7 +224,7 @@ test('Deposit ETH to Compound', async () => {
   spells.add({
     connector: 'compound',
     method: 'deposit',
-    args: [ethAddr, amt, 0, 0],
+    args: ['ETH-A', amt, 0, 0],
   })
 
   const gas = await spells.estimateCastGas({ from: account })
@@ -240,7 +240,7 @@ test('Borrow DAI from Compound', async () => {
   spells.add({
     connector: 'compound',
     method: 'borrow',
-    args: [daiAddr, amt, 0, 0],
+    args: ["DAI-A", amt, 0, 0],
   })
 
   const gas = await spells.estimateCastGas({ from: account })
@@ -256,7 +256,7 @@ test('Payback DAI to Compound', async () => {
   spells.add({
     connector: 'compound',
     method: 'payback',
-    args: [daiAddr, amt, 0, 0],
+    args: ["DAI-A", amt, 0, 0],
   })
 
   const gas = await spells.estimateCastGas({ from: account })
@@ -272,7 +272,7 @@ test('Withdraw ETH from Compound', async () => {
   spells.add({
     connector: 'compound',
     method: 'withdraw',
-    args: [ethAddr, amt, 0, 0],
+    args: ["ETH-A", amt, 0, 0],
   })
 
   const gas = await spells.estimateCastGas({ from: account })
@@ -305,22 +305,22 @@ test('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
   spells.add({
     connector: 'compound',
     method: 'deposit',
-    args: [ethAddr, amt, 0, 0],
+    args: ["ETH-A", amt, 0, 0],
   })
   spells.add({
     connector: 'compound',
     method: 'borrow',
-    args: [daiAddr, amt2, 0, 0],
+    args: ["DAI-A", amt2, 0, 0],
   })
   spells.add({
     connector: 'compound',
     method: 'payback',
-    args: [daiAddr, dsa.maxValue, 0, 0],
+    args: ["DAI-A", dsa.maxValue, 0, 0],
   })
   spells.add({
     connector: 'compound',
     method: 'withdraw',
-    args: [ethAddr, dsa.maxValue, 0, 0],
+    args: ["ETH-A", dsa.maxValue, 0, 0],
   })
 
   const gas = await spells.estimateCastGas({ from: account })
