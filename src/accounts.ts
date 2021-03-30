@@ -1,5 +1,5 @@
 import { Abi } from './abi'
-import { Addresses } from './addresses/addresses'
+import { Addresses } from './addresses'
 import { DSA } from './dsa'
 
 export class Accounts {
