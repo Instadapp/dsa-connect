@@ -17,7 +17,8 @@ export interface GetTransactionConfigParams {
   nonce?: TransactionConfig['nonce']
 }
 
-export type Connector = keyof typeof Abi.connectors
+export type Version = keyof typeof Abi.connectors.versions
+export type Connector = typeof Abi.connectors
 
 export type EstimateGasParams = {
   abi: AbiItem
@@ -93,8 +94,8 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[] }) => {
-    const connectorInterface = this.getInterface(Abi.connectors[params.connector], params.method)
+  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version) => {
+    const connectorInterface = this.getInterface(Abi.connectors.versions[version][connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
 
