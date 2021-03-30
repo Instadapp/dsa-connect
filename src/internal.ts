@@ -95,7 +95,7 @@ export class Internal {
    * Returns encoded data of any calls.
    */
   encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version) => {
-    const connectorInterface = this.getInterface(Abi.connectors.versions[version][connector], params.method)
+    const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
 
