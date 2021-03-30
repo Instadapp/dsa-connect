@@ -1,5 +1,5 @@
 import { TransactionConfig } from 'web3-core'
-import { Addresses } from './data/addresses'
+import { Addresses } from './addresses/addresses'
 import { DSA } from './dsa'
 
 export class Transaction {

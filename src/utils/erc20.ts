@@ -1,6 +1,6 @@
 import { Abi } from '../abi'
 import { DSA } from '../dsa'
-import { Addresses } from '../data/addresses'
+import { Addresses } from '../addresses/addresses'
 import { TokenInfo } from '../data/token-info'
 import * as Math from './math';
 import { TransactionConfig } from 'web3-core'

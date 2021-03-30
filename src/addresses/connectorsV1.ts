@@ -1,15 +1,4 @@
-export const Addresses = {
-  genesis: '0x0000000000000000000000000000000000000000',
-  core: {
-    index: '0x2971AdFa57b20E5a416aE5a708A8655A9c74f723',
-    list: '0x4c8a1BEb8a87765788946D6B19C6C6355194AbEb',
-    account: '0x939Daad09fC4A9B8f8A9352A485DAb2df4F4B3F8',
-    connector: '0xD6A602C01a023B98Ecfb29Df02FBA380d3B21E0c',
-    events: '0x2af7ea6Cb911035f3eb1ED895Cb6692C39ecbA97',
-    instapool: '0x06cb7c24990cbe6b9f99982f975f9147c000fec6',
-    dydx_flash: '0xf5b16af97B5CBa4Babe786238FF6016daE6bb890',
-  },
-  connectors: {
+export const connectorsV1 = {
     basic: "0xe5398f279175962E56fE4c5E0b62dc7208EF36c6",
     authority: "0xd1aff9f2acf800c876c409100d6f39aea93fc3d9", // same address as of "auth" to not break things with upgrade
     compound: "0x94dFafCc80B8460AcF1cbC5cAc17bd83C95e9992",
@@ -47,8 +36,4 @@ export const Addresses = {
     refinance: "0x0D16C7134ce24D1e22D64bC7bc0B4862Faa9AdB9",
     aave_v2_import: "0xCFC2a047887A4026A7E866f7ec1404f30D6A6F31",
     aave_v1_import: "0x4a9e4827e884cB3e49406e3A1A678F75910B1BB9",
-  },
-  read: {
-    core: '0x621AD080ad3B839e7b19e040C77F05213AB71524',
-  },
 }
