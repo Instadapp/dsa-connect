@@ -133,7 +133,7 @@ export class DSA {
 
   public async getAcocuntIdDetails(instanceId: Instance['id']) {
     try {
-      const contract = new this.web3.eth.Contract(Abi.read, Addresses.core.read)
+      const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core.read)
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
 
       return { id, address, version }
