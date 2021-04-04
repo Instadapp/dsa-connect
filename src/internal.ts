@@ -2,10 +2,12 @@ import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
 import DSA from '.'
 import { Abi } from './abi'
+import { Connector } from "./abi/connectors";
 import { Addresses } from './addresses'
 import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
+import { hasKey } from './utils/typeHelper'
 
 export interface GetTransactionConfigParams {
   from: NonNullable<TransactionConfig['from']>
@@ -18,7 +20,7 @@ export interface GetTransactionConfigParams {
 }
 
 export type Version = keyof typeof Abi.connectors.versions
-export type Connector = typeof Abi.connectors
+export { Connector } from './abi/connectors';
 
 export type EstimateGasParams = {
   abi: AbiItem
@@ -94,7 +96,14 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version) => {
+  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version=1) => {
+    
+    // type check that object has the required properties
+    if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
+      throw new Error(`ConnectorInterface '${params.method}' not found`)
+    }
+
+    // Abi.connectors.versions[version]
     const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
@@ -125,8 +134,16 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget = (connector: Connector) => {
-    const target = Addresses.connectors[connector]
+  private getTarget = (connector: Connector, version: Version = 1) => {
+    
+    // type check that object has the required properties
+    if (
+      !(hasKey(Addresses.connectors.versions, version) && hasKey(Addresses.connectors.versions[version], connector))
+    ) {
+      return console.error(`${connector} is invalid connector.`)
+    } 
+
+    const target = Addresses.connectors.versions[version][connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 

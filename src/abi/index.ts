@@ -6,7 +6,7 @@
 import * as basics from './basics'
 import { connectors } from './connectors'
 import { core } from './core'
-import * as read from './read'
+import {read} from './read'
 
 export const Abi = {
   basics,
