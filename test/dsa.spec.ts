@@ -466,284 +466,284 @@ describe('DSA v2', function () {
     expect(balance).toEqual(amt.toString())
   })
 
-  test('Swap 1 ETH to USDC', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'uniswap',
-      method: 'sell',
-      args: [usdcAddr, ethAddr, amt, 0, 0, 0],
-    })
+  // test('Swap 1 ETH to USDC', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'uniswap',
+  //     method: 'sell',
+  //     args: [usdcAddr, ethAddr, amt, 0, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Withdraw USDC from DSA', async () => {
-    const spells = dsa.Spell()
+  // test('Withdraw USDC from DSA', async () => {
+  //   const spells = dsa.Spell()
 
-    spells.add({
-      connector: 'basic',
-      method: 'withdraw',
-      args: [usdcAddr, dsa.maxValue, account, 0, 0],
-    })
+  //   spells.add({
+  //     connector: 'basic',
+  //     method: 'withdraw',
+  //     args: [usdcAddr, dsa.maxValue, account, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Give USDC allowance', async () => {
-    var data = {
-      token: usdcAddr,
-      amount: "1000000000000",
-      to: dsa.instance.address
-    }
-    await dsa.erc20.approve(data)
+  // test('Give USDC allowance', async () => {
+  //   var data = {
+  //     token: usdcAddr,
+  //     amount: "1000000000000",
+  //     to: dsa.instance.address
+  //   }
+  //   await dsa.erc20.approve(data)
 
-    const spells = dsa.Spell()
+  //   const spells = dsa.Spell()
 
-    spells.add({
-      connector: 'basic',
-      method: 'deposit',
-      args: [usdcAddr, dsa.maxValue, 0, 0],
-    })
+  //   spells.add({
+  //     connector: 'basic',
+  //     method: 'deposit',
+  //     args: [usdcAddr, dsa.maxValue, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Swap 1 ETH to USDC #2', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'uniswap',
-      method: 'sell',
-      args: [usdcAddr, ethAddr, amt, 0, 0, 0],
-    })
+  // test('Swap 1 ETH to USDC #2', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'uniswap',
+  //     method: 'sell',
+  //     args: [usdcAddr, ethAddr, amt, 0, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Deposit ETH to Compound', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'compound',
-      method: 'deposit',
-      args: ['ETH-A', amt, 0, 0],
-    })
+  // test('Deposit ETH to Compound', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'deposit',
+  //     args: ['ETH-A', amt, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Borrow DAI from Compound', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("10", "ether")
-    spells.add({
-      connector: 'compound',
-      method: 'borrow',
-      args: ["DAI-A", amt, 0, 0],
-    })
+  // test('Borrow DAI from Compound', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("10", "ether")
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'borrow',
+  //     args: ["DAI-A", amt, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Payback DAI to Compound', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("10", "ether")
-    spells.add({
-      connector: 'compound',
-      method: 'payback',
-      args: ["DAI-A", amt, 0, 0],
-    })
+  // test('Payback DAI to Compound', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("10", "ether")
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'payback',
+  //     args: ["DAI-A", amt, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Withdraw ETH from Compound', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("0.9", "ether")
-    spells.add({
-      connector: 'compound',
-      method: 'withdraw',
-      args: ["ETH-A", amt, 0, 0],
-    })
+  // test('Withdraw ETH from Compound', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("0.9", "ether")
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'withdraw',
+  //     args: ["ETH-A", amt, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Swap 1 ETH to DAI', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'uniswap',
-      method: 'sell',
-      args: [daiAddr, ethAddr, amt, 0, 0, 0],
-    })
+  // test('Swap 1 ETH to DAI', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'uniswap',
+  //     method: 'sell',
+  //     args: [daiAddr, ethAddr, amt, 0, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    const amt2 = web3.utils.toWei("100", "ether")
-    spells.add({
-      connector: 'compound',
-      method: 'deposit',
-      args: ["ETH-A", amt, 0, 0],
-    })
-    spells.add({
-      connector: 'compound',
-      method: 'borrow',
-      args: ["DAI-A", amt2, 0, 0],
-    })
-    spells.add({
-      connector: 'compound',
-      method: 'payback',
-      args: ["DAI-A", dsa.maxValue, 0, 0],
-    })
-    spells.add({
-      connector: 'compound',
-      method: 'withdraw',
-      args: ["ETH-A", dsa.maxValue, 0, 0],
-    })
+  // test('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   const amt2 = web3.utils.toWei("100", "ether")
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'deposit',
+  //     args: ["ETH-A", amt, 0, 0],
+  //   })
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'borrow',
+  //     args: ["DAI-A", amt2, 0, 0],
+  //   })
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'payback',
+  //     args: ["DAI-A", dsa.maxValue, 0, 0],
+  //   })
+  //   spells.add({
+  //     connector: 'compound',
+  //     method: 'withdraw',
+  //     args: ["ETH-A", dsa.maxValue, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Object-oriented Spells', async () => {
-    const spells = dsa.Spell()
+  // test('Object-oriented Spells', async () => {
+  //   const spells = dsa.Spell()
 
-    spells.add({
-      connector: 'basic',
-      method: 'withdraw',
-      args: [daiAddr, dsa.maxValue, account, 0, 0],
-    })
+  //   spells.add({
+  //     connector: 'basic',
+  //     method: 'withdraw',
+  //     args: [daiAddr, dsa.maxValue, account, 0, 0],
+  //   })
 
-    const calldata = await dsa.encodeCastABI(spells)
-    expect(calldata).toBeDefined()
+  //   const calldata = await dsa.encodeCastABI(spells)
+  //   expect(calldata).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
-  })
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
+  // })
 
-  test('Swap 1 ETH to USDC #3', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'uniswap',
-      method: 'sell',
-      args: [usdcAddr, ethAddr, amt, 0, 0, 0],
-    })
+  // test('Swap 1 ETH to USDC #3', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'uniswap',
+  //     method: 'sell',
+  //     args: [usdcAddr, ethAddr, amt, 0, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Cast with fluid api', async () => {
-    const txHash = await dsa
-      .Spell()
-      .add({
-        connector: 'basic',
-        method: 'withdraw',
-        args: [usdcAddr, dsa.maxVal(), account, 0, 0],
-      })
-      .cast({ from: account })
+  // test('Cast with fluid api', async () => {
+  //   const txHash = await dsa
+  //     .Spell()
+  //     .add({
+  //       connector: 'basic',
+  //       method: 'withdraw',
+  //       args: [usdcAddr, dsa.maxVal(), account, 0, 0],
+  //     })
+  //     .cast({ from: account })
 
-    expect(txHash).toBeDefined()
-  })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('get transaction count', async () => {
-    const nonce = await dsa.transaction.getTransactionCount(account as string)
+  // test('get transaction count', async () => {
+  //   const nonce = await dsa.transaction.getTransactionCount(account as string)
 
-    expect(nonce).toBeDefined()
-  })
+  //   expect(nonce).toBeDefined()
+  // })
 
-  test('Swap 1 ETH to USDC #4', async () => {
-    const spells = dsa.Spell()
-    const amt = web3.utils.toWei("1", "ether")
-    spells.add({
-      connector: 'uniswap',
-      method: 'sell',
-      args: [usdcAddr, ethAddr, amt, 0, 0, 0],
-    })
+  // test('Swap 1 ETH to USDC #4', async () => {
+  //   const spells = dsa.Spell()
+  //   const amt = web3.utils.toWei("1", "ether")
+  //   spells.add({
+  //     connector: 'uniswap',
+  //     method: 'sell',
+  //     args: [usdcAddr, ethAddr, amt, 0, 0, 0],
+  //   })
 
-    const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+  //   const gas = await spells.estimateCastGas({ from: account })
+  //   expect(gas).toBeDefined()
 
-    const txHash = await spells.cast({ from: account })
-    expect(txHash).toBeDefined()
-  })
+  //   const txHash = await spells.cast({ from: account })
+  //   expect(txHash).toBeDefined()
+  // })
 
-  test('Transfer -1 USDC from DSA', async () => {
-    var data = {
-      token: usdcAddr,
-      amount: dsa.maxValue,
-      to: account,
-    }
-    await dsa.erc20.transfer(data)
-  })
+  // test('Transfer -1 USDC from DSA', async () => {
+  //   var data = {
+  //     token: usdcAddr,
+  //     amount: dsa.maxValue,
+  //     to: account,
+  //   }
+  //   await dsa.erc20.transfer(data)
+  // })
 
-  test('Transfer -1 USDC to DSA', async () => {
-    var data = {
-      token: usdcAddr,
-      amount: dsa.maxValue,
-      to: dsa.instance.address,
-    }
-    await dsa.erc20.transfer(data)
-  })
+  // test('Transfer -1 USDC to DSA', async () => {
+  //   var data = {
+  //     token: usdcAddr,
+  //     amount: dsa.maxValue,
+  //     to: dsa.instance.address,
+  //   }
+  //   await dsa.erc20.transfer(data)
+  // })
 
-  test('Give -1 DAI allowance', async () => {
-    var data = {
-      token: daiAddr,
-      amount: dsa.maxValue,
-      to: dsa.instance.address
-    }
-    await dsa.erc20.approve(data)
-  })
+  // test('Give -1 DAI allowance', async () => {
+  //   var data = {
+  //     token: daiAddr,
+  //     amount: dsa.maxValue,
+  //     to: dsa.instance.address
+  //   }
+  //   await dsa.erc20.approve(data)
+  // })
 })
 

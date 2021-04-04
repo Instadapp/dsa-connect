@@ -2,6 +2,7 @@ import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
 import DSA from '.'
 import { Abi } from './abi'
+import { Connector } from "./abi/connectors";
 import { Addresses } from './addresses'
 import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
@@ -18,7 +19,7 @@ export interface GetTransactionConfigParams {
 }
 
 export type Version = keyof typeof Abi.connectors.versions
-export type Connector = typeof Abi.connectors
+export { Connector } from './abi/connectors';
 
 export type EstimateGasParams = {
   abi: AbiItem
@@ -94,7 +95,8 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version) => {
+  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version=1) => {
+    // Abi.connectors.versions[version]
     const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
@@ -125,8 +127,8 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget = (connector: Connector) => {
-    const target = Addresses.connectors[connector]
+  private getTarget = (connector: Connector, version: Version = 1) => {
+    const target = Addresses.connectors.versions[version][connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 

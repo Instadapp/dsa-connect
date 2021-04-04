@@ -25,7 +25,7 @@ type DSAConfig =
 interface Instance {
   id: number
   address: string
-  version: number
+  version: 1 | 2
 }
 
 /**
@@ -133,7 +133,7 @@ export class DSA {
 
   public async getAcocuntIdDetails(instanceId: Instance['id']) {
     try {
-      const contract = new this.web3.eth.Contract(Abi.read.core, Addresses.read.core)
+      const contract = new this.web3.eth.Contract(Abi.read, Addresses.core.read)
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
 
       return { id, address, version }
@@ -172,7 +172,6 @@ export class DSA {
     const mergedParams = Object.assign(defaults, params) as BuildParams
 
     const to = Addresses.core.index
-
     const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
     const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
@@ -349,7 +348,8 @@ export class DSA {
 
   private async getData(params: { spells: Spells; origin?: string }) {
     const encodedSpells = this.internal.encodeSpells(params)
-    const contract = new this.web3.eth.Contract(Abi.core.account, this.instance.address)
+
+    const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
     const data = contract.methods
       .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
       .encodeABI()

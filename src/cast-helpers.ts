@@ -41,7 +41,8 @@ export class CastHelpers {
     }
 
     const value = params.value ?? '0'
-    const abi = this.dsa.internal.getInterface(Abi.core.account, 'cast')
+    
+    const abi = this.dsa.internal.getInterface(Abi.core.versions[this.dsa.instance.version].account, 'cast')
    
     if (!abi) throw new Error('Abi is not defined.')
 
@@ -70,7 +71,8 @@ export class CastHelpers {
         `Please configure the DSA instance by calling dsa.setInstance(dsaId). More details: https://docs.instadapp.io/setup`
       )
 
-    const contract = new this.dsa.config.web3.eth.Contract(Abi.core.account, mergedParams.to)
+    
+    const contract = new this.dsa.config.web3.eth.Contract(Abi.core.versions[this.dsa.instance.version].account, mergedParams.to)
 
     const { targets, spells } = this.dsa.internal.encodeSpells(mergedParams.spells)
     //TODO @thrilok: check about return type.
