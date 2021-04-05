@@ -328,7 +328,6 @@ export class DSA {
     if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
 
     const data = await this.getData(mergedParams)
-    console.log("imp data: ", data)
 
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
