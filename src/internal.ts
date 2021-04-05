@@ -8,6 +8,7 @@ import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
 import { hasKey } from './utils/typeHelper'
+import connectorV2Mapping from "./data/connectorsV2_M1_mapping";
 
 export interface GetTransactionConfigParams {
   from: NonNullable<TransactionConfig['from']>
@@ -121,7 +122,18 @@ export class Internal {
   encodeSpells = (params: Spells | { spells: Spells }) => {
     const spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
-    const targets = spells.data.map((spell) => this.getTarget(spell.connector))
+  
+    const targets = spells.data.map(
+      Number(this.dsa.instance.version) === 1 ?
+        (spell) => this.getTarget(spell.connector) :
+        (spell) => 
+        this.getTarget(
+          hasKey(connectorV2Mapping, spell.connector) ? 
+          connectorV2Mapping[spell.connector] as Connector : spell.connector
+        )
+    )
+
+    
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell))
 
     return { targets, spells: encodedMethods }
@@ -134,7 +146,9 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget = (connector: Connector, version: Version = 1) => {
+  private getTarget = (connector: Connector) => {
+    const version = this.dsa.instance.version;
+    console.log("connector: ",connector, "version: ", version)
     
     // type check that object has the required properties
     if (
@@ -147,7 +161,8 @@ export class Internal {
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 
-    return target
+    // return target address for version 1 and connector name for version 2
+    return version === 1 ? target : connector;
   }
 
   /**

@@ -4,7 +4,7 @@ import { Abi } from './abi'
 import { Accounts } from './accounts'
 import { CastHelpers } from './cast-helpers'
 import { Addresses } from './addresses'
-import { Internal } from './internal'
+import { Internal, Version } from './internal'
 import { Spells } from './spells'
 import { Transaction } from './transaction'
 import { wrapIfSpells } from './utils'
@@ -136,7 +136,7 @@ export class DSA {
       const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core.read)
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
 
-      return { id, address, version }
+      return { id, address, version: parseInt(version) as Version }
     } catch (err) {
       const count = await this.accounts.count()
       if (count < instanceId) {
@@ -328,6 +328,7 @@ export class DSA {
     if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
 
     const data = await this.getData(mergedParams)
+    console.log("imp data: ", data)
 
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
