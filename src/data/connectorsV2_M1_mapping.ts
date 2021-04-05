@@ -1,4 +1,4 @@
-{
+export default {
     "oneInch" :"1INCH-A",
     "aave" :"AAVE-V1-A",
     "aaveV2" :"AAVE-V2-A",
