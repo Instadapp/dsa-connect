@@ -148,7 +148,6 @@ export class Internal {
    */
   private getTarget = (connector: Connector) => {
     const version = this.dsa.instance.version;
-    console.log("connector: ",connector, "version: ", version)
     
     // type check that object has the required properties
     if (
