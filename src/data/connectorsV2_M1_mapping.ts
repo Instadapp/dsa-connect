@@ -1,7 +1,7 @@
 export default {
     "oneInch" :"1INCH-A",
     "aave" :"AAVE-V1-A",
-    "aaveV2" :"AAVE-V2-A",
+    "aave_v2" :"AAVE-V2-A",
     "authority" :"AUTHORITY-A",
     "basic" :"BASIC-A",
     "comp" :"COMP-A",
