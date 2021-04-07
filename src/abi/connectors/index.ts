@@ -2,7 +2,7 @@ export * as connectorsV1 from './v1'
 export * as connectorsV2_M1 from './v2'
 
 import * as connectorsV1 from './v1'
-import * as connectorsV2_M1 from './v2'
+import { connectorsV2_M1 } from './v2'
 
 export type Connector = keyof typeof connectorsV1 | keyof typeof connectorsV2_M1 
 
