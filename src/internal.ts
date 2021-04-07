@@ -97,8 +97,9 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version=1) => {
-    
+  encodeMethod = (params: { connector: Connector; method: string; args: string[]}) => {
+    const version = this.dsa.instance.version;
+
     // type check that object has the required properties
     if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
       throw new Error(`ConnectorInterface '${params.method}' not found`)
@@ -108,7 +109,6 @@ export class Internal {
     const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
-
     return this.dsa.web3.eth.abi.encodeFunctionCall(connectorInterface, params.args)
   }
 
@@ -120,20 +120,19 @@ export class Internal {
    * @param params.spells the spells instance
    */
   encodeSpells = (params: Spells | { spells: Spells }) => {
-    const spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
+    let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
-  
-    const targets = spells.data.map(
-      Number(this.dsa.instance.version) === 1 ?
-        (spell) => this.getTarget(spell.connector) :
-        (spell) => 
-        this.getTarget(
+    // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
+    spells.data = spells.data.map(spell => Number(this.dsa.instance.version) === 1 ?
+      {...spell, connector: spell.connector} :
+      hasKey(connectorV2Mapping, spell.connector) ? 
           hasKey(connectorV2Mapping, spell.connector) ? 
-          connectorV2Mapping[spell.connector] as Connector : spell.connector
-        )
+      hasKey(connectorV2Mapping, spell.connector) ? 
+        {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
+        {...spell, connector: spell.connector}
     )
-
     
+    const targets = spells.data.map((spell) => this.getTarget(spell.connector))
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell))
 
     return { targets, spells: encodedMethods }
