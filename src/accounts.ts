@@ -68,6 +68,7 @@ export class Accounts {
    * @param address The DSA address
    */
   private getAuthoritiesByAddress = async (address: string) => {
+    
     const contract = new this.dsa.web3.eth.Contract(Abi.core.read, Addresses.core.read)
 
     // TODO: Return type instead of any?
