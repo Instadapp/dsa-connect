@@ -123,6 +123,8 @@ export class DSA {
     this.web3.eth.getChainId().then(chainId => {
       if (!([1, 137]).includes(chainId)) {
         throw new Error(`chainId '${chainId}' is not supported.`)
+      } else {
+        this.instance.chainId = chainId as ChainId
       }
     });
   }
