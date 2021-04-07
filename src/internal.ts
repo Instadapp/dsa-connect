@@ -126,8 +126,6 @@ export class Internal {
     spells.data = spells.data.map(spell => Number(this.dsa.instance.version) === 1 ?
       {...spell, connector: spell.connector} :
       hasKey(connectorV2Mapping, spell.connector) ? 
-          hasKey(connectorV2Mapping, spell.connector) ? 
-      hasKey(connectorV2Mapping, spell.connector) ? 
         {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
         {...spell, connector: spell.connector}
     )
