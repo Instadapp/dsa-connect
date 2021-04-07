@@ -1,4 +1,4 @@
 export const connectorsV1 = {
-    basic: "0xe5398f279175962E56fE4c5E0b62dc7208EF36c6",
-    authority: "0xd1aff9f2acf800c876c409100d6f39aea93fc3d9", // same address as of "auth" to not break things with upgrade
+    basic: "0x6214f9c4F9700fc7a50B5f9aEEB819d647406Ac7",
+    authority: "0xD6daA927ad756a4022858dddcc4E26137b30DB4D", // same address as of "auth" to not break things with upgrade
 }
