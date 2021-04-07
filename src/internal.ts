@@ -148,15 +148,17 @@ export class Internal {
    */
   private getTarget = (connector: Connector) => {
     const version = this.dsa.instance.version;
-    
+    const chainId = this.dsa.instance.chainId;
+
     // type check that object has the required properties
     if (
-      !(hasKey(Addresses.connectors.versions, version) && hasKey(Addresses.connectors.versions[version], connector))
+      !(hasKey(Addresses.connectors.chains[chainId].versions, version) && 
+      hasKey(Addresses.connectors.chains[chainId].versions[version], connector))
     ) {
       return console.error(`${connector} is invalid connector.`)
     } 
 
-    const target = Addresses.connectors.versions[version][connector]
+    const target = Addresses.connectors.chains[chainId].versions[version][connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 
