@@ -130,7 +130,7 @@ export class DSA {
 
     if (!isFinite(id)) throw new Error(`Invaild id '${id}' for DSA.`)
 
-    const accountDetails = await this.getAcocuntIdDetails(id)
+    const accountDetails = await this.getAccountIdDetails(id)
 
     this.instance = accountDetails
 
@@ -145,7 +145,7 @@ export class DSA {
     this.instance.chainId = chainId;
   }
 
-  public async getAcocuntIdDetails(instanceId: Instance['id']) {
+  public async getAccountIdDetails(instanceId: Instance['id']) {
     try {
       const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core[this.instance.chainId].read)
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
