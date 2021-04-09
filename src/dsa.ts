@@ -193,7 +193,7 @@ export class DSA {
       from: defaultAddress,
       authority: defaultAddress,
       origin: Addresses.genesis,
-      version: 1,
+      version: this.instance.chainId != 1 ? 2 : 1,
     }
 
     const mergedParams = Object.assign(defaults, params) as BuildParams
@@ -229,7 +229,7 @@ export class DSA {
     const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
     const data = contract.methods.build(
       params.authority, 
-      params.version || 1, 
+      params.version || (this.instance.chainId != 1 ? 2 : 1),
       params.origin || Addresses.genesis,
     ).encodeABI()
    
