@@ -12,7 +12,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
     - name: Publish if version has been updated
-      uses: ishanjain28/npm-publish-action@0.0.3
+      uses: ishanjain28/npm-publish-action@0.0.4
       with:
         workspace: "."
         publish_command: "npm"
