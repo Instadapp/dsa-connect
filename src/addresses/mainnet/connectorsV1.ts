@@ -36,5 +36,6 @@ export const connectorsV1 = {
     refinance: "0x0D16C7134ce24D1e22D64bC7bc0B4862Faa9AdB9",
     aave_v2_import: "0xCFC2a047887A4026A7E866f7ec1404f30D6A6F31",
     aave_v1_import: "0x4a9e4827e884cB3e49406e3A1A678F75910B1BB9",
-    polygon_bridge: "0x5d1C4e6c91Ee834c6E1949DB2D0A6309061c358A"
+    polygon_bridge: "0x5d1C4e6c91Ee834c6E1949DB2D0A6309061c358A",
+    aave_polygon_migrate: "0x3cD0727d7bbBb6A5EADBDC72349370a7eB599301"
 }
