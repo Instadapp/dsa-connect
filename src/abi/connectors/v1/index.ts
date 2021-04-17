@@ -1,6 +1,7 @@
 export * from './oneInch'
 export * from './aave'
 export * from './aave_migrate'
+export * from './aave_polygon_migrate'
 export * from './aave_v1_import'
 export * from './aave_v2_import'
 export * from './aave_v2'
