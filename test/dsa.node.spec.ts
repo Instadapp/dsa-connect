@@ -12,7 +12,7 @@ let dsa: DSA
 let account: string
 let gasPrice: string = "20000000000"
 
-const accountPrivateKey: string = "0x794e97eb26df968ac351941a1de7c2bf3ad192663f6bff06cefe8989b86b39d3"
+const accountPrivateKey: string = "0xdc68bafd6461c12ab15e8ac77dad9a74960bf308a7522a2bda798396500c028e"
 
 const ethAddr = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
@@ -34,8 +34,9 @@ describe('Basic', function () {
   
     expect(accountOne).toBeDefined()
     expect(accountTwo).toBeDefined()
-  
-    account = accountOne
+    const dsa_account = await dsa.internal.getAddress()
+    console.log(dsa_account, accountOne, accountTwo)
+    account = accountTwo
   })
 })
 
