@@ -3,8 +3,8 @@ import { TransactionConfig } from 'web3-core'
 import { Abi } from './abi'
 import { Accounts } from './accounts'
 import { CastHelpers } from './cast-helpers'
-import { Addresses } from './data/addresses'
-import { Internal } from './internal'
+import { Addresses } from './addresses'
+import { Internal, Version } from './internal'
 import { Spells } from './spells'
 import { Transaction } from './transaction'
 import { wrapIfSpells } from './utils'
@@ -22,10 +22,15 @@ type DSAConfig =
       mode?: 'browser'
     }
 
+
+// ChainId 1 = mainnet, ChainId 137 = matic
+type ChainId = 1 | 137;
+
 interface Instance {
   id: number
   address: string
-  version: number
+  version: Version 
+  chainId: ChainId
 }
 
 /**
@@ -83,6 +88,7 @@ export class DSA {
     id: 0,
     address: Addresses.genesis,
     version: 1,
+    chainId: 1
   }
 
   // value of uint(-1).
@@ -114,6 +120,13 @@ export class DSA {
    */
   constructor(config: Web3 | DSAConfig) {
     this.config = getDSAConfig(config)
+    this.web3.eth.getChainId().then(chainId => {
+      if (!([1, 137]).includes(chainId)) {
+        throw new Error(`chainId '${chainId}' is not supported.`)
+      } else {
+        this.instance.chainId = chainId as ChainId
+      }
+    });
   }
 
   /**
@@ -124,19 +137,33 @@ export class DSA {
 
     if (!isFinite(id)) throw new Error(`Invaild id '${id}' for DSA.`)
 
-    const accountDetails = await this.getAcocuntIdDetails(id)
+    const accountDetails = await this.getAccountIdDetails(id)
 
     this.instance = accountDetails
 
     return this.instance
   }
 
-  public async getAcocuntIdDetails(instanceId: Instance['id']) {
-    try {
-      const contract = new this.web3.eth.Contract(Abi.read.core, Addresses.read.core)
-      const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
+  /**
+   * Refreshes the chain Id and sets it on the instance 
+   */
+  public async refreshChainId() {
+    const chainId = await this.web3.eth.getChainId() as ChainId;
+    this.instance.chainId = chainId;
+  }
 
-      return { id, address, version }
+  public async getAccountIdDetails(instanceId: Instance['id']) {
+    try {
+      const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core[this.instance.chainId].read)
+      const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
+      const chainId = await this.web3.eth.getChainId();
+
+      return { 
+        id, 
+        address, 
+        version: parseInt(version) as Version, 
+        chainId: chainId as ChainId
+      }
     } catch (err) {
       const count = await this.accounts.count()
       if (count < instanceId) {
@@ -166,14 +193,13 @@ export class DSA {
       from: defaultAddress,
       authority: defaultAddress,
       origin: Addresses.genesis,
-      version: 1,
+      version: this.instance.chainId != 1 ? 2 : 1,
     }
 
     const mergedParams = Object.assign(defaults, params) as BuildParams
 
-    const to = Addresses.core.index
-
-    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
+    const to = Addresses.core[this.instance.chainId].index
+    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
     const data = contract.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
     if (!mergedParams.from) throw new Error("Parameter 'from' is not defined.")
@@ -199,11 +225,11 @@ export class DSA {
     if (!params.authority) throw new Error("Parameter 'authority' is not defined.")
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
 
-    const to = Addresses.core.index
-    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
+    const to = Addresses.core[this.instance.chainId].index
+    const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
     const data = contract.methods.build(
       params.authority, 
-      params.version || 1, 
+      params.version || (this.instance.chainId != 1 ? 2 : 1),
       params.origin || Addresses.genesis,
     ).encodeABI()
    
@@ -244,9 +270,9 @@ export class DSA {
 
     if (!mergedParams.from) throw new Error(`Parameter 'from' is not defined.`)
 
-    const to = Addresses.core.index
+    const to = Addresses.core[this.instance.chainId].index
 
-    const contracts = new this.web3.eth.Contract(Abi.core.index, Addresses.core.index)
+    const contracts = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
     const data = contracts.methods.build(mergedParams.authority, mergedParams.version, mergedParams.origin).encodeABI()
 
     const transactionConfig = await this.internal.getTransactionConfig({
@@ -340,7 +366,8 @@ export class DSA {
       data: data,
     })
 
-    console.log('Casting spells to DSA.')
+    console.log(`DSA config:\n version: ${this.instance.version}\n chainId: ${this.instance.chainId}`)
+    console.log(`Casting spells to DSA(#${this.instance.id})...`)
 
     const transaction = await this.transaction.send(transactionConfig)
 
@@ -349,7 +376,8 @@ export class DSA {
 
   private async getData(params: { spells: Spells; origin?: string }) {
     const encodedSpells = this.internal.encodeSpells(params)
-    const contract = new this.web3.eth.Contract(Abi.core.account, this.instance.address)
+
+    const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
     const data = contract.methods
       .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
       .encodeABI()

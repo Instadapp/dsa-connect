@@ -2,10 +2,13 @@ import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
 import DSA from '.'
 import { Abi } from './abi'
-import { Addresses } from './data/addresses'
+import { Connector } from "./abi/connectors";
+import { Addresses } from './addresses'
 import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
+import { hasKey } from './utils/typeHelper'
+import connectorV2Mapping from "./data/connectorsV2_M1_mapping";
 
 export interface GetTransactionConfigParams {
   from: NonNullable<TransactionConfig['from']>
@@ -17,7 +20,8 @@ export interface GetTransactionConfigParams {
   nonce?: TransactionConfig['nonce']
 }
 
-export type Connector = keyof typeof Abi.connectors
+export type Version = keyof typeof Abi.connectors.versions
+export { Connector } from './abi/connectors';
 
 export type EstimateGasParams = {
   abi: AbiItem
@@ -93,11 +97,18 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[] }) => {
-    const connectorInterface = this.getInterface(Abi.connectors[params.connector], params.method)
+  encodeMethod = (params: { connector: Connector; method: string; args: string[]}) => {
+    const version = this.dsa.instance.version;
+
+    // type check that object has the required properties
+    if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
+      throw new Error(`ConnectorInterface '${params.method}' not found`)
+    }
+
+    // Abi.connectors.versions[version]
+    const connectorInterface = this.getInterface(Abi.connectors.versions[version][params.connector], params.method)
 
     if (!connectorInterface) throw new Error(`ConnectorInterface '${params.method}' not found`)
-
     return this.dsa.web3.eth.abi.encodeFunctionCall(connectorInterface, params.args)
   }
 
@@ -109,8 +120,16 @@ export class Internal {
    * @param params.spells the spells instance
    */
   encodeSpells = (params: Spells | { spells: Spells }) => {
-    const spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
+    let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
+    // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
+    spells.data = spells.data.map(spell => Number(this.dsa.instance.version) === 1 ?
+      {...spell, connector: spell.connector} :
+      hasKey(connectorV2Mapping, spell.connector) ? 
+        {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
+        {...spell, connector: spell.connector}
+    )
+    
     const targets = spells.data.map((spell) => this.getTarget(spell.connector))
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell))
 
@@ -125,11 +144,23 @@ export class Internal {
    * Returns the input interface required for cast().
    */
   private getTarget = (connector: Connector) => {
-    const target = Addresses.connectors[connector]
+    const version = this.dsa.instance.version;
+    const chainId = this.dsa.instance.chainId;
+
+    // type check that object has the required properties
+    if (
+      !(hasKey(Addresses.connectors.chains[chainId].versions, version) && 
+      hasKey(Addresses.connectors.chains[chainId].versions[version], connector))
+    ) {
+      return console.error(`${connector} is invalid connector.`)
+    } 
+
+    const target = Addresses.connectors.chains[chainId].versions[version][connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 
-    return target
+    // return target address for version 1 and connector name for version 2
+    return version === 1 ? target : connector;
   }
 
   /**

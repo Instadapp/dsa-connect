@@ -3,7 +3,7 @@
 echo "Running tests for dsa-connect"
 
 echo "Starting ganache-cli"
-npx ganache-cli --fork $ETH_NODE_URL --unlock $PUBLIC_ADDRESS &
+npm run ganache:fork &
 
 sleep 5
 

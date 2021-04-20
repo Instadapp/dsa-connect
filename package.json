@@ -1,6 +1,6 @@
 {
   "name": "dsa-connect",
-  "version": "0.1.9",
+  "version": "0.2.0-beta.12",
   "description": "DSA connect",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -22,7 +22,7 @@
     "trypublish": "npm publish || true",
     "postversion": "git push && git push --tags && npm publish && npm run open-releases",
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
-    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS%",
+    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS% --chainId 1 -e 1000000",
     "hardhat:fork": "dotenv -- cross-var npx hardhat node --fork %ETH_NODE_URL%"
   },
   "bugs": "https://github.com/InstaDApp/dsa-connect/issues",
@@ -40,7 +40,6 @@
     "defi",
     "dapps"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.9.0",

@@ -228,4 +228,4 @@ This will send the transaction to blockchain in node implementation (or ask user
 
 ## Connectors
 
-You can see the list of connectors [here](src/data/addresses.ts#L-12) & [here](https://github.com/InstaDApp/dsa-connectors-new/blob/main/README.md)
+You can see the list of connectors [here](src/addresses) & [here](https://github.com/InstaDApp/dsa-connectors-new/blob/main/README.md)

@@ -1,5 +1,5 @@
 import { Abi } from './abi'
-import { Addresses } from './data/addresses'
+import { Addresses } from './addresses'
 import { DSA } from './dsa'
 
 export class Accounts {
@@ -9,7 +9,7 @@ export class Accounts {
    * Global number of DSAs.
    */
   count = async () => {
-    const contract = new this.dsa.web3.eth.Contract(Abi.core.list, Addresses.core.list)
+    const contract = new this.dsa.web3.eth.Contract(Abi.core.list, Addresses.core[this.dsa.instance.chainId].list)
     const count = await contract.methods.accounts().call({ from: Addresses.genesis })
 
     return count
@@ -22,8 +22,7 @@ export class Accounts {
    */
   getAccounts = async (authority: string) => {
     const address = await this.getAuthorityAddress(authority)
-
-    const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
+    const contract = new this.dsa.web3.eth.Contract(Abi.core.read, Addresses.core[this.dsa.instance.chainId].read)
 
     // TODO: Check if type is correct here (string/number?)
     const authorityDetails: {
@@ -55,7 +54,7 @@ export class Accounts {
    * @param id The DSA ID.
    */
   getAuthoritiesById = async (id: number) => {
-    const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
+    const contract = new this.dsa.web3.eth.Contract(Abi.core.read, Addresses.core[this.dsa.instance.chainId].read)
 
     // TODO: Return type instead of any?
     const authorities: any = await contract.methods.getIDAuthorities(id).call({ from: Addresses.genesis })
@@ -69,7 +68,8 @@ export class Accounts {
    * @param address The DSA address
    */
   private getAuthoritiesByAddress = async (address: string) => {
-    const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
+    
+    const contract = new this.dsa.web3.eth.Contract(Abi.core.read, Addresses.core[this.dsa.instance.chainId].read)
 
     // TODO: Return type instead of any?
     const authorities: any = await contract.methods.getAccountAuthorities(address).call({ from: Addresses.genesis })
@@ -83,7 +83,7 @@ export class Accounts {
    * @param address The DSA address.
    */
   private getAuthoritiesTypes = async (address: string) => {
-    const contract = new this.dsa.web3.eth.Contract(Abi.read.core, Addresses.read.core)
+    const contract = new this.dsa.web3.eth.Contract(Abi.core.read, Addresses.core[this.dsa.instance.chainId].read)
 
     // TODO: Return type instead of any?
     const authorities: any = contract.methods.getAccountAuthoritiesTypes(address).call({ from: Addresses.genesis })

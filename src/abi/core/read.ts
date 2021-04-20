@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const core: AbiItem[] = [
+export const read: AbiItem[] = [
   {
     inputs: [
       { internalType: 'address', name: '_index', type: 'address' },
