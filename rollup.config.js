@@ -1,5 +1,6 @@
 import {terser} from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
+import pluginCommonjs from "@rollup/plugin-commonjs";
 import pkg from './package.json'
 
 const banner = `
@@ -21,6 +22,9 @@ const plugins = [
   typescript({
     typescript: require('typescript'),
   }),
+  pluginCommonjs({
+    extensions: [".js", ".ts"]
+  })
 ]
 
 if(!process.env.ROLLUP_WATCH)
@@ -43,8 +47,9 @@ export default [
     output: [
       {
         file: pkg.main,
-        format: 'es',
+        format: 'cjs',
         banner,
+        exports: "default"
       },
       {
         file: pkg.module,
