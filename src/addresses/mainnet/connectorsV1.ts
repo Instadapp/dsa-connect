@@ -18,7 +18,7 @@ export const connectorsV1 = {
     migrate: "0xcb5cbc3f397e0024fac67cf6dd465e02ca91c215",
     compoundImport: "0xdc9f393d5f4c12f1c1049035c20d58bd624510e3",
     uniswap: "0x3f4b307d501417CA0F928958a27191AA6657D38d",
-    comp: "0xB4a04F1C194bEed64FCE27843B5b3079339cdaD4",
+    comp: "0xFB8a92E017E3416c0F63c28C53195337eBDeba2E",
     staking: "0xe5b66b785bd6b6708BB814482180C136Ddbcd687",
     chi: "0xb86437e80709015d05354c35e54b7c8b11a58687",
     curve_claim: "0xF5e14d35706971B6AaD7A67B1A8E9a1EF7870Be9",
