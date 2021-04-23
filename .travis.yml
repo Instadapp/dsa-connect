@@ -10,7 +10,7 @@ script:
 - npm run build
 # Set the env variables required by ganache-cli or tests here before start .travis-cli-run-test.sh script
 # Otherwise, These variables will be unavailable and the build will fail
-- env PUBLIC_ADDRESS=$PUBLIC_ADDRESS ETH_NODE_URL=$ETH_NODE_URL sh -c ./.travis-ci-run-test.sh
+- env PUBLIC_ADDRESS=$PUBLIC_ADDRESS ETH_NODE_URL=$ETH_NODE_URL sh -c ./run-test.sh
 env:
   matrix:
   - PUBLIC_ADDRESS=0xA35f3FEFEcb5160327d1B6A210b60D1e1d7968e3

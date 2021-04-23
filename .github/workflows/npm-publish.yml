@@ -13,7 +13,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: npm install
       - uses: JS-DevTools/npm-publish@v1
+        env:
+          PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
+          ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}

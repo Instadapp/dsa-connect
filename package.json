@@ -12,7 +12,7 @@
   "types": "./dist/index.d.ts",
   "private": false,
   "scripts": {
-    "prepublishOnly": "npm ci && npm test",
+    "prepublishOnly": "npm ci && ./run-test.sh && npm run build",
     "dev": "concurrently -c yellow,blue -n RLP,SRV \"npm:build:watch\" \"npm:serve\"",
     "build": "rollup -c",
     "build:watch": "rollup -cw",
