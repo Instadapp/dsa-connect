@@ -416,7 +416,7 @@ function getDSAConfig(config: Web3 | DSAConfig): DSAConfig {
     }
   } else if (config.mode === 'simulation') {
     if (!config.publicKey) throw new Error(`Property 'publicKey' is not defined in config.`)
-    if (config.web3.utils.isAddress(config.publicKey.toLowerCase())) throw new Error(`Property 'publicKey' is not a address.`)
+    if (!config.web3.utils.isAddress(config.publicKey.toLowerCase())) throw new Error(`Property 'publicKey' is not a address.`)
 
     const publicKey = config.web3.utils.toChecksumAddress(config.publicKey.toLowerCase())
     return {
