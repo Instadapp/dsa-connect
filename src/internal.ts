@@ -167,6 +167,10 @@ export class Internal {
    * Returns the input interface required for cast().
    */
   getAddress = async () => {
+    if (this.dsa.config.mode == "node")
+      return this.dsa.web3.eth.accounts.privateKeyToAccount(this.dsa.config.privateKey)
+        .address;
+
     // otherwise, browser
     const addresses = await this.dsa.web3.eth.getAccounts()
 
