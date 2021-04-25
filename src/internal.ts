@@ -170,6 +170,8 @@ export class Internal {
     if (this.dsa.config.mode == "node")
       return this.dsa.web3.eth.accounts.privateKeyToAccount(this.dsa.config.privateKey)
         .address;
+    else if (this.dsa.config.mode == "simulation") 
+      return this.dsa.config.publicKey
 
     // otherwise, browser
     const addresses = await this.dsa.web3.eth.getAccounts()
