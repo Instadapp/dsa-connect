@@ -1,5 +1,6 @@
 import {ONEINCH_A} from './1INCH-A'
 import {AAVE_CLAIM_A} from './AAVE-CLAIM-A'
+import {AAVE_STAKE_A} from './AAVE-STAKE-A'
 import {AAVE_V1} from './AAVE-V1-A'
 import {AAVE_V2} from './AAVE-V2-A'
 import {AUTHORITY_A} from './AUTHORITY-A'
@@ -22,5 +23,6 @@ export const connectorsV2_M1 =  {
     "COMPOUND-A": COMPOUND_A,
     "MAKERDAO-A": MAKERDAO_A,
     "UNISWAP-A": UNISWAP_A,
-    "POLYGON-BRIDGE-A": POLYGON_BRIDGE_A
+    "POLYGON-BRIDGE-A": POLYGON_BRIDGE_A,
+    "AAVE-STAKE-A": AAVE_STAKE_A
 }
