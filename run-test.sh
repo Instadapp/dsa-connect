@@ -9,3 +9,4 @@ sleep 5
 
 echo "Running tests"
 npm run test
+npm run test:dist
