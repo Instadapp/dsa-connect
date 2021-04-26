@@ -94,7 +94,7 @@ const questions = [
         const match = /export/.exec(content)!;
         let beforeExport = content.slice(0, match.index).trim();
         let afterExport = content.slice(match.index, content.length).split(`{\n`);
-        beforeExport += `import {${answers.variable_name}} from './${answers.name}'`;
+        beforeExport += `\nimport {${answers.variable_name}} from './${answers.name}'`;
         
         const final = `${beforeExport}\n${afterExport[0]}{\n    "${answers.name}": ${answers.variable_name},\n${afterExport[1]}`;
 
