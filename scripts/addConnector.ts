@@ -91,12 +91,12 @@ const questions = [
         console.log(`🚀 ${abiDir}/index.ts [updated]`)
     } else {
         const content = await readFile(`${abiDir}/index.ts`);
-        const match = /\n\nexport/.exec(content)!;
-        let beforeExport = content.slice(0, match.index);
+        const match = /export/.exec(content)!;
+        let beforeExport = content.slice(0, match.index).trim();
         let afterExport = content.slice(match.index, content.length).split(`{\n`);
         beforeExport += `import {${answers.variable_name}} from './${answers.name}'`;
         
-        const final = `${beforeExport}\n\n${afterExport[0]}{\n    "${answers.name}": ${answers.variable_name},\n${afterExport[1]}`;
+        const final = `${beforeExport}\n${afterExport[0]}{\n    "${answers.name}": ${answers.variable_name},\n${afterExport[1]}`;
 
         // save the file
         await writeFile(`${abiDir}/index.ts`, final);
