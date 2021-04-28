@@ -11,4 +11,7 @@ export default {
     "polygon_bridge" :"POLYGON-BRIDGE-A",
     "aave_claim": "AAVE-CLAIM-A",
     "aave_stake": "AAVE-STAKE-A",
+    "aave_v1_import": "AAVE-V1-IMPORT-A",
+    "aave_v2_import": "AAVE-V1-IMPORT-A",
+    "compoundImport_v2": "COMPOUND-IMPORT-A",
 }

@@ -10,9 +10,15 @@ import {COMPOUND_A} from './COMPOUND-A'
 import {MAKERDAO_A} from './MAKERDAO-A'
 import {POLYGON_BRIDGE_A} from './POLYGON-BRIDGE-A'
 import {UNISWAP_A} from './UNISWAP-A'
+import {AAVE_V1_IMPORT_A} from './AAVE-V1-IMPORT-A'
+import {AAVE_V2_IMPORT_A} from './AAVE-V2-IMPORT-A'
+import {COMPOUND_IMPORT_A} from './COMPOUND-IMPORT-A'
 
 
 export const connectorsV2_M1 =  {
+    "COMPOUND-IMPORT-A": COMPOUND_IMPORT_A,
+    "AAVE-V2-IMPORT-A": AAVE_V2_IMPORT_A,
+    "AAVE-V1-IMPORT-A": AAVE_V1_IMPORT_A,
     "1INCH-A": ONEINCH_A,
     "AAVE-CLAIM-A": AAVE_CLAIM_A,
     "AAVE-V1-A": AAVE_V1,
