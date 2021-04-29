@@ -14,4 +14,5 @@ export default {
     "aave_v1_import": "AAVE-V1-IMPORT-A",
     "aave_v2_import": "AAVE-V1-IMPORT-A",
     "compoundImport_v2": "COMPOUND-IMPORT-A",
+    "instapool_v2": "INSTAPOOL-A",
 }
