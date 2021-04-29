@@ -13,9 +13,9 @@ import {UNISWAP_A} from './UNISWAP-A'
 import {AAVE_V1_IMPORT_A} from './AAVE-V1-IMPORT-A'
 import {AAVE_V2_IMPORT_A} from './AAVE-V2-IMPORT-A'
 import {COMPOUND_IMPORT_A} from './COMPOUND-IMPORT-A'
-
-
+import {INSTAPOOL_A} from './INSTAPOOL-A'
 export const connectorsV2_M1 =  {
+    "INSTAPOOL-A": INSTAPOOL_A,
     "COMPOUND-IMPORT-A": COMPOUND_IMPORT_A,
     "AAVE-V2-IMPORT-A": AAVE_V2_IMPORT_A,
     "AAVE-V1-IMPORT-A": AAVE_V1_IMPORT_A,
