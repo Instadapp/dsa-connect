@@ -22,7 +22,7 @@
     "trypublish": "npm publish || true",
     "postversion": "git push && git push --tags && npm publish && npm run open-releases",
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
-    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS% --chainId 1 -e 1000000 -m 'west cricket tenant memory offer burger crumble snow solid mushroom wish solid'",
+    "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS% --chainId 1 -e 10000000 -m 'west cricket tenant memory offer burger crumble snow solid mushroom wish solid'",
     "hardhat:fork": "dotenv -- cross-var npx hardhat node --fork %ETH_NODE_URL%",
     "add:connector": "NODE_PATH=. TS_NODE_PROJECT=scripts/tsconfig.scripts.json dotenv -- cross-var ts-node scripts/addConnector.ts"
   },
