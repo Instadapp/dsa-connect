@@ -11,8 +11,9 @@ export class Instapool_v2 {
    * @param spells The spells instance
    */
   encodeFlashCastData(spells: Spells) {
-    let encodeSpellsData = this.dsa.internal.encodeSpells(spells);
-    let argTypes = ["address[]", "bytes[]"];
+    const encodeSpellsData = this.dsa.internal.encodeSpells(spells);
+    const targetType = Number(this.dsa.instance.version) === 1 ? "address[]" : "string[]"
+    let argTypes = [targetType, "bytes[]"];
     return this.dsa.web3.eth.abi.encodeParameters(argTypes, [encodeSpellsData.targets, encodeSpellsData.spells]);
   }
 }
