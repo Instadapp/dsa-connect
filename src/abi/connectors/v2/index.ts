@@ -14,6 +14,8 @@ import {AAVE_V1_IMPORT_A} from './AAVE-V1-IMPORT-A'
 import {AAVE_V2_IMPORT_A} from './AAVE-V2-IMPORT-A'
 import {COMPOUND_IMPORT_A} from './COMPOUND-IMPORT-A'
 import {INSTAPOOL_A} from './INSTAPOOL-A'
+import {PARASWAP_A} from './PARASWAP-A'
+
 export const connectorsV2_M1 =  {
     "INSTAPOOL-A": INSTAPOOL_A,
     "COMPOUND-IMPORT-A": COMPOUND_IMPORT_A,
@@ -30,5 +32,6 @@ export const connectorsV2_M1 =  {
     "MAKERDAO-A": MAKERDAO_A,
     "UNISWAP-A": UNISWAP_A,
     "POLYGON-BRIDGE-A": POLYGON_BRIDGE_A,
-    "AAVE-STAKE-A": AAVE_STAKE_A
+    "AAVE-STAKE-A": AAVE_STAKE_A,
+    "PARASWAP-A": PARASWAP_A
 }
