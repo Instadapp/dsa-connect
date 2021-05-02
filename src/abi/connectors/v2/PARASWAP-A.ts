@@ -1,0 +1,3 @@
+import { AbiItem } from 'web3-utils'
+
+export const PARASWAP_A: AbiItem[] =[{"type":"function","stateMutability":"view","outputs":[{"type":"string","name":"","internalType":"string"}],"name":"name","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[{"type":"string","name":"_eventName","internalType":"string"},{"type":"bytes","name":"_eventParam","internalType":"bytes"}],"name":"swap","inputs":[{"type":"address","name":"buyAddr","internalType":"address"},{"type":"address","name":"sellAddr","internalType":"address"},{"type":"uint256","name":"sellAmt","internalType":"uint256"},{"type":"uint256","name":"unitAmt","internalType":"uint256"},{"type":"bytes","name":"callData","internalType":"bytes"},{"type":"uint256","name":"setId","internalType":"uint256"}]}]
