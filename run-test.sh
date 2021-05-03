@@ -2,7 +2,7 @@
 
 echo "Running tests for dsa-connect"
 
-echo "Starting ganache-cli"
+echo "Starting hardhat node"
 npm run hardhat:fork &
 
 sleep 10
