@@ -4,6 +4,7 @@ import Web3 from 'web3'
 // import "@nomiclabs/hardhat-ethers"
 // import '@nomiclabs/hardhat-web3'
 import DSA from '../src'
+const { expect } = require("chai");
 
 config()
 
@@ -18,22 +19,19 @@ const ethAddr = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 const daiAddr = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
 
-beforeAll(() => {
-  web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-  dsa = new DSA({web3, mode: "node", privateKey: accountPrivateKey})
-  
-})
+web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+dsa = new DSA({ web3, mode: "node", privateKey: accountPrivateKey })
 
 describe('Basic', function () {
-  test('initalization of DSA', () => {
-    expect(dsa).toBeDefined()
+  it('initalization of DSA', () => {
+    expect(dsa).to.exist
   })
-  
-  test('get web3 accounts', async () => {
+
+  it('get web3 accounts', async () => {
     const [accountOne, accountTwo] = await web3.eth.getAccounts()
-  
-    expect(accountOne).toBeDefined()
-    expect(accountTwo).toBeDefined()
+
+    expect(accountOne).to.exist
+    expect(accountTwo).to.exist
     const dsa_account = await dsa.internal.getAddress()
     console.log(dsa_account, accountOne, accountTwo)
     account = accountTwo
@@ -42,25 +40,25 @@ describe('Basic', function () {
 
 describe('DSA v1', function () {
 
-  test('create new dsa v1', async () => {
+  it('create new dsa v1', async () => {
     let dsaAccounts = await dsa.accounts.getAccounts(account)
     const accountCount = dsaAccounts.length
 
     console.log(dsaAccounts)
-    
-    await dsa.build({gasPrice})
+
+    await dsa.build({ gasPrice })
 
     dsaAccounts = await dsa.accounts.getAccounts(account)
-    expect(dsaAccounts.length).toEqual(accountCount + 1)
+    expect(dsaAccounts.length).to.eq(accountCount + 1)
 
     const createdDSA = dsaAccounts[dsaAccounts.length - 1]
 
     await dsa.setAccount(createdDSA.id)
-    expect(dsa.instance.id).toEqual(createdDSA.id)
-    expect(dsa.instance.version).toEqual(1)
+    expect(dsa.instance.id).to.eq(createdDSA.id)
+    expect(dsa.instance.version).to.eq(1)
   })
 
-  test('Cast with flashloan', async () => {
+  it('Cast with flashloan', async () => {
     const usdc_address = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 
     const spells = dsa.Spell()
@@ -76,7 +74,7 @@ describe('DSA v1', function () {
       method: 'flashBorrow',
       args: [usdc_address, "10000000", 0],
     })
-    
+
     spells.add({
       connector: "instapool_v2",
       method: "flashPayback",
@@ -84,13 +82,13 @@ describe('DSA v1', function () {
     })
 
     const calldata = await dsa.encodeCastABI(spells)
-    expect(calldata).toBeDefined()
+    expect(calldata).to.exist
 
     const txHash = await dsa.cast({ spells: spells, from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Cast with flashloan with multiple', async () => {
+  it('Cast with flashloan with multiple', async () => {
     const spells = dsa.Spell()
 
     spells.add({
@@ -104,7 +102,7 @@ describe('DSA v1', function () {
       method: 'flashBorrow',
       args: [usdcAddr, "10000000", 0],
     })
-    
+
 
     spells.add({
       connector: 'compound',
@@ -137,13 +135,13 @@ describe('DSA v1', function () {
     })
 
     const calldata = await dsa.encodeCastABI(spells)
-    expect(calldata).toBeDefined()
+    expect(calldata).to.exist
 
     // const txHash = await dsa.cast({ spells: spells, from: process.env.PUBLIC_ADDRESS }) // Throws error due to connector
 
   })
 
-  test('Deposit 10 ETH to DSA', async () => {
+  it('Deposit 10 ETH to DSA', async () => {
     const amt = web3.utils.toWei("10", "ether")
     const data = {
       token: ethAddr,
@@ -155,10 +153,10 @@ describe('DSA v1', function () {
     await dsa.erc20.transfer(data)
 
     const balance = await web3.eth.getBalance(dsa.instance.address)
-    expect(balance).toEqual(amt.toString())
+    expect(balance).to.eq(amt.toString())
   })
 
-  test('Swap 1 ETH to USDC', async () => {
+  it('Swap 1 ETH to USDC', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -168,13 +166,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Withdraw USDC from DSA', async () => {
+  it('Withdraw USDC from DSA', async () => {
     const spells = dsa.Spell()
 
     spells.add({
@@ -184,13 +182,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Give USDC allowance', async () => {
+  it('Give USDC allowance', async () => {
     var data = {
       token: usdcAddr,
       amount: "1000000000000",
@@ -208,13 +206,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Swap 1 ETH to USDC #2', async () => {
+  it('Swap 1 ETH to USDC #2', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -224,13 +222,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Deposit ETH to Compound', async () => {
+  it('Deposit ETH to Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -240,13 +238,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Borrow DAI from Compound', async () => {
+  it('Borrow DAI from Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("10", "ether")
     spells.add({
@@ -256,13 +254,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Payback DAI to Compound', async () => {
+  it('Payback DAI to Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("10", "ether")
     spells.add({
@@ -272,13 +270,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Withdraw ETH from Compound', async () => {
+  it('Withdraw ETH from Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("0.9", "ether")
     spells.add({
@@ -288,13 +286,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Swap 1 ETH to DAI', async () => {
+  it('Swap 1 ETH to DAI', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -304,13 +302,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
+  it('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     const amt2 = web3.utils.toWei("100", "ether")
@@ -336,13 +334,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Object-oriented Spells', async () => {
+  it('Object-oriented Spells', async () => {
     const spells = dsa.Spell()
 
     spells.add({
@@ -352,16 +350,16 @@ describe('DSA v1', function () {
     })
 
     const calldata = await dsa.encodeCastABI(spells)
-    expect(calldata).toBeDefined()
+    expect(calldata).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
   })
 
-  test('Swap 1 ETH to USDC #3', async () => {
+  it('Swap 1 ETH to USDC #3', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -371,13 +369,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Cast with fluid api', async () => {
+  it('Cast with fluid api', async () => {
     const txHash = await dsa
       .Spell()
       .add({
@@ -387,16 +385,16 @@ describe('DSA v1', function () {
       })
       .cast({ from: account, gasPrice })
 
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('get transaction count', async () => {
+  it('get transaction count', async () => {
     const nonce = await dsa.transaction.getTransactionCount(account as string)
 
-    expect(nonce).toBeDefined()
+    expect(nonce).to.exist
   })
 
-  test('Swap 1 ETH to USDC #4', async () => {
+  it('Swap 1 ETH to USDC #4', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -406,13 +404,13 @@ describe('DSA v1', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Transfer -1 USDC from DSA', async () => {
+  it('Transfer -1 USDC from DSA', async () => {
     var data = {
       token: usdcAddr,
       amount: dsa.maxValue,
@@ -422,7 +420,7 @@ describe('DSA v1', function () {
     await dsa.erc20.transfer(data)
   })
 
-  test('Transfer -1 USDC to DSA', async () => {
+  it('Transfer -1 USDC to DSA', async () => {
     var data = {
       token: usdcAddr,
       amount: dsa.maxValue,
@@ -432,7 +430,7 @@ describe('DSA v1', function () {
     await dsa.erc20.transfer(data)
   })
 
-  test('Give -1 DAI allowance', async () => {
+  it('Give -1 DAI allowance', async () => {
     var data = {
       token: daiAddr,
       amount: dsa.maxValue,
@@ -444,25 +442,25 @@ describe('DSA v1', function () {
 })
 
 describe('DSA v2', function () {
-  test('create new dsa v2', async () => {
+  it('create new dsa v2', async () => {
     let dsaAccounts = await dsa.accounts.getAccounts(account)
     const accountCount = dsaAccounts.length
 
     console.log(dsaAccounts)
-    
-    await dsa.build({version: 2, gasPrice})
+
+    await dsa.build({ version: 2, gasPrice })
 
     dsaAccounts = await dsa.accounts.getAccounts(account)
-    expect(dsaAccounts.length).toEqual(accountCount + 1)
+    expect(dsaAccounts.length).to.eq(accountCount + 1)
 
     const createdDSA = dsaAccounts[dsaAccounts.length - 1]
 
     await dsa.setAccount(createdDSA.id)
-    expect(dsa.instance.id).toEqual(createdDSA.id)
-    expect(dsa.instance.version).toEqual(2)
+    expect(dsa.instance.id).to.eq(createdDSA.id)
+    expect(dsa.instance.version).to.eq(2)
   })
 
-  test('Deposit 10 ETH to DSA', async () => {
+  it('Deposit 10 ETH to DSA', async () => {
     const amt = web3.utils.toWei("10", "ether")
     const data = {
       token: ethAddr,
@@ -474,10 +472,10 @@ describe('DSA v2', function () {
     await dsa.erc20.transfer(data)
 
     const balance = await web3.eth.getBalance(dsa.instance.address)
-    expect(balance).toEqual(amt.toString())
+    expect(balance).to.eq(amt.toString())
   })
 
-  test('Swap 1 ETH to USDC', async () => {
+  it('Swap 1 ETH to USDC', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -487,13 +485,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Swap 1 ETH to USDC (Spell: "1INCH-A")', async () => {
+  it('Swap 1 ETH to USDC (Spell: "1INCH-A")', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -506,17 +504,17 @@ describe('DSA v2', function () {
     try {
       await spells.estimateCastGas({ from: account })
     } catch (e) {
-        expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account, gasPrice })
     } catch (e) {
-      expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
   })
 
-  test('Swap 1 ETH to USDC (Spell: "1INCH-A")', async () => {
+  it('Swap 1 ETH to USDC (Spell: "1INCH-A")', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -528,18 +526,18 @@ describe('DSA v2', function () {
     try {
       await spells.estimateCastGas({ from: account })
     } catch (e) {
-        expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account, gasPrice })
     } catch (e) {
       console.log("EADD", e.message)
-        expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
   })
 
-  test('Withdraw USDC from DSA', async () => {
+  it('Withdraw USDC from DSA', async () => {
     const spells = dsa.Spell()
 
     spells.add({
@@ -549,13 +547,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Give USDC allowance', async () => {
+  it('Give USDC allowance', async () => {
     var data = {
       token: usdcAddr,
       amount: "1000000000000",
@@ -573,13 +571,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Swap 1 ETH to USDC #2', async () => {
+  it('Swap 1 ETH to USDC #2', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -589,13 +587,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Deposit ETH to Compound', async () => {
+  it('Deposit ETH to Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -605,13 +603,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Borrow DAI from Compound', async () => {
+  it('Borrow DAI from Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("10", "ether")
     spells.add({
@@ -621,13 +619,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Payback DAI to Compound', async () => {
+  it('Payback DAI to Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("10", "ether")
     spells.add({
@@ -637,13 +635,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Withdraw ETH from Compound', async () => {
+  it('Withdraw ETH from Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("0.9", "ether")
     spells.add({
@@ -653,13 +651,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Swap 1 ETH to DAI', async () => {
+  it('Swap 1 ETH to DAI', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -669,13 +667,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
+  it('Deposit ETH, Borrow DAI, Payback DAI, Withdraw ETH', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     const amt2 = web3.utils.toWei("100", "ether")
@@ -701,13 +699,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Object-oriented Spells', async () => {
+  it('Object-oriented Spells', async () => {
     const spells = dsa.Spell()
 
     spells.add({
@@ -717,16 +715,16 @@ describe('DSA v2', function () {
     })
 
     const calldata = await dsa.encodeCastABI(spells)
-    expect(calldata).toBeDefined()
+    expect(calldata).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
   })
 
-  test('Swap 1 ETH to USDC #3', async () => {
+  it('Swap 1 ETH to USDC #3', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -736,13 +734,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Cast with fluid api', async () => {
+  it('Cast with fluid api', async () => {
     const txHash = await dsa
       .Spell()
       .add({
@@ -752,16 +750,16 @@ describe('DSA v2', function () {
       })
       .cast({ from: account, gasPrice })
 
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('get transaction count', async () => {
+  it('get transaction count', async () => {
     const nonce = await dsa.transaction.getTransactionCount(account as string)
 
-    expect(nonce).toBeDefined()
+    expect(nonce).to.exist
   })
 
-  test('Swap 1 ETH to USDC #4', async () => {
+  it('Swap 1 ETH to USDC #4', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
     spells.add({
@@ -771,13 +769,13 @@ describe('DSA v2', function () {
     })
 
     const gas = await spells.estimateCastGas({ from: account })
-    expect(gas).toBeDefined()
+    expect(gas).to.exist
 
     const txHash = await spells.cast({ from: account, gasPrice })
-    expect(txHash).toBeDefined()
+    expect(txHash).to.exist
   })
 
-  test('Transfer -1 USDC from DSA', async () => {
+  it('Transfer -1 USDC from DSA', async () => {
     var data = {
       token: usdcAddr,
       amount: dsa.maxValue,
@@ -787,7 +785,7 @@ describe('DSA v2', function () {
     await dsa.erc20.transfer(data)
   })
 
-  test('Transfer -1 USDC to DSA', async () => {
+  it('Transfer -1 USDC to DSA', async () => {
     var data = {
       token: usdcAddr,
       amount: dsa.maxValue,
@@ -797,7 +795,7 @@ describe('DSA v2', function () {
     await dsa.erc20.transfer(data)
   })
 
-  test('Give -1 DAI allowance', async () => {
+  it('Give -1 DAI allowance', async () => {
     var data = {
       token: daiAddr,
       amount: dsa.maxValue,
