@@ -3,9 +3,9 @@
 echo "Running tests for dsa-connect"
 
 echo "Starting ganache-cli"
-npm run ganache:fork &
+npm run hardhat:fork &
 
-sleep 5
+sleep 10
 
 echo "Running tests"
 npm run test
