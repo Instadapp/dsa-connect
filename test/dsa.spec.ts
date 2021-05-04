@@ -2,6 +2,7 @@ import { config } from 'dotenv'
 import Web3 from 'web3'
 // import "@nomiclabs/hardhat-ethers"
 // import '@nomiclabs/hardhat-web3'
+import hre from 'hardhat'
 import DSA from '../src'
 const { expect } = require("chai");
 
@@ -15,7 +16,8 @@ const ethAddr = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 const daiAddr = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
 
-web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+// web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+web3 = (hre as any).web3
 dsa = new DSA(web3)
 
 describe('Basic', function () {
@@ -493,13 +495,13 @@ describe('DSA v2', function () {
     try {
       await spells.estimateCastGas({ from: account })
     } catch (e) {
-      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account })
     } catch (e) {
-      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
   })
 
@@ -515,14 +517,14 @@ describe('DSA v2', function () {
     try {
       await spells.estimateCastGas({ from: account })
     } catch (e) {
-      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account })
     } catch (e) {
       console.log("EADD", e.message)
-      expect(e.message).to.eq("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
+      expect(e.message).to.eq("VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
   })
 

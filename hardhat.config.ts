@@ -38,6 +38,7 @@ module.exports = {
       forking: {
         url: process.env.ETH_NODE_URL,
       },
+      blockNumber: 12367201,
       blockGasLimit: 12000000,
     },
   },
