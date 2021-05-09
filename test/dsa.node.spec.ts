@@ -1,5 +1,4 @@
 import { config } from 'dotenv'
-import Web3 from 'web3'
 import hre from 'hardhat'
 // import "@nomiclabs/hardhat-ethers"
 // import '@nomiclabs/hardhat-web3'
@@ -8,7 +7,7 @@ const { expect } = require("chai");
 
 config()
 
-let web3: Web3
+
 let dsa: DSA
 let account: string
 let gasPrice: string = "20000000000"
@@ -19,8 +18,7 @@ const ethAddr = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 const usdcAddr = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
 const daiAddr = '0x6B175474E89094C44Da98b954EedeAC495271d0F'
 
-// web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-web3 = (hre as any).web3
+const { web3 } = hre;
 dsa = new DSA({ web3, mode: "node", privateKey: accountPrivateKey })
 
 describe('Basic', function () {
