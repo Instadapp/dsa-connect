@@ -583,6 +583,36 @@ describe('DSA v2', function () {
     expect(txHash).toBeDefined()
   })
 
+  test('Cast with flashloan', async () => {
+    const usdc_address = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'
+
+    const spells = dsa.Spell()
+
+    spells.add({
+      connector: 'basic',
+      method: 'withdraw',
+      args: [usdc_address, 0, account, 0, 0],
+    })
+
+    spells.add({
+      connector: 'instapool_v2',
+      method: 'flashBorrow',
+      args: [usdc_address, "10000000", 0],
+    })
+    
+    spells.add({
+      connector: "instapool_v2",
+      method: "flashPayback",
+      args: [usdc_address, "10000000", 0, 0]
+    })
+
+    const calldata = await dsa.encodeCastABI(spells)
+    expect(calldata).toBeDefined()
+
+    const txHash = await dsa.cast({ spells: spells, from: account })
+    expect(txHash).toBeDefined()
+  })
+
   test('Deposit ETH to Compound', async () => {
     const spells = dsa.Spell()
     const amt = web3.utils.toWei("1", "ether")
