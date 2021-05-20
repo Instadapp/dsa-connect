@@ -97,8 +97,7 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[]}) => {
-    const version = this.dsa.instance.version;
+  encodeMethod = (params: { connector: Connector; method: string; args: string[]}, version: Version = this.dsa.instance.version) => {
 
     // type check that object has the required properties
     if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
@@ -119,19 +118,19 @@ export class Internal {
    * OR
    * @param params.spells the spells instance
    */
-  encodeSpells = (params: Spells | { spells: Spells }) => {
+  encodeSpells = (params: Spells | { spells: Spells }, version: Version = this.dsa.instance.version) => {
     let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
     // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
-    spells.data = spells.data.map(spell => Number(this.dsa.instance.version) === 1 ?
+    spells.data = spells.data.map(spell => Number(version) === 1 ?
       {...spell, connector: spell.connector} :
       hasKey(connectorV2Mapping, spell.connector) ? 
         {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
         {...spell, connector: spell.connector}
     )
     
-    const targets = spells.data.map((spell) => this.getTarget(spell.connector))
-    const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell))
+    const targets = spells.data.map((spell) => this.getTarget(spell.connector, version))
+    const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell, version))
 
     return { targets, spells: encodedMethods }
   }
@@ -143,8 +142,7 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget = (connector: Connector) => {
-    const version = this.dsa.instance.version;
+  private getTarget = (connector: Connector, version: Version = this.dsa.instance.version) => {
     const chainId = this.dsa.instance.chainId;
 
     // type check that object has the required properties
