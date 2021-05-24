@@ -27,15 +27,18 @@ export const connectorsV1 = {
     dydx_flash: "0xE5a7bdd3336245142Ad3a153838ecFB490A5e044",
     swerve: "0x8b302dc8a97a63eb468715b8c30f7003b86e9f01",
     curve_three: "0x1568a9D336A7aC051DCC4bdcc4A0B09299DE5Daf",
-    instapool_v2: "0xeb4bf86589f808f90eec8e964dbf16bd4d284905",
+    instapool_v2: "0x59AD22EC3d7614Ac2f96bF71Dd398886476099Ab",
     compoundImport_v2: "0x0AD8CC89bfB3b265a6De52438a26a44C6d66E74E",
     math: "0xa007f98ab41b0b4520701cb2ac75e802c460db4c",
     aave_v2: "0x53Edf7Fc8bB9c249694EA0a2174043553b34Db27",
     aave_migrate: "0xd3914a73367F8015070f073D5C69602F3a48B80D",
     fee: "0x5fa9455cE54BD5723443C6D3D614693E3429B57F",
-    refinance: "0x0D16C7134ce24D1e22D64bC7bc0B4862Faa9AdB9",
+    refinance: "0xD45dFA34cEeAB567208041331F5ed9916C23b1E8",
     aave_v2_import: "0xCFC2a047887A4026A7E866f7ec1404f30D6A6F31",
     aave_v1_import: "0x4a9e4827e884cB3e49406e3A1A678F75910B1BB9",
     polygon_bridge: "0x5d1C4e6c91Ee834c6E1949DB2D0A6309061c358A",
-    aave_polygon_migrate: "0x9686CE6Ad5C3f7b212CAF401b928c4bB3422E7Ba"
+    aave_polygon_migrate: "0x9686CE6Ad5C3f7b212CAF401b928c4bB3422E7Ba",
+    aave_claim: "0x8f1e38c53af7bD2b2bE01b9580911b7Cca504F1b",
+    aave_stake: "0xa96b2F679fB935Ba279eA9395402ca4696D64D78",
+    dsa_migrate_v1_to_v2: "0x4aec8c5b1CF3498Bef061E13d8e7F646Feeb7029"
 }

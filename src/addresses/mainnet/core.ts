@@ -14,8 +14,8 @@ export const core = {
         accountProxy: '0xFE02a32Cbe0CB9ad9A945576A5bb53A3C123A3A3',
         accountDefault: '0x28aDcDC02Ca7B3EDf11924102726066AA0fA7010',
         implementations: "0xCBA828153d3a85b30B5b912e1f2daCac5816aE9D",
-        account: '0x77a34e599dA1e37215445c5740D57b63E5Bb98FD', // M1
-        connectors: '0xFE2390DAD597594439f218190fC2De40f9Cf1179', // M1
+        account: '0x8a3462A50e1a9Fe8c9e7d9023CAcbD9a98D90021', // M1
+        connectors: '0x97b0B3A8bDeFE8cB9563a3c610019Ad10DB8aD11', // M1
       }
     }
 }

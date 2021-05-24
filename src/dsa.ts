@@ -19,6 +19,11 @@ type DSAConfig =
     }
   | {
       web3: Web3
+      mode: 'simulation'
+      publicKey: string
+    }
+  | {
+      web3: Web3
       mode?: 'browser'
     }
 
@@ -408,6 +413,16 @@ function getDSAConfig(config: Web3 | DSAConfig): DSAConfig {
       web3: config.web3,
       mode: config.mode,
       privateKey,
+    }
+  } else if (config.mode === 'simulation') {
+    if (!config.publicKey) throw new Error(`Property 'publicKey' is not defined in config.`)
+    if (!config.web3.utils.isAddress(config.publicKey.toLowerCase())) throw new Error(`Property 'publicKey' is not a address.`)
+
+    const publicKey = config.web3.utils.toChecksumAddress(config.publicKey.toLowerCase())
+    return {
+      web3: config.web3,
+      mode: 'simulation',
+      publicKey: publicKey
     }
   } else if (!config.mode || config.mode === 'browser') {
     return {
