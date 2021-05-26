@@ -123,13 +123,18 @@ export class DSA {
   /**
    * @param config A `web3` instance or a DSAConfig
    */
-  constructor(config: Web3 | DSAConfig) {
+  constructor(config: Web3 | DSAConfig, chainId: ChainId = 1) {
+    this.instance.chainId = chainId;
     this.config = getDSAConfig(config)
-    this.web3.eth.getChainId().then(chainId => {
+    this.config.web3.eth.getChainId().then(_chainId => {
+      if (this.instance.chainId != _chainId){
+        throw new Error(`chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`)
+      } 
+      
       if (!([1, 137]).includes(chainId)) {
-        throw new Error(`chainId '${chainId}' is not supported.`)
+        throw new Error(`chainId '${_chainId}' is not supported.`)
       } else {
-        this.instance.chainId = chainId as ChainId
+        this.instance.chainId = _chainId as ChainId
       }
     });
   }
