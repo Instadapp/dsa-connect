@@ -27,7 +27,7 @@ export const connectorsV1 = {
     dydx_flash: "0xE5a7bdd3336245142Ad3a153838ecFB490A5e044",
     swerve: "0x8b302dc8a97a63eb468715b8c30f7003b86e9f01",
     curve_three: "0x1568a9D336A7aC051DCC4bdcc4A0B09299DE5Daf",
-    instapool_v2: "0x59AD22EC3d7614Ac2f96bF71Dd398886476099Ab",
+    instapool_v2: "0x2a26228e607ffD2aB2bD3aA49cBae0eDC6469Bf8",
     compoundImport_v2: "0x0AD8CC89bfB3b265a6De52438a26a44C6d66E74E",
     math: "0xa007f98ab41b0b4520701cb2ac75e802c460db4c",
     aave_v2: "0x53Edf7Fc8bB9c249694EA0a2174043553b34Db27",
