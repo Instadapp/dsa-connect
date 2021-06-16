@@ -43,7 +43,7 @@ describe('DSA v1', function () {
 
     console.log(dsaAccounts)
     
-    await dsa.build({})
+    await dsa.build({version: 1})
 
     dsaAccounts = await dsa.accounts.getAccounts(account)
     expect(dsaAccounts.length).toEqual(accountCount + 1)

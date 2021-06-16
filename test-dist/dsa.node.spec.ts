@@ -48,7 +48,7 @@ describe('DSA v1', function () {
 
     console.log(dsaAccounts)
     
-    await dsa.build({gasPrice})
+    await dsa.build({version: 1, gasPrice})
 
     dsaAccounts = await dsa.accounts.getAccounts(account)
     expect(dsaAccounts.length).toEqual(accountCount + 1)
