@@ -40,5 +40,5 @@ export const connectorsV1 = {
     aave_polygon_migrate: "0x9686CE6Ad5C3f7b212CAF401b928c4bB3422E7Ba",
     aave_claim: "0x8f1e38c53af7bD2b2bE01b9580911b7Cca504F1b",
     aave_stake: "0xa96b2F679fB935Ba279eA9395402ca4696D64D78",
-    dsa_migrate_v1_to_v2: "0x4aec8c5b1CF3498Bef061E13d8e7F646Feeb7029"
+    dsa_migrate_v1_to_v2: "0x4F774c123D012a6CfD5918B7f4CE7D3386Ca727d"
 }
