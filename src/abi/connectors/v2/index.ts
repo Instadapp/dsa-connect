@@ -23,7 +23,9 @@ import {MAKERDAO_CLAIM_A} from './MAKERDAO-CLAIM-A'
 import {G_UNISWAP_A} from './G-UNISWAP-A'
 import {STAKE_ERC20_A} from './STAKE-ERC20-A'
 import {INST_STAKING_A} from './INST-STAKING-A'
+import {ONEINCH_B} from './1INCH-B'
 export const connectorsV2_M1 =  {
+    "1INCH-B": ONEINCH_B,
     "INST-STAKING-A": INST_STAKING_A,
     "STAKE-ERC20-A": STAKE_ERC20_A,
     "G-UNISWAP-A": G_UNISWAP_A,
