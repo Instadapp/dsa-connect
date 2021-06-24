@@ -26,7 +26,9 @@ import {INST_STAKING_A} from './INST-STAKING-A'
 import {ONEINCH_B} from './1INCH-B'
 import {WETH_A} from './WETH-A'
 import {INST_A} from './INST-A'
+import {REFINANCE_A} from './REFINANCE-A'
 export const connectorsV2_M1 =  {
+    "REFINANCE-A": REFINANCE_A,
     "INST-A": INST_A,
     "WETH-A": WETH_A,
     "1INCH-B": ONEINCH_B,

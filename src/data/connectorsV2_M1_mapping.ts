@@ -15,4 +15,5 @@ export default {
     "aave_v2_import": "AAVE-V2-IMPORT-A",
     "compoundImport_v2": "COMPOUND-IMPORT-A",
     "instapool_v2": "INSTAPOOL-A",
+    "refinance": "REFINANCE-A",
 }
