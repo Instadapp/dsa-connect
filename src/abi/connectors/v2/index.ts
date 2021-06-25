@@ -28,7 +28,9 @@ import {WETH_A} from './WETH-A'
 import {INST_A} from './INST-A'
 import {REFINANCE_A} from './REFINANCE-A'
 import {INST_LM_A} from './INST-LM-A'
+import {UNISWAP_V2_A} from './UNISWAP-V2-A'
 export const connectorsV2_M1 =  {
+    "UNISWAP-V2-A": UNISWAP_V2_A,
     "INST-LM-A": INST_LM_A,
     "REFINANCE-A": REFINANCE_A,
     "INST-A": INST_A,
