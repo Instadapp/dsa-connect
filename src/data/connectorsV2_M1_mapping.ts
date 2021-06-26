@@ -7,7 +7,7 @@ export default {
     "comp" :"COMP-A",
     "compound" :"COMPOUND-A",
     "maker" :"MAKERDAO-A",
-    "uniswap" :"UNISWAP-A",
+    "uniswap" :"UNISWAP-V2-A",
     "polygon_bridge" :"POLYGON-BRIDGE-A",
     "aave_claim": "AAVE-CLAIM-A",
     "aave_stake": "AAVE-STAKE-A",
