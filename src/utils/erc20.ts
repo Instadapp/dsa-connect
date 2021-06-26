@@ -85,9 +85,11 @@ type Erc20InputParams = {
           .catch((err: any) => {
             throw new Error(`Error while getting token balance: ${err}`);
           });
+      } else {
+        params.amount = this.dsa.web3.utils.toBN(params.amount).toString()
       }
       const data: string = contract.methods
-        .transfer(toAddr, Math.bigNumInString(Number(params.amount)))
+        .transfer(toAddr, params.amount)
         .encodeABI();
 
       txObj = await this.dsa.internal.getTransactionConfig({
