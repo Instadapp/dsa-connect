@@ -6,7 +6,7 @@ import { CastHelpers } from './cast-helpers'
 import { Addresses } from './addresses'
 import { Internal, Version } from './internal'
 import { Spells } from './spells'
-import { Transaction } from './transaction'
+import { Transaction, TransactionCallbacks } from './transaction'
 import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
 import { Erc20 } from './utils/erc20'
@@ -51,7 +51,7 @@ interface Instance {
 type CastParams = {
   spells: Spells
   origin?: string
-} & Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
+} & TransactionCallbacks & Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
 
 /**
  * @param {address} _d.authority (optional)
@@ -66,7 +66,7 @@ type BuildParams = {
   authority?: string
   origin?: string
   version?: Instance['version']
-} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
+} & TransactionCallbacks & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
 
 export class DSA {
   readonly config: DSAConfig
@@ -223,7 +223,10 @@ export class DSA {
       nonce: mergedParams.nonce,
     })
 
-    const transaction = await this.transaction.send(transactionConfig)
+    const transaction = await this.transaction.send(transactionConfig, {
+      onReceipt: mergedParams.onReceipt,
+      onConfirmation: mergedParams.onConfirmation,
+    })
 
     return transaction
   }
@@ -379,7 +382,10 @@ export class DSA {
     console.log(`DSA config:\n version: ${this.instance.version}\n chainId: ${this.instance.chainId}`)
     console.log(`Casting spells to DSA(#${this.instance.id})...`)
 
-    const transaction = await this.transaction.send(transactionConfig)
+    const transaction = await this.transaction.send(transactionConfig, {
+      onReceipt : mergedParams.onReceipt,
+      onConfirmation : mergedParams.onConfirmation,
+    })
 
     return transaction
   }
