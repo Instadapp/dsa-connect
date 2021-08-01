@@ -1,4 +1,5 @@
 import { config } from 'dotenv'
+import waitForExpect from 'wait-for-expect'
 import Web3 from 'web3'
 // import hre from 'hardhat'
 // import "@nomiclabs/hardhat-ethers"
@@ -820,6 +821,31 @@ describe('DSA v2', function () {
       to: dsa.instance.address
     }
     await dsa.erc20.approve(data)
+  })
+})
+
+describe('Transaction', function(){
+ 
+  test('Should notify on receipt', async () => {
+    const spells = dsa.Spell()
+    const amt = web3.utils.toWei("1", "ether")
+    spells.add({
+      connector: 'uniswap',
+      method: 'sell',
+      args: [usdcAddr, ethAddr, amt, 0, 0, 0],
+    })
+
+    const mockOnReceiptCallback = jest.fn();
+
+    const txHash = await spells.cast({ from: account, onReceipt: mockOnReceiptCallback})
+    
+    expect(txHash).toBeDefined()
+
+   await waitForExpect(() => {
+      expect(mockOnReceiptCallback).toBeCalled()
+      // Check that the receipt was received
+      expect(mockOnReceiptCallback.mock.calls[0][0]).toBeDefined()
+    })
   })
 })
 
