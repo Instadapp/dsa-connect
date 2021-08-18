@@ -1,6 +1,11 @@
-import { TransactionConfig } from 'web3-core'
+import { TransactionConfig, TransactionReceipt } from 'web3-core'
 import { Addresses } from './addresses'
 import { DSA } from './dsa'
+
+export interface TransactionCallbacks {
+  onReceipt?: (receipt: TransactionReceipt) => void
+  onConfirmation?: (confirmationNumber: number, receipt: TransactionReceipt, latestBlockHash?: string) => void
+}
 
 export class Transaction {
   constructor(private dsa: DSA) {}
@@ -8,7 +13,7 @@ export class Transaction {
   /**
    * Send transaction and get transaction hash.
    */
-  send = async (transactionConfig: TransactionConfig): Promise<string> => {
+  send = async (transactionConfig: TransactionConfig, transactionCallbacks: TransactionCallbacks = {}): Promise<string> => {
     return new Promise(async (resolve, reject)=>{
       if (transactionConfig.to == Addresses.genesis)
         throw Error(
@@ -37,6 +42,12 @@ export class Transaction {
           resolve(txHash);
           return txHash;
         })
+        .on("receipt", (receipt) => {
+          transactionCallbacks.onReceipt && transactionCallbacks.onReceipt(receipt);
+         })
+        .on("confirmation", (confirmationNumber, receipt, latestBlockHash) => {
+          transactionCallbacks.onConfirmation && transactionCallbacks.onConfirmation(confirmationNumber, receipt, latestBlockHash);
+         })
         .on("error", (error) => {
           reject(error);
           return;
