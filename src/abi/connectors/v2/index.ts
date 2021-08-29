@@ -31,7 +31,15 @@ import {INST_LM_A} from './INST-LM-A'
 import {UNISWAP_V2_A} from './UNISWAP-V2-A'
 import {LIQUITY_A} from './LIQUITY-A'
 import {REFLEXER_A} from './REFLEXER-A'
+import {UNISWAP_V3_A} from './UNISWAP-V3-A'
+import {B_COMPOUND_A} from './B-COMPOUND-A'
+import {B_MAKERDAO_A} from './B-MAKERDAO-A'
+import {B_LIQUITY_A} from './B-LIQUITY-A'
 export const connectorsV2_M1 =  {
+    "B-LIQUITY-A": B_LIQUITY_A,
+    "B-MAKERDAO-A": B_MAKERDAO_A,
+    "B-COMPOUND-A": B_COMPOUND_A,
+    "UNISWAP-V3-A": UNISWAP_V3_A,
     "REFLEXER-A": REFLEXER_A,
     "LIQUITY-A": LIQUITY_A,
     "UNISWAP-V2-A": UNISWAP_V2_A,
