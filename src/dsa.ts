@@ -11,7 +11,7 @@ import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
 import { Erc20 } from './utils/erc20'
 
-type DSAConfig =
+export type DSAConfig =
   | {
       web3: Web3
       mode: 'node'
@@ -29,9 +29,9 @@ type DSAConfig =
 
 
 // ChainId 1 = mainnet, ChainId 137 = matic
-type ChainId = 1 | 137;
+export type ChainId = 1 | 137;
 
-interface Instance {
+export interface Instance {
   id: number
   address: string
   version: Version 
