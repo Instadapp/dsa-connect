@@ -67,6 +67,8 @@ export class Internal {
       if (!params.gasPrice) throw new Error("Parameter 'gasPrice' must be defined when using mode 'node'.")
 
       transactionConfig.nonce = params.nonce ?? (await this.getNonce(from))
+    } else if (!!params.nonce) {
+      transactionConfig.nonce = params.nonce
     }
 
     return transactionConfig
