@@ -35,7 +35,9 @@ import {UNISWAP_V3_A} from './UNISWAP-V3-A'
 import {B_COMPOUND_A} from './B-COMPOUND-A'
 import {B_MAKERDAO_A} from './B-MAKERDAO-A'
 import {B_LIQUITY_A} from './B-LIQUITY-A'
+import {BASIC_B} from './BASIC-B'
 export const connectorsV2_M1 =  {
+    "BASIC-B": BASIC_B,
     "B-LIQUITY-A": B_LIQUITY_A,
     "B-MAKERDAO-A": B_MAKERDAO_A,
     "B-COMPOUND-A": B_COMPOUND_A,
