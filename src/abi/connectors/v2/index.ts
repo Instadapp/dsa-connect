@@ -38,7 +38,9 @@ import {B_LIQUITY_A} from './B-LIQUITY-A'
 import {BASIC_B} from './BASIC-B'
 import {BASIC_C} from './BASIC-C'
 import {UNISWAP_V3_STAKE_A} from './UNISWAP-V3-STAKE-A'
+import {YEARN_VAULT_A} from './YEARN-VAULT-A'
 export const connectorsV2_M1 =  {
+    "YEARN-VAULT-A": YEARN_VAULT_A,
     "UNISWAP-V3-STAKE-A": UNISWAP_V3_STAKE_A,
     "BASIC-C": BASIC_C,
     "BASIC-B": BASIC_B,
