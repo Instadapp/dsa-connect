@@ -1,6 +1,10 @@
 {
   "name": "dsa-connect",
+<<<<<<< HEAD
   "version": "0.4.9",
+=======
+  "version": "0.4.7-beta.0",
+>>>>>>> abccfb0 (Bumped version to 0.4.7-beta.0)
   "description": "DSA connect",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
