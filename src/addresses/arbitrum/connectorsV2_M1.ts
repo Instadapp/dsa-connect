@@ -1,4 +1,4 @@
-export const connectorsV1 = {
+export const connectorsV2_M1 = {
     "AUTHORITY-A": "0x6ce3e607c808b4f4c26b7f6adaeb619e49cabb25",
     "BASIC-A": "0x9926955e0dd681dc303370c52f4ad0a4dd061687",
     "BASIC-B": "0xa9b99766e6c676cf1975c0d3166f96c0848ff5ad",
