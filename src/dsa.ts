@@ -28,14 +28,13 @@ export type DSAConfig =
       mode?: 'browser'
     }
 
-
-// ChainId 1 = mainnet, ChainId 137 = matic
-export type ChainId = 1 | 137;
+// ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum
+export type ChainId = 1 | 137 | 42161
 
 export interface Instance {
   id: number
   address: string
-  version: Version 
+  version: Version
   chainId: ChainId
 }
 
@@ -52,7 +51,8 @@ export interface Instance {
 type CastParams = {
   spells: Spells
   origin?: string
-} & TransactionCallbacks & Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
+} & TransactionCallbacks &
+  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
 
 /**
  * @param {address} _d.authority (optional)
@@ -67,7 +67,8 @@ type BuildParams = {
   authority?: string
   origin?: string
   version?: Instance['version']
-} & TransactionCallbacks & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
+} & TransactionCallbacks &
+  Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
 
 export class DSA {
   readonly config: DSAConfig
@@ -94,12 +95,12 @@ export class DSA {
     id: 0,
     address: Addresses.genesis,
     version: 1,
-    chainId: 1
+    chainId: 1,
   }
 
   // value of uint(-1).
   public readonly maxValue = '115792089237316195423570985008687907853269984665640564039457584007913129639935'
-  public readonly maxVal = () =>'115792089237316195423570985008687907853269984665640564039457584007913129639935'
+  public readonly maxVal = () => '115792089237316195423570985008687907853269984665640564039457584007913129639935'
 
   // Extensions
   readonly erc20 = new Erc20(this)
@@ -126,19 +127,21 @@ export class DSA {
    * @param config A `web3` instance or a DSAConfig
    */
   constructor(config: Web3 | DSAConfig, chainId: ChainId = 1) {
-    this.instance.chainId = chainId;
+    this.instance.chainId = chainId
     this.config = getDSAConfig(config)
-    this.config.web3.eth.getChainId().then(_chainId => {
-      if (this.instance.chainId != _chainId){
-        throw new Error(`chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`)
-      } 
-      
-      if (!([1, 137]).includes(chainId)) {
+    this.config.web3.eth.getChainId().then((_chainId) => {
+      if (this.instance.chainId != _chainId) {
+        throw new Error(
+          `chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`
+        )
+      }
+
+      if (![1, 137, 42161].includes(chainId)) {
         throw new Error(`chainId '${_chainId}' is not supported.`)
       } else {
         this.instance.chainId = _chainId as ChainId
       }
-    });
+    })
   }
 
   /**
@@ -157,24 +160,24 @@ export class DSA {
   }
 
   /**
-   * Refreshes the chain Id and sets it on the instance 
+   * Refreshes the chain Id and sets it on the instance
    */
   public async refreshChainId() {
-    const chainId = await this.web3.eth.getChainId() as ChainId;
-    this.instance.chainId = chainId;
+    const chainId = (await this.web3.eth.getChainId()) as ChainId
+    this.instance.chainId = chainId
   }
 
   public async getAccountIdDetails(instanceId: Instance['id']) {
     try {
       const contract = new this.web3.eth.Contract(Abi.core.read, Addresses.core[this.instance.chainId].read)
       const [id, address, version] = await contract.methods.getAccountIdDetails(instanceId).call()
-      const chainId = await this.web3.eth.getChainId();
+      const chainId = await this.web3.eth.getChainId()
 
-      return { 
-        id, 
-        address, 
-        version: parseInt(version) as Version, 
-        chainId: chainId as ChainId
+      return {
+        id,
+        address,
+        version: parseInt(version) as Version,
+        chainId: chainId as ChainId,
       }
     } catch (err) {
       const count = await this.accounts.count()
@@ -242,12 +245,10 @@ export class DSA {
 
     const to = Addresses.core[this.instance.chainId].index
     const contract = new this.web3.eth.Contract(Abi.core.index, Addresses.core[this.instance.chainId].index)
-    const data = contract.methods.build(
-      params.authority, 
-      params.version || 2,
-      params.origin || Addresses.genesis,
-    ).encodeABI()
-   
+    const data = contract.methods
+      .build(params.authority, params.version || 2, params.origin || Addresses.genesis)
+      .encodeABI()
+
     return this.internal.getTransactionConfig({
       from: params.from,
       to,
@@ -336,7 +337,7 @@ export class DSA {
           console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
-        return await vm.castHelpers.estimateGas({spells: this, ...params})
+        return await vm.castHelpers.estimateGas({ spells: this, ...params })
       }
 
       encodeCastABI = async (params?: Omit<CastHelpers['encodeABI'], 'spells'>) => {
@@ -344,7 +345,7 @@ export class DSA {
           console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
-        return await vm.encodeCastABI({spells: this, ...params})
+        return await vm.encodeCastABI({ spells: this, ...params })
       }
 
       encodeSpells = async (params?: Omit<Internal['encodeSpells'], 'spells'>) => {
@@ -352,9 +353,9 @@ export class DSA {
           console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
-        return await vm.encodeSpells({spells: this, ...params})
+        return await vm.encodeSpells({ spells: this, ...params })
       }
-  })()
+    })()
   }
 
   async cast(params: Spells | CastParams) {
@@ -385,8 +386,8 @@ export class DSA {
     console.log(`Casting spells to DSA(#${this.instance.id})...`)
 
     const transaction = await this.transaction.send(transactionConfig, {
-      onReceipt : mergedParams.onReceipt,
-      onConfirmation : mergedParams.onConfirmation,
+      onReceipt: mergedParams.onReceipt,
+      onConfirmation: mergedParams.onConfirmation,
     })
 
     return transaction
@@ -429,13 +430,14 @@ function getDSAConfig(config: Web3 | DSAConfig): DSAConfig {
     }
   } else if (config.mode === 'simulation') {
     if (!config.publicKey) throw new Error(`Property 'publicKey' is not defined in config.`)
-    if (!config.web3.utils.isAddress(config.publicKey.toLowerCase())) throw new Error(`Property 'publicKey' is not a address.`)
+    if (!config.web3.utils.isAddress(config.publicKey.toLowerCase()))
+      throw new Error(`Property 'publicKey' is not a address.`)
 
     const publicKey = config.web3.utils.toChecksumAddress(config.publicKey.toLowerCase())
     return {
       web3: config.web3,
       mode: 'simulation',
-      publicKey: publicKey
+      publicKey: publicKey,
     }
   } else if (!config.mode || config.mode === 'browser') {
     return {

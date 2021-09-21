@@ -160,7 +160,7 @@ export class Internal {
     if (!target) return console.error(`${connector} is invalid connector.`)
 
     // return target address for version 1 and connector name for version 2
-    return version === 1 ? target : connector;
+    return version === 2 ? connector : target;
   }
 
   /**
