@@ -13,9 +13,21 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - uses: JS-DevTools/npm-publish@v1
+      - name: Publish Production Release
+        if: "!contains(github.ref, 'beta')"
+        uses: JS-DevTools/npm-publish@v1
         env:
           PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
           ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
           token: ${{ secrets.NPM_AUTH_TOKEN }}
+          tag: latest
+      - name: Publish Beta Release
+        if: "contains(github.ref, 'beta')"
+        uses: JS-DevTools/npm-publish@v1
+        env:
+          PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
+          ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
+        with:
+          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          tag: beta
