@@ -8,6 +8,7 @@ import { connectorsV2_M1 as connectorsV2_M1_Mainnet } from './mainnet/connectors
 import { connectorsV1 as connectorsV1_Polygon } from './polygon/connectorsV1'
 import { connectorsV2_M1 as connectorsV2_M1_Polygon } from './polygon/connectorsV2_M1'
 import { connectorsV2_M1 as connectorsV2_M1_Arbitrum } from "./arbitrum/connectorsV2_M1"
+import { connectorsV2_M1 as connectorsV2_M1_Avalanche } from "./avalanche/connectorsV2_M1"
 
 export const Addresses = {
   genesis: '0x0000000000000000000000000000000000000000',
@@ -29,6 +30,11 @@ export const Addresses = {
       42161: {
         versions: {
           2: connectorsV2_M1_Arbitrum
+        }
+      },
+      43114: {
+        versions: {
+          2: connectorsV2_M1_Avalanche
         }
       },
     },
