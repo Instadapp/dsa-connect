@@ -1,5 +1,4 @@
 import { DSA, DSAConfig, ChainId, Instance } from './dsa'
-import { Abi } from './abi'
 import { Spell } from './spells'
 export default DSA;
 
@@ -8,5 +7,4 @@ export {
     ChainId,
     Instance,
     Spell,
-    Abi
 }
