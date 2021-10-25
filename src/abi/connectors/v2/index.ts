@@ -42,7 +42,9 @@ import {YEARN_VAULT_A} from './YEARN-VAULT-A'
 import {INST_STAKING_B} from './INST-STAKING-B'
 import {GELATO_AAVE_A} from './GELATO-AAVE-A'
 import {POOLTOGETHER_A} from './POOLTOGETHER-A'
+import {INSTAPOOL_B} from './INSTAPOOL-B'
 export const connectorsV2_M1 =  {
+    "INSTAPOOL-B": INSTAPOOL_B,
     "POOLTOGETHER-A": POOLTOGETHER_A,
     "GELATO-AAVE-A": GELATO_AAVE_A,
     "INST-STAKING-B": INST_STAKING_B,
