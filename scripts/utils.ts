@@ -35,8 +35,12 @@ export const ${varName}: AbiItem[] = ${abi}
 export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => {
     console.log('🔮 Fetching ABI')
 
-    if (abi_idx === 0) {
-        const res = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.API_KEY_TOKEN}`);
+    if (abi_idx === 0 && answers.chain === "Mainnet") {
+        const res = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.MAINNET_API_KEY_TOKEN}`);
+        const { result } = await res.json();
+        return result;
+    } else if (abi_idx === 0 && answers.chain === "Polygon") {
+        const res = await fetch(`https://api.polygonscan.com/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.POLYGON_API_KEY_TOKEN}`);
         const { result } = await res.json();
         return result;
     } else if (abi_idx === 1) {
