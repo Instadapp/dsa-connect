@@ -24,6 +24,8 @@ export const mainnetAddressV1Path = `src/addresses/mainnet/connectorsV1.ts`;
 export const mainnetAddressV2Path = `src/addresses/mainnet/connectorsV2_M1.ts`;
 export const polygonAddressV1Path = `src/addresses/polygon/connectorsV1.ts`;
 export const polygonAddressV2Path = `src/addresses/polygon/connectorsV2_M1.ts`;
+export const avalancheAddressV2Path = `src/addresses/avalanche/connectorsV2_M1.ts`;
+export const arbitrumAddressV2Path = `src/adddresses/arbitrum/connectorsV2_M1.ts`;
 export const getAbiTemplate = (varName: string, abi: string) => `
 import { AbiItem } from 'web3-utils'
 

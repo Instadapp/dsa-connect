@@ -13,13 +13,17 @@ import { connectorsV1 as mConnectorsV1 } from '../src/addresses/mainnet/connecto
 import { connectorsV2_M1 as mConnectorsV2_M1 } from '../src/addresses/mainnet/connectorsV2_M1';
 import { connectorsV1 as pConnectorsV1 } from "../src/addresses/polygon/connectorsV1";
 import { connectorsV2_M1 as pConnectorsV2_M1 } from '../src/addresses/polygon/connectorsV2_M1';
-import { Obj, checkFile, getAbiDir, getAbiPath, getAbiTemplate, mainnetAddressV1Path, mainnetAddressV2Path, polygonAddressV1Path, polygonAddressV2Path, getABI } from "./utils";
+import { connectorsV2_M1 as avConnectorsV2_M1 } from '../src/addresses/avalanche/connectorsV2_M1';
+import { connectorsV2_M1 as arConnectorsV2_M1 } from '../src/addresses/arbitrum/connectorsV2_M1';
+import { Obj, checkFile, getAbiDir, getAbiPath, getAbiTemplate, mainnetAddressV1Path, mainnetAddressV2Path, polygonAddressV1Path, polygonAddressV2Path, avalancheAddressV2Path, arbitrumAddressV2Path, getABI } from "./utils";
 import fs from 'fs'
 
 const mainnetConnectorsV1 = mConnectorsV1 as Obj;
 const mainnetConnectorsV2 = mConnectorsV2_M1 as Obj;
 const polygonConnectorsV1 = pConnectorsV1 as Obj;
 const polygonConnectorsV2 = pConnectorsV2_M1 as Obj;
+const avalancheConnectorsV2 = avConnectorsV2_M1 as Obj;
+const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj;
 let connectorsV1Template = `export const connectorsV1 = `;
 let connectorsV2Template = `export const connectorsV2_M1 = `;
 
@@ -60,7 +64,7 @@ const questions = [
         type: "list",
         name: "chain",
         message: "Which Chain?",
-        choices: ["Mainnet", "Polygon"]
+        choices: ["Mainnet", "Polygon", "Avalanche", "Arbitrum"]
     },
     {
         type: "list",
@@ -74,7 +78,7 @@ const questions = [
 (async () => {
     const answers = await inquirer.prompt(questions);
     const abi_idx = abiChoices.indexOf(answers.abi_type)
-    if (answers.chain === "Polygon" && abi_idx === 0) {
+    if ((answers.chain === "Polygon" || answers.chain === "Avalanche" || answers.chain === "Arbitrum") && abi_idx === 0) {
         console.log("\n\n❌ Sorry but Fetching ABI from address only works with Mainnet ❌\n")
         process.exit(0);
     }
@@ -116,7 +120,7 @@ const questions = [
             fs.writeFileSync(mainnetAddressV2Path, connectorsV2Template);
             console.log(`🚀 ${mainnetAddressV2Path} [updated]`)
 
-        } else {
+        } else if (answers.chain === "Polygon") {
             if (polygonConnectorsV2[answers.name]) {
                 throw new Error("Polygon Connectors V2 already contains " + answers.name);
             }
@@ -126,11 +130,31 @@ const questions = [
             // save the file
             fs.writeFileSync(polygonAddressV2Path, connectorsV2Template);
             console.log(`🚀 ${polygonAddressV2Path} [updated]`)
+        } else if (answers.chain === "Avalanche") {
+            if (polygonConnectorsV2[answers.name]) {
+                throw new Error("Avalanche Connectors V2 already contains " + answers.name);
+            }
+            avalancheConnectorsV2[answers.name] = answers.address;
+            connectorsV2Template += JSON.stringify(avalancheConnectorsV2, null, 4);
+
+            // save the file
+            fs.writeFileSync(avalancheAddressV2Path, connectorsV2Template);
+            console.log(`🚀 ${avalancheAddressV2Path} [updated]`)
+        } else {
+            if (arbitrumConnectorsV2[answers.name]) {
+                throw new Error("Arbitrum Connectors V2 already contains " + answers.name);
+            }
+            arbitrumConnectorsV2[answers.name] = answers.address;
+            connectorsV2Template += JSON.stringify(arbitrumConnectorsV2, null, 4);
+
+            // save the file
+            fs.writeFileSync(arbitrumAddressV2Path, connectorsV2Template);
+            console.log(`🚀 ${arbitrumAddressV2Path} [updated]`)
         }
     }
 
     const abiFileContent = getAbiTemplate(answers.variable_name, abi);
-    await fs.writeFileSync(getAbiPath(answers), abiFileContent);
+    fs.writeFileSync(getAbiPath(answers), abiFileContent);
     console.log(`🚀 ${getAbiPath(answers)} [created]`)
 
     const abiDir = getAbiDir(answers);
@@ -148,7 +172,7 @@ const questions = [
         const final = `${beforeExport}\n${afterExport[0]}{\n    "${answers.name}": ${answers.variable_name},\n${afterExport[1]}`;
 
         // save the file
-        await fs.writeFileSync(`${abiDir}/index.ts`, final);
+        fs.writeFileSync(`${abiDir}/index.ts`, final);
         console.log(`🚀 ${abiDir}/index.ts [updated]`)
     }
 })();
