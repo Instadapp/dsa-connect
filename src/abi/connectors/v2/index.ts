@@ -43,7 +43,11 @@ import {INST_STAKING_B} from './INST-STAKING-B'
 import {GELATO_AAVE_A} from './GELATO-AAVE-A'
 import {POOLTOGETHER_A} from './POOLTOGETHER-A'
 import {INSTAPOOL_B} from './INSTAPOOL-B'
+import {BENQI_A} from './BENQI-A'
+import {QI_A} from './QI-A'
 export const connectorsV2_M1 =  {
+    "QI-A": QI_A,
+    "BENQI-A": BENQI_A,
     "INSTAPOOL-B": INSTAPOOL_B,
     "POOLTOGETHER-A": POOLTOGETHER_A,
     "GELATO-AAVE-A": GELATO_AAVE_A,
