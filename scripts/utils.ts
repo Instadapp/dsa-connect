@@ -38,11 +38,21 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
     if (abi_idx === 0 && answers.chain === "Mainnet") {
         const res = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.MAINNET_API_KEY_TOKEN}`);
         const { result } = await res.json();
+
         return result;
+        
     } else if (abi_idx === 0 && answers.chain === "Polygon") {
         const res = await fetch(`https://api.polygonscan.com/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.POLYGON_API_KEY_TOKEN}`);
         const { result } = await res.json();
+
         return result;
+
+    } else if (abi_idx === 0 && answers.chain === "Arbitrum") {
+        const res = await fetch(`https://api.arbiscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.ARBITRUM_API_KEY_TOKEN}`);
+        const { result } = await res.json();
+
+        return result;
+
     } else if (abi_idx === 1) {
         const data = await inquirer.prompt([
             {
@@ -53,9 +63,8 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
             }
         ]);
 
+        return fs.readFileSync(Path.resolve(data.path), 'utf-8');
 
-
-        return JSON.stringify(fs.readFileSync(Path.resolve(data.path), 'utf-8'));
     } else {
         const data = await inquirer.prompt([
             {
@@ -76,6 +85,6 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
         const res = await fetch(data.url);
         const json = res.json();
 
-        return JSON.stringify(json);
+        return json;
     }
 }

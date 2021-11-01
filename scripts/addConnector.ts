@@ -27,7 +27,7 @@ const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj;
 let connectorsV1Template = `export const connectorsV1 = `;
 let connectorsV2Template = `export const connectorsV2_M1 = `;
 
-const abiChoices = ["From Address (Only for Mainnet and Polygon)", "From JSON File Path", "From JSON (via URL)"]
+const abiChoices = ["From Address (Only for Mainnet, Polygon and Arbitrum)", "From JSON File Path", "From JSON (via URL)"]
 const questions = [
     {
         type: "input",
@@ -78,7 +78,7 @@ const questions = [
 (async () => {
     const answers = await inquirer.prompt(questions);
     const abi_idx = abiChoices.indexOf(answers.abi_type)
-    if ((answers.chain === "Avalanche" || answers.chain === "Arbitrum") && abi_idx === 0) {
+    if (answers.chain === "Avalanche" && abi_idx === 0) {
         console.log("\n\n❌ Sorry but Fetching ABI from address only works with Mainnet and Polygon ❌\n")
         process.exit(0);
     }
