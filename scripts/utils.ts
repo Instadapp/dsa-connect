@@ -24,6 +24,8 @@ export const mainnetAddressV1Path = `src/addresses/mainnet/connectorsV1.ts`;
 export const mainnetAddressV2Path = `src/addresses/mainnet/connectorsV2_M1.ts`;
 export const polygonAddressV1Path = `src/addresses/polygon/connectorsV1.ts`;
 export const polygonAddressV2Path = `src/addresses/polygon/connectorsV2_M1.ts`;
+export const avalancheAddressV2Path = `src/addresses/avalanche/connectorsV2_M1.ts`;
+export const arbitrumAddressV2Path = `src/adddresses/arbitrum/connectorsV2_M1.ts`;
 export const getAbiTemplate = (varName: string, abi: string) => `
 import { AbiItem } from 'web3-utils'
 
@@ -33,10 +35,24 @@ export const ${varName}: AbiItem[] = ${abi}
 export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => {
     console.log('🔮 Fetching ABI')
 
-    if (abi_idx === 0) {
-        const res = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.API_KEY_TOKEN}`);
+    if (abi_idx === 0 && answers.chain === "Mainnet") {
+        const res = await fetch(`https://api.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.MAINNET_API_KEY_TOKEN}`);
         const { result } = await res.json();
+
         return result;
+        
+    } else if (abi_idx === 0 && answers.chain === "Polygon") {
+        const res = await fetch(`https://api.polygonscan.com/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.POLYGON_API_KEY_TOKEN}`);
+        const { result } = await res.json();
+
+        return result;
+
+    } else if (abi_idx === 0 && answers.chain === "Arbitrum") {
+        const res = await fetch(`https://api.arbiscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.ARBITRUM_API_KEY_TOKEN}`);
+        const { result } = await res.json();
+
+        return result;
+
     } else if (abi_idx === 1) {
         const data = await inquirer.prompt([
             {
@@ -47,9 +63,8 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
             }
         ]);
 
+        return fs.readFileSync(Path.resolve(data.path), 'utf-8');
 
-
-        return JSON.stringify(fs.readFileSync(Path.resolve(data.path), 'utf-8'));
     } else {
         const data = await inquirer.prompt([
             {
@@ -70,6 +85,6 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
         const res = await fetch(data.url);
         const json = res.json();
 
-        return JSON.stringify(json);
+        return json;
     }
 }
