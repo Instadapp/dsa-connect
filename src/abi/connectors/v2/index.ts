@@ -46,7 +46,9 @@ import {INSTAPOOL_B} from './INSTAPOOL-B'
 import {BENQI_A} from './BENQI-A'
 import {QI_A} from './QI-A'
 import {COMPOUND_IMPORT_C} from './COMPOUND-IMPORT-C'
+import {AAVE_V2_IMPORT_C} from './AAVE-V2-IMPORT-C'
 export const connectorsV2_M1 =  {
+    "AAVE-V2-IMPORT-C": AAVE_V2_IMPORT_C,
     "COMPOUND-IMPORT-C": COMPOUND_IMPORT_C,
     "QI-A": QI_A,
     "BENQI-A": BENQI_A,
