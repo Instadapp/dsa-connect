@@ -45,7 +45,9 @@ import {POOLTOGETHER_A} from './POOLTOGETHER-A'
 import {INSTAPOOL_B} from './INSTAPOOL-B'
 import {BENQI_A} from './BENQI-A'
 import {QI_A} from './QI-A'
+import {COMPOUND_IMPORT_C} from './COMPOUND-IMPORT-C'
 export const connectorsV2_M1 =  {
+    "COMPOUND-IMPORT-C": COMPOUND_IMPORT_C,
     "QI-A": QI_A,
     "BENQI-A": BENQI_A,
     "INSTAPOOL-B": INSTAPOOL_B,
