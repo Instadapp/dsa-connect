@@ -27,7 +27,7 @@ const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj;
 let connectorsV1Template = `export const connectorsV1 = `;
 let connectorsV2Template = `export const connectorsV2_M1 = `;
 
-const abiChoices = ["From Address (Only for Mainnet, Polygon and Arbitrum)", "From JSON File Path", "From JSON (via URL)"]
+const abiChoices = ["From Address", "From JSON File Path", "From JSON (via URL)"]
 const questions = [
     {
         type: "input",
@@ -78,13 +78,13 @@ const questions = [
 (async () => {
     const answers = await inquirer.prompt(questions);
     const abi_idx = abiChoices.indexOf(answers.abi_type)
-    if (answers.chain === "Avalanche" && abi_idx === 0) {
-        console.log("\n\n❌ Sorry but Fetching ABI from address only works with Mainnet and Polygon ❌\n")
-        process.exit(0);
-    }
+    // if (answers.chain === "" && abi_idx === 0) {
+    //     console.log("\n\n❌ Sorry but Fetching ABI from address only works with Mainnet, Polygon, Arbitrum and Avalanche ❌\n")
+    //     process.exit(0);
+    // }
 
     const abi = await getABI(abi_idx, answers);
-    await checkFile(getAbiPath(answers))
+    // await checkFile(getAbiPath(answers))
 
     if (answers.version === 1) {
         if (answers.chain === "Mainnet") {
@@ -154,15 +154,23 @@ const questions = [
     }
 
     const abiFileContent = getAbiTemplate(answers.variable_name, abi);
-    fs.writeFileSync(getAbiPath(answers), abiFileContent);
-    console.log(`🚀 ${getAbiPath(answers)} [created]`)
+    const AbiPath = getAbiPath(answers);
+    let fileExist = false;
+    if(fs.existsSync(AbiPath)){
+        console.log(`ABI file already exists for ${answers.name}`);
+        console.log('Using the existing ABI file');
+        fileExist = true;
+    } else {
+        fs.writeFileSync(AbiPath, abiFileContent);
+        console.log(`🚀 ${getAbiPath(answers)} [created]`)
+    }
 
     const abiDir = getAbiDir(answers);
 
-    if (answers.version === 1) {
+    if (answers.version === 1 && fileExist === false) {
         fs.appendFileSync(`${abiDir}/index.ts`, `export * from './${answers.name}'`);
         console.log(`🚀 ${abiDir}/index.ts [updated]`)
-    } else {
+    } else if(fileExist === false) {
         const content = fs.readFileSync(`${abiDir}/index.ts`, 'utf-8');
         const match = /export/.exec(content)!;
         let beforeExport = content.slice(0, match.index).trim();

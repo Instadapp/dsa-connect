@@ -25,7 +25,7 @@ export const mainnetAddressV2Path = `src/addresses/mainnet/connectorsV2_M1.ts`;
 export const polygonAddressV1Path = `src/addresses/polygon/connectorsV1.ts`;
 export const polygonAddressV2Path = `src/addresses/polygon/connectorsV2_M1.ts`;
 export const avalancheAddressV2Path = `src/addresses/avalanche/connectorsV2_M1.ts`;
-export const arbitrumAddressV2Path = `src/adddresses/arbitrum/connectorsV2_M1.ts`;
+export const arbitrumAddressV2Path = `src/addresses/arbitrum/connectorsV2_M1.ts`;
 export const getAbiTemplate = (varName: string, abi: string) => `
 import { AbiItem } from 'web3-utils'
 
@@ -49,6 +49,12 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
 
     } else if (abi_idx === 0 && answers.chain === "Arbitrum") {
         const res = await fetch(`https://api.arbiscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.ARBITRUM_API_KEY_TOKEN}`);
+        const { result } = await res.json();
+
+        return result;
+
+    } else if (abi_idx === 0 && answers.chain === "Avalanche") {
+        const res = await fetch(`https://api.snowtrace.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.AVALANCHE_API_KEY_TOKEN}`);
         const { result } = await res.json();
 
         return result;
