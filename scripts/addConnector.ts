@@ -31,20 +31,18 @@ import {
 } from './utils'
 import fs from 'fs'
 
-const mainnetConnectorsV1 = mConnectorsV1 as Obj
-const mainnetConnectorsV2 = mConnectorsV2_M1 as Obj
-const polygonConnectorsV1 = pConnectorsV1 as Obj
-const polygonConnectorsV2 = pConnectorsV2_M1 as Obj
-const avalancheConnectorsV2 = avConnectorsV2_M1 as Obj
-const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj
-let connectorsV1Template = `export const connectorsV1 = `
-let connectorsV2Template = `export const connectorsV2_M1 = `
 
-const abiChoices = [
-  'From Address (Only for Mainnet, Polygon and Arbitrum)',
-  'From JSON File Path',
-  'From JSON (via URL)',
-]
+const mainnetConnectorsV1 = mConnectorsV1 as Obj;
+const mainnetConnectorsV2 = mConnectorsV2_M1 as Obj;
+const polygonConnectorsV1 = pConnectorsV1 as Obj;
+const polygonConnectorsV2 = pConnectorsV2_M1 as Obj;
+const avalancheConnectorsV2 = avConnectorsV2_M1 as Obj;
+const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj;
+let connectorsV1Template = `export const connectorsV1 = `;
+let connectorsV2Template = `export const connectorsV2_M1 = `;
+
+const abiChoices = ["From Address", "From JSON File Path", "From JSON (via URL)"]
+
 const questions = [
   {
     type: 'input',
@@ -64,55 +62,54 @@ const questions = [
       }
       return true
     },
-  },
-  {
-    type: 'list',
-    name: 'version',
-    message: "What's the connector version?",
-    choices: [1, 2],
-  },
-  {
-    type: 'input',
-    name: 'address',
-    message: "What's the connector address?",
-    validate: (address: string) => Web3.utils.isAddress(address) || 'Enter a valid address!',
-  },
-  {
-    type: 'list',
-    name: 'chain',
-    message: 'Which Chain?',
-    choices: ['Mainnet', 'Polygon', 'Avalanche', 'Arbitrum'],
-  },
-  {
-    type: 'list',
-    name: 'abi_type',
-    message: 'How to get the ABI?',
-    choices: abiChoices,
-  },
-]
+    {
+        type: "list",
+        name: "chain",
+        message: "Which Chain?",
+        choices: ["Mainnet", "Polygon", "Avalanche", "Arbitrum"]
+    },
+    {
+        type: "list",
+        name: "abi_type",
+        message: "How to get the ABI?",
+        choices: abiChoices,
+    }
+];
 
-;(async () => {
-  const answers = await inquirer.prompt(questions)
-  const abi_idx = abiChoices.indexOf(answers.abi_type)
-  if (answers.chain === 'Avalanche' && abi_idx === 0) {
-    console.log('\n\n❌ Sorry but Fetching ABI from address only works with Mainnet and Polygon ❌\n')
-    process.exit(0)
-  }
 
-  const abi = await getABI(abi_idx, answers)
-  await checkFile(getAbiPath(answers))
+(async () => {
+    const answers = await inquirer.prompt(questions);
+    const abi_idx = abiChoices.indexOf(answers.abi_type)
+    // if (answers.chain === "" && abi_idx === 0) {
+    //     console.log("\n\n❌ Sorry but Fetching ABI from address only works with Mainnet, Polygon, Arbitrum and Avalanche ❌\n")
+    //     process.exit(0);
+    // }
 
-  if (answers.version === 1) {
-    if (answers.chain === 'Mainnet') {
-      if (mainnetConnectorsV1[answers.variable_name]) {
-        throw new Error('Mainnet Connectors V1 already contains ' + answers.variable)
-      }
-      mainnetConnectorsV1[answers.variable_name] = answers.address
-      connectorsV1Template += JSON.stringify(mainnetConnectorsV1, null, 4)
+    const abi = await getABI(abi_idx, answers);
+    // await checkFile(getAbiPath(answers))
 
-      // save the file
-      fs.writeFileSync(mainnetAddressV1Path, connectorsV1Template)
-      console.log(`🚀 ${mainnetAddressV1Path} [updated]`)
+    if (answers.version === 1) {
+        if (answers.chain === "Mainnet") {
+            if (mainnetConnectorsV1[answers.variable_name]) {
+                throw new Error("Mainnet Connectors V1 already contains " + answers.variable);
+            }
+            mainnetConnectorsV1[answers.variable_name] = answers.address;
+            connectorsV1Template += JSON.stringify(mainnetConnectorsV1, null, 4);
+
+            // save the file
+            fs.writeFileSync(mainnetAddressV1Path, connectorsV1Template);
+            console.log(`🚀 ${mainnetAddressV1Path} [updated]`)
+        } else {
+            if (polygonConnectorsV1[answers.variable_name]) {
+                throw new Error("Polygon Connectors V1 already contains " + answers.variable_name);
+            }
+            polygonConnectorsV1[answers.variable_name] = answers.address;
+            connectorsV1Template += JSON.stringify(polygonConnectorsV1, null, 4);
+
+            // save the file
+            fs.writeFileSync(polygonAddressV1Path, connectorsV1Template)
+            console.log(`🚀 ${polygonAddressV1Path} [updated]`)
+        }
     } else {
       if (polygonConnectorsV1[answers.variable_name]) {
         throw new Error('Polygon Connectors V1 already contains ' + answers.variable_name)
@@ -124,47 +121,37 @@ const questions = [
       fs.writeFileSync(polygonAddressV1Path, connectorsV1Template)
       console.log(`🚀 ${polygonAddressV1Path} [updated]`)
     }
-  } else {
-    if (answers.chain === 'Mainnet') {
-      if (mainnetConnectorsV2[answers.name]) {
-        throw new Error('Mainnet Connectors V2 already contains ' + answers.name)
-      }
-      mainnetConnectorsV2[answers.name] = answers.address
-      connectorsV2Template += JSON.stringify(mainnetConnectorsV2, null, 4)
 
-      // save the file
-      fs.writeFileSync(mainnetAddressV2Path, connectorsV2Template)
-      console.log(`🚀 ${mainnetAddressV2Path} [updated]`)
-    } else if (answers.chain === 'Polygon') {
-      if (polygonConnectorsV2[answers.name]) {
-        throw new Error('Polygon Connectors V2 already contains ' + answers.name)
-      }
-      polygonConnectorsV2[answers.name] = answers.address
-      connectorsV2Template += JSON.stringify(polygonConnectorsV2, null, 4)
-
-      // save the file
-      fs.writeFileSync(polygonAddressV2Path, connectorsV2Template)
-      console.log(`🚀 ${polygonAddressV2Path} [updated]`)
-    } else if (answers.chain === 'Avalanche') {
-      if (polygonConnectorsV2[answers.name]) {
-        throw new Error('Avalanche Connectors V2 already contains ' + answers.name)
-      }
-      avalancheConnectorsV2[answers.name] = answers.address
-      connectorsV2Template += JSON.stringify(avalancheConnectorsV2, null, 4)
-
-      // save the file
-      fs.writeFileSync(avalancheAddressV2Path, connectorsV2Template)
-      console.log(`🚀 ${avalancheAddressV2Path} [updated]`)
+    const abiFileContent = getAbiTemplate(answers.variable_name, abi);
+    const AbiPath = getAbiPath(answers);
+    let fileExist = false;
+    if(fs.existsSync(AbiPath)){
+        console.log(`ABI file already exists for ${answers.name}`);
+        console.log('Using the existing ABI file');
+        fileExist = true;
     } else {
-      if (arbitrumConnectorsV2[answers.name]) {
-        throw new Error('Arbitrum Connectors V2 already contains ' + answers.name)
-      }
-      arbitrumConnectorsV2[answers.name] = answers.address
-      connectorsV2Template += JSON.stringify(arbitrumConnectorsV2, null, 4)
+        fs.writeFileSync(AbiPath, abiFileContent);
+        console.log(`🚀 ${getAbiPath(answers)} [created]`)
+    }
 
-      // save the file
-      fs.writeFileSync(arbitrumAddressV2Path, connectorsV2Template)
-      console.log(`🚀 ${arbitrumAddressV2Path} [updated]`)
+    const abiDir = getAbiDir(answers);
+
+    if (answers.version === 1 && fileExist === false) {
+        fs.appendFileSync(`${abiDir}/index.ts`, `export * from './${answers.name}'`);
+        console.log(`🚀 ${abiDir}/index.ts [updated]`)
+    } else if(fileExist === false) {
+        const content = fs.readFileSync(`${abiDir}/index.ts`, 'utf-8');
+        const match = /export/.exec(content)!;
+        let beforeExport = content.slice(0, match.index).trim();
+        let afterExport = content.slice(match.index, content.length).split(`{\n`);
+        beforeExport += `\nimport {${answers.variable_name}} from './${answers.name}'`;
+
+        const final = `${beforeExport}\n${afterExport[0]}{\n    "${answers.name}": ${answers.variable_name},\n${afterExport[1]}`;
+
+        // save the file
+        fs.writeFileSync(`${abiDir}/index.ts`, final);
+        console.log(`🚀 ${abiDir}/index.ts [updated]`)
+
     }
   }
 
