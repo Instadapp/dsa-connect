@@ -1,23 +1,22 @@
-import * as fs from 'fs'
-import inquirer from 'inquirer'
-import fetch from 'node-fetch'
-import URL from 'url'
-import Path from 'path'
+import * as fs from 'fs';
+import inquirer from 'inquirer';
+import fetch from 'node-fetch';
+import URL from "url";
+import Path from "path"
 
 export interface Obj {
-  [key: string]: string
+    [key: string]: string;
 }
 
 export const checkFile = (fileName: string) => {
-  return new Promise((resolve, reject) => {
-    fs.access(fileName, (err) => {
-      if (err) return resolve(null)
+    return new Promise((resolve, reject) => {
+        fs.access(fileName, (err) => {
+            if (err) return resolve(null);
 
-      return reject(new Error('File does exist!'))
+            return reject(new Error("File does exist!"));
+        })
     })
-  })
 }
-
 
 export const getAbiPath = (answers: Obj) => `src/abi/connectors/v${answers.version}/${answers.name}.ts`;
 export const getAbiDir = (answers: Obj) => `src/abi/connectors/v${answers.version}`;
@@ -28,14 +27,12 @@ export const polygonAddressV2Path = `src/addresses/polygon/connectorsV2_M1.ts`;
 export const avalancheAddressV2Path = `src/addresses/avalanche/connectorsV2_M1.ts`;
 export const arbitrumAddressV2Path = `src/addresses/arbitrum/connectorsV2_M1.ts`;
 export const getAbiTemplate = (varName: string, abi: string) => `
-
 import { AbiItem } from 'web3-utils'
 
 export const ${varName}: AbiItem[] = ${abi}
-`.trim()
+`.trim();
 
 export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => {
-
     console.log('🔮 Fetching ABI')
 
     if (abi_idx === 0 && answers.chain === "Mainnet") {
