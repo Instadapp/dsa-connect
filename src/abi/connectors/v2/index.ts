@@ -47,7 +47,6 @@ import {BENQI_A} from './BENQI-A'
 import {QI_A} from './QI-A'
 import {COMPOUND_IMPORT_C} from './COMPOUND-IMPORT-C'
 import {AAVE_V2_IMPORT_C} from './AAVE-V2-IMPORT-C'
-import {UNISWAP_SELL_BETA} from './UNISWAP-SELL-BETA'
 export const connectorsV2_M1 =  {
     "AAVE-V2-IMPORT-C": AAVE_V2_IMPORT_C,
     "COMPOUND-IMPORT-C": COMPOUND_IMPORT_C,
@@ -98,6 +97,3 @@ export const connectorsV2_M1 =  {
     "AAVE-V2-IMPORT-B": AAVE_V2_IMPORT_B,
     "MAKERDAO-CLAIM-A": MAKERDAO_CLAIM_A,
 }
-{
-    "UNISWAP-SELL-BETA": UNISWAP_SELL_BETA,
-undefined

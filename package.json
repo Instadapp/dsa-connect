@@ -25,7 +25,7 @@
     "open-releases": "open \"$(node -e 'console.log(`${require(\"./package.json\").repository}/releases`)')\"",
     "ganache:fork": "dotenv -- cross-var npx ganache-cli --fork %ETH_NODE_URL% --unlock %PUBLIC_ADDRESS% --chainId 1 -e 10000000 -m 'west cricket tenant memory offer burger crumble snow solid mushroom wish solid'",
     "hardhat:fork": "dotenv -- cross-var npx hardhat node --fork %ETH_NODE_URL%",
-    "add:connector": "cross-env NODE_PATH=. TS_NODE_PROJECT=scripts/tsconfig.scripts.json dotenv -- cross-var ts-node scripts/addConnector.ts"
+    "add:connector": "NODE_PATH=. TS_NODE_PROJECT=scripts/tsconfig.scripts.json dotenv -- cross-var ts-node scripts/addConnector.ts"
   },
   "bugs": "https://github.com/InstaDApp/dsa-connect/issues",
   "repository": {
@@ -83,8 +83,5 @@
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
-  },
-  "dependencies": {
-    "cross-env": "^7.0.3"
   }
 }
