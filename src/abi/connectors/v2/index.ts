@@ -53,6 +53,7 @@ import {INTEROP_A} from './INTEROP-A'
 import {INTEROP_STAGING_A} from './INTEROP-STAGING-A'
 
 export const connectorsV2_M1 =  {
+    "UNISWAP-SELL-BETA": UNISWAP_SELL_BETA,
     "AAVE-V2-IMPORT-C": AAVE_V2_IMPORT_C,
     "COMPOUND-IMPORT-C": COMPOUND_IMPORT_C,
     "QI-A": QI_A,
