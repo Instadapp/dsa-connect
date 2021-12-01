@@ -131,7 +131,7 @@ const questions = [
             fs.writeFileSync(polygonAddressV2Path, connectorsV2Template);
             console.log(`🚀 ${polygonAddressV2Path} [updated]`)
         } else if (answers.chain === "Avalanche") {
-            if (polygonConnectorsV2[answers.name]) {
+            if (avalancheConnectorsV2[answers.name]) {
                 throw new Error("Avalanche Connectors V2 already contains " + answers.name);
             }
             avalancheConnectorsV2[answers.name] = answers.address;
