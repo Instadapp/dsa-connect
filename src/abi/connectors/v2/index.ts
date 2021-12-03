@@ -52,7 +52,10 @@ import {UNISWAP_SELL_BETA} from './UNISWAP-SELL-BETA'
 import {INTEROP_A} from './INTEROP-A'
 import {INTEROP_STAGING_A} from './INTEROP-STAGING-A'
 import {INSTAPOOL_C} from './INSTAPOOL-C'
+import { UNIVERSE_A } from './UNIVERSE-A'
+
 export const connectorsV2_M1 =  {
+    "UNIVERSE-A": UNIVERSE_A,
     "INSTAPOOL-C": INSTAPOOL_C,
     "UNISWAP-SELL-BETA": UNISWAP_SELL_BETA,
     "AAVE-V2-IMPORT-C": AAVE_V2_IMPORT_C,
