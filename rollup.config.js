@@ -1,6 +1,7 @@
 import {terser} from 'rollup-plugin-terser'
 import typescript from 'rollup-plugin-typescript2'
 import pluginCommonjs from "@rollup/plugin-commonjs";
+import replace from "rollup-plugin-replace";
 import pkg from './package.json'
 
 const banner = `
@@ -24,6 +25,9 @@ const plugins = [
   }),
   pluginCommonjs({
     extensions: [".js", ".ts"]
+  }),
+  replace({
+    __REPLACE_VERSION__: pkg.version,
   })
 ]
 
