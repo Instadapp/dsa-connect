@@ -71,6 +71,7 @@ type BuildParams = {
   Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
 
 export class DSA {
+  static readonly version: string = "__REPLACE_VERSION__"
   readonly config: DSAConfig
 
   get web3() {

@@ -221,7 +221,7 @@ export class Internal {
       })
 
       return estimatedGas
-    } catch (error) {
+    } catch (error: any) {
       throw new EstimatedGasException(error, { ...params, data })
     }
   }
