@@ -52,6 +52,11 @@ import {UNISWAP_SELL_BETA} from './UNISWAP-SELL-BETA'
 import {INTEROP_A} from './INTEROP-A'
 import {INTEROP_STAGING_A} from './INTEROP-STAGING-A'
 import {INSTAPOOL_C} from './INSTAPOOL-C'
+
+import {WAVAX_A} from './WAVAX-A'
+import {WMATIC_A} from './WMATIC-A'
+
+
 export const connectorsV2_M1 =  {
     "INSTAPOOL-C": INSTAPOOL_C,
     "UNISWAP-SELL-BETA": UNISWAP_SELL_BETA,
@@ -104,5 +109,7 @@ export const connectorsV2_M1 =  {
     "AAVE-V2-IMPORT-B": AAVE_V2_IMPORT_B,
     "MAKERDAO-CLAIM-A": MAKERDAO_CLAIM_A,
     "INTEROP-A": INTEROP_A,
-    "INTEROP-STAGING-A": INTEROP_STAGING_A
+    "INTEROP-STAGING-A": INTEROP_STAGING_A,
+    "WMATIC-A": WMATIC_A,
+    "WAVAX-A": WAVAX_A
 }
