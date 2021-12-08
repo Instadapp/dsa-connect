@@ -12,7 +12,7 @@ export const core = {
       accountProxy: '0x28846f4051EB05594B3fF9dE76b7B5bf00431155',
       accountDefault: '0x2240770bEc8cB22ed716F2DCcC4F24980A904bC5',
       implementations: "0x39d3d5e7c11D61E072511485878dd84711c19d4A",
-      account: '0x7ECE9E841BdCfa3A482331E2b6b853e497Bd7C9f', // M1
+      account: '0x4aec8c5b1cf3498bef061e13d8e7f646feeb7029', // M1
       connectors: '0x2A00684bFAb9717C21271E0751BCcb7d2D763c88', // M1
     }
   }
