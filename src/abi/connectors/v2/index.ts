@@ -56,7 +56,9 @@ import {INSTAPOOL_C} from './INSTAPOOL-C'
 import {WAVAX_A} from './WAVAX-A'
 import {WMATIC_A} from './WMATIC-A'
 import {QUICKSWAP_A} from './QUICKSWAP-A'
+import {ONEINCH_V4} from './1INCH-V4'
 export const connectorsV2_M1 =  {
+    "1INCH-V4": ONEINCH_V4,
     "QUICKSWAP-A": QUICKSWAP_A,
     "INSTAPOOL-C": INSTAPOOL_C,
     "UNISWAP-SELL-BETA": UNISWAP_SELL_BETA,
