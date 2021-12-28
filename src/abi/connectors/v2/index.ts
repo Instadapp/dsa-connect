@@ -1,4 +1,3 @@
-import { ONEINCH_A } from './1INCH-A'
 import { AAVE_CLAIM_A } from './AAVE-CLAIM-A'
 import { AAVE_CLAIM_B } from './AAVE-CLAIM-B'
 import { AAVE_STAKE_A } from './AAVE-STAKE-A'
@@ -23,7 +22,6 @@ import { MAKERDAO_CLAIM_A } from './MAKERDAO-CLAIM-A'
 import { G_UNISWAP_A } from './G-UNISWAP-A'
 import { STAKE_ERC20_A } from './STAKE-ERC20-A'
 import { INST_STAKING_A } from './INST-STAKING-A'
-import { ONEINCH_B } from './1INCH-B'
 import { WETH_A } from './WETH-A'
 import { INST_A } from './INST-A'
 import { REFINANCE_A } from './REFINANCE-A'
@@ -56,11 +54,16 @@ import { INSTAPOOL_C } from './INSTAPOOL-C'
 import { WAVAX_A } from './WAVAX-A'
 import { WMATIC_A } from './WMATIC-A'
 import { QUICKSWAP_A } from './QUICKSWAP-A'
-import {ONEINCH_V4_A} from './1INCH-V4-A'
-import {ONEINCH_V3_A} from './1INCH-V3-A'
+import { ONEINCH_A } from './1INCH-A'
+import { ONEINCH_B } from './1INCH-B'
+import { ONEINCH_V4_A } from './1INCH-V4-A'
+import { ONEINCH_V3_A } from './1INCH-V3-A'
+
 export const connectorsV2_M1 = {
-    "1INCH-V3-A": ONEINCH_V3_A,
-    "1INCH-V4-A": ONEINCH_V4_A,
+  '1INCH-V3-A': ONEINCH_V3_A,
+  '1INCH-V4-A': ONEINCH_V4_A,
+  '1INCH-A': ONEINCH_A,
+  '1INCH-B': ONEINCH_B,
   'QUICKSWAP-A': QUICKSWAP_A,
   'INSTAPOOL-C': INSTAPOOL_C,
   'UNISWAP-SELL-BETA': UNISWAP_SELL_BETA,
@@ -87,7 +90,6 @@ export const connectorsV2_M1 = {
   'REFINANCE-A': REFINANCE_A,
   'INST-A': INST_A,
   'WETH-A': WETH_A,
-  '1INCH-B': ONEINCH_B,
   'INST-STAKING-A': INST_STAKING_A,
   'STAKE-ERC20-A': STAKE_ERC20_A,
   'G-UNISWAP-A': G_UNISWAP_A,
@@ -95,7 +97,6 @@ export const connectorsV2_M1 = {
   'COMPOUND-IMPORT-A': COMPOUND_IMPORT_A,
   'AAVE-V2-IMPORT-A': AAVE_V2_IMPORT_A,
   'AAVE-V1-IMPORT-A': AAVE_V1_IMPORT_A,
-  '1INCH-A': ONEINCH_A,
   'AAVE-CLAIM-A': AAVE_CLAIM_A,
   'AAVE-CLAIM-B': AAVE_CLAIM_B,
   'AAVE-V1-A': AAVE_V1,
