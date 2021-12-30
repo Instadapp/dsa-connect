@@ -47,10 +47,11 @@ import { COMPOUND_IMPORT_C } from './COMPOUND-IMPORT-C'
 import { AAVE_V2_IMPORT_C } from './AAVE-V2-IMPORT-C'
 import { UNISWAP_SELL_BETA } from './UNISWAP-SELL-BETA'
 
-import { INTEROP_A } from './INTEROP-A'
-import { INTEROP_STAGING_A } from './INTEROP-STAGING-A'
-import { INSTAPOOL_C } from './INSTAPOOL-C'
+import {INTEROP_A} from './INTEROP-A'
+import {INTEROP_STAGING_A} from './INTEROP-STAGING-A'
+import {INSTAPOOL_C} from './INSTAPOOL-C'
 
+import { UNIVERSE_A } from './UNIVERSE-A'
 import { WAVAX_A } from './WAVAX-A'
 import { WMATIC_A } from './WMATIC-A'
 import { QUICKSWAP_A } from './QUICKSWAP-A'
@@ -118,4 +119,5 @@ export const connectorsV2_M1 = {
   'INTEROP-STAGING-A': INTEROP_STAGING_A,
   'WMATIC-A': WMATIC_A,
   'WAVAX-A': WAVAX_A,
+  'UNIVERSE-A': UNIVERSE_A
 }
