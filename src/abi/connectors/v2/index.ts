@@ -47,24 +47,26 @@ import { COMPOUND_IMPORT_C } from './COMPOUND-IMPORT-C'
 import { AAVE_V2_IMPORT_C } from './AAVE-V2-IMPORT-C'
 import { UNISWAP_SELL_BETA } from './UNISWAP-SELL-BETA'
 
-import { INTEROP_A } from './INTEROP-A'
-import { INTEROP_STAGING_A } from './INTEROP-STAGING-A'
-import { INSTAPOOL_C } from './INSTAPOOL-C'
+import {INTEROP_A} from './INTEROP-A'
+import {INTEROP_STAGING_A} from './INTEROP-STAGING-A'
+import {INSTAPOOL_C} from './INSTAPOOL-C'
 
+import { UNIVERSE_A } from './UNIVERSE-A'
 import { WAVAX_A } from './WAVAX-A'
 import { WMATIC_A } from './WMATIC-A'
 import { QUICKSWAP_A } from './QUICKSWAP-A'
 import { ONEINCH_A } from './1INCH-A'
 import { ONEINCH_B } from './1INCH-B'
-import { ONEINCH_V4_A } from './1INCH-V4-A'
 import { ONEINCH_V3_A } from './1INCH-V3-A'
-import {PARASWAP_V5_A} from './PARASWAP-V5-A'
+import { ONEINCH_V4_A } from './1INCH-V4-A'
+import { PARASWAP_V5_A } from './PARASWAP-V5-A'
+
 export const connectorsV2_M1 = {
   'PARASWAP-V5-A': PARASWAP_V5_A,
-  '1INCH-V3-A': ONEINCH_V3_A,
-  '1INCH-V4-A': ONEINCH_V4_A,
   '1INCH-A': ONEINCH_A,
   '1INCH-B': ONEINCH_B,
+  '1INCH-V3-A': ONEINCH_V3_A,
+  '1INCH-V4-A': ONEINCH_V4_A,
   'QUICKSWAP-A': QUICKSWAP_A,
   'INSTAPOOL-C': INSTAPOOL_C,
   'UNISWAP-SELL-BETA': UNISWAP_SELL_BETA,
@@ -118,4 +120,5 @@ export const connectorsV2_M1 = {
   'INTEROP-STAGING-A': INTEROP_STAGING_A,
   'WMATIC-A': WMATIC_A,
   'WAVAX-A': WAVAX_A,
+  'UNIVERSE-A': UNIVERSE_A
 }
