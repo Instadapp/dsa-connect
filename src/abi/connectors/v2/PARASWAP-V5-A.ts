@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const PARASWAP_A: AbiItem[] = [
+export const PARASWAP_V5_A: AbiItem[] = [
   {
     inputs: [],
     name: 'name',
