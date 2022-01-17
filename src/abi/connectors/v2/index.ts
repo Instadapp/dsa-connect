@@ -62,8 +62,9 @@ import { ONEINCH_V4_A } from './1INCH-V4-A'
 import { PARASWAP_V5_A } from './PARASWAP-V5-A'
 import { ZEROX_A } from './ZEROX-A'
 import { ZEROX_V4_A } from './ZEROX-V4-A'
-
+import {UNISWAP_V3_ROUTER_A} from './UNISWAP-V3-ROUTER-A'
 export const connectorsV2_M1 = {
+    "UNISWAP-V3-ROUTER-A": UNISWAP_V3_ROUTER_A,
   'ZEROX-V4-A': ZEROX_V4_A,
   'ZEROX-A': ZEROX_A,
   'PARASWAP-V5-A': PARASWAP_V5_A,
