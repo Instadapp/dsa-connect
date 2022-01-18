@@ -64,6 +64,7 @@ import { ZEROX_A } from './ZEROX-A'
 import { ZEROX_V4_A } from './ZEROX-V4-A'
 import {UNISWAP_V3_ROUTER_A} from './UNISWAP-V3-ROUTER-A'
 import { SUSHISWAP_A } from './SUSHISWAP-A'
+import {UBIQUITY_A} from './UBIQUITY-A'
 
 export const connectorsV2_M1 = {
   'UNISWAP-V3-ROUTER-A': UNISWAP_V3_ROUTER_A,
@@ -129,4 +130,5 @@ export const connectorsV2_M1 = {
   'WMATIC-A': WMATIC_A,
   'WAVAX-A': WAVAX_A,
   'UNIVERSE-A': UNIVERSE_A,
+  "UBIQUITY-A": UBIQUITY_A,
 }
