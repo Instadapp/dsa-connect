@@ -62,11 +62,12 @@ import { ONEINCH_V4_A } from './1INCH-V4-A'
 import { PARASWAP_V5_A } from './PARASWAP-V5-A'
 import { ZEROX_A } from './ZEROX-A'
 import { ZEROX_V4_A } from './ZEROX-V4-A'
-import {UNISWAP_V3_ROUTER_A} from './UNISWAP-V3-ROUTER-A'
+import { UNISWAP_V3_ROUTER_A } from './UNISWAP-V3-ROUTER-A'
 import { SUSHISWAP_A } from './SUSHISWAP-A'
-import {UBIQUITY_A} from './UBIQUITY-A'
-
+import { UBIQUITY_A } from './UBIQUITY-A'
+import { UNISWAP_V3_STAKER_B } from './UNISWAP-V3-STAKER-B'
 export const connectorsV2_M1 = {
+  'UNISWAP-V3-STAKER-B': UNISWAP_V3_STAKER_B,
   'UNISWAP-V3-ROUTER-A': UNISWAP_V3_ROUTER_A,
   'SUSHISWAP-A': SUSHISWAP_A,
   'ZEROX-V4-A': ZEROX_V4_A,
@@ -130,5 +131,5 @@ export const connectorsV2_M1 = {
   'WMATIC-A': WMATIC_A,
   'WAVAX-A': WAVAX_A,
   'UNIVERSE-A': UNIVERSE_A,
-  "UBIQUITY-A": UBIQUITY_A,
+  'UBIQUITY-A': UBIQUITY_A,
 }
