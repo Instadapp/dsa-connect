@@ -27,6 +27,8 @@ export const polygonAddressV2Path = `src/addresses/polygon/connectorsV2_M1.ts`
 export const avalancheAddressV2Path = `src/addresses/avalanche/connectorsV2_M1.ts`
 export const arbitrumAddressV2Path = `src/addresses/arbitrum/connectorsV2_M1.ts`
 export const optimismAddressV2Path = `src/addresses/optimism/connectorsV2_M1.ts`
+export const fantomAddressV2Path = `src/addresses/fantom/connectorsV2_M1.ts`
+
 export const getAbiTemplate = (varName: string, abi: string) =>
   `
 import { AbiItem } from 'web3-utils'
@@ -68,6 +70,13 @@ export const getABI = async (abi_idx: number, answers: Obj): Promise<string> => 
   } else if (abi_idx === 0 && answers.chain === 'Optimism') {
     const res = await fetch(
       `https://api-optimistic.etherscan.io/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.OPTIMISM_API_KEY_TOKEN}`
+    )
+    const { result } = await res.json()
+
+    return result
+  } else if (abi_idx === 0 && answers.chain === 'Fantom') {
+    const res = await fetch(
+      `https://api.ftmscan.com/api?module=contract&action=getabi&address=${answers.address}&apikey=${process.env.FANTOM_API_KEY_TOKEN}`
     )
     const { result } = await res.json()
 
