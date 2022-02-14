@@ -1,7 +1,7 @@
 export const core = {
   index: '0x2fa042BEEB7A40A7078EaA5aC755e3842248292b',
   list: '0x10e166c3FAF887D8a61dE6c25039231eE694E926',
-  // read: '0x313FE505ad3ead0D35dD5d6687FB9C6B2469Db3d',
+  read: '0x8a7fCeE0e1Ff6DB33C7E83060c18e3B97915A970',
   versions: {
     1: {
       account: '0x97dC007cdb5198Bb0aC3b021560B03e8e673aEC8',
