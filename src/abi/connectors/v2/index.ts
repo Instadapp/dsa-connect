@@ -68,7 +68,9 @@ import { UBIQUITY_A } from './UBIQUITY-A'
 import { UNISWAP_V3_STAKER_B } from './UNISWAP-V3-STAKER-B'
 import { PANGOLIN_A } from './PANGOLIN-A'
 import { PANGOLIN_STAKE_A } from './PANGOLIN-STAKE-A'
+import {MSTABLE_A} from './MSTABLE-A'
 export const connectorsV2_M1 = {
+   "MSTABLE-A": MSTABLE_A,
   'PANGOLIN-STAKE-A': PANGOLIN_STAKE_A,
   'PANGOLIN-A': PANGOLIN_A,
   'UNISWAP-V3-STAKER-B': UNISWAP_V3_STAKER_B,
