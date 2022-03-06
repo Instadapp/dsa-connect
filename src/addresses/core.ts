@@ -3,7 +3,7 @@ import { core as polygonCore } from './polygon/core'
 import { core as arbitrumCore } from './arbitrum/core'
 import { core as avalancheCore } from './avalanche/core'
 import { core as optimismCore } from './optimism/core'
-import { core as fantomCore } from './optimism/core'
+import { core as fantomCore } from './fantom/core'
 
 export const core = {
   1: mainnetCore,
