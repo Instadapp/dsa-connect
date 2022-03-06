@@ -16,6 +16,8 @@ import { connectorsV2_M1 as pConnectorsV2_M1 } from '../src/addresses/polygon/co
 import { connectorsV2_M1 as avConnectorsV2_M1 } from '../src/addresses/avalanche/connectorsV2_M1'
 import { connectorsV2_M1 as arConnectorsV2_M1 } from '../src/addresses/arbitrum/connectorsV2_M1'
 import { connectorsV2_M1 as opConnectorsV2_M1 } from '../src/addresses/optimism/connectorsV2_M1'
+import { connectorsV2_M1 as ftmConnectorsV2_M1 } from '../src/addresses/fantom/connectorsV2_M1'
+
 import {
   Obj,
   checkFile,
@@ -29,6 +31,7 @@ import {
   avalancheAddressV2Path,
   arbitrumAddressV2Path,
   optimismAddressV2Path,
+  fantomAddressV2Path,
   getABI,
 } from './utils'
 import fs from 'fs'
@@ -40,6 +43,7 @@ const polygonConnectorsV2 = pConnectorsV2_M1 as Obj
 const avalancheConnectorsV2 = avConnectorsV2_M1 as Obj
 const arbitrumConnectorsV2 = arConnectorsV2_M1 as Obj
 const optimismConnectorsV2 = opConnectorsV2_M1 as Obj
+const fantomConnectorsV2 = ftmConnectorsV2_M1 as Obj
 
 let connectorsV1Template = `export const connectorsV1 = `
 let connectorsV2Template = `export const connectorsV2_M1 = `
@@ -81,7 +85,7 @@ const questions = [
     type: 'list',
     name: 'chain',
     message: 'Which Chain?',
-    choices: ['Mainnet', 'Polygon', 'Avalanche', 'Arbitrum', 'Optimism'],
+    choices: ['Mainnet', 'Polygon', 'Avalanche', 'Arbitrum', 'Optimism', 'Fantom'],
   },
   {
     type: 'list',
@@ -165,6 +169,16 @@ const questions = [
       // save the file
       fs.writeFileSync(arbitrumAddressV2Path, connectorsV2Template)
       console.log(`🚀 ${arbitrumAddressV2Path} [updated]`)
+    } else if (answers.chain === 'Fantom') {
+      if (fantomConnectorsV2[answers.name]) {
+        throw new Error('Fantom Connectors V2 already contains ' + answers.name)
+      }
+      fantomConnectorsV2[answers.name] = answers.address
+      connectorsV2Template += JSON.stringify(fantomConnectorsV2, null, 4)
+
+      // save the file
+      fs.writeFileSync(fantomAddressV2Path, connectorsV2Template)
+      console.log(`🚀 ${fantomAddressV2Path} [updated]`)
     } else {
       if (optimismConnectorsV2[answers.name]) {
         throw new Error('Optimism Connectors V2 already contains ' + answers.name)

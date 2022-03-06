@@ -54,6 +54,7 @@ import { INSTAPOOL_C } from './INSTAPOOL-C'
 import { UNIVERSE_A } from './UNIVERSE-A'
 import { WAVAX_A } from './WAVAX-A'
 import { WMATIC_A } from './WMATIC-A'
+import { WFTM_A } from './WFTM-A'
 import { QUICKSWAP_A } from './QUICKSWAP-A'
 import { ONEINCH_A } from './1INCH-A'
 import { ONEINCH_B } from './1INCH-B'
@@ -69,8 +70,11 @@ import { UNISWAP_V3_STAKER_B } from './UNISWAP-V3-STAKER-B'
 import { PANGOLIN_A } from './PANGOLIN-A'
 import { PANGOLIN_STAKE_A } from './PANGOLIN-STAKE-A'
 import {MSTABLE_A} from './MSTABLE-A'
+
+
 export const connectorsV2_M1 = {
-   "MSTABLE-A": MSTABLE_A,
+  'WFTM-A': WFTM_A,
+  'MSTABLE-A': MSTABLE_A,
   'PANGOLIN-STAKE-A': PANGOLIN_STAKE_A,
   'PANGOLIN-A': PANGOLIN_A,
   'UNISWAP-V3-STAKER-B': UNISWAP_V3_STAKER_B,
