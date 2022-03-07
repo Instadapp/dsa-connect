@@ -28,8 +28,8 @@ export type DSAConfig =
       mode?: 'browser'
     }
 
-// ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism
-export type ChainId = 1 | 137 | 42161 | 43114 | 10
+// ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism, 250 = fantom
+export type ChainId = 1 | 137 | 42161 | 43114 | 10 | 250
 
 export interface Instance {
   id: number
@@ -71,7 +71,7 @@ type BuildParams = {
   Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
 
 export class DSA {
-  static readonly version: string = "__REPLACE_VERSION__"
+  static readonly version: string = '__REPLACE_VERSION__'
   readonly config: DSAConfig
 
   get web3() {
@@ -137,7 +137,7 @@ export class DSA {
         )
       }
 
-      if (![1, 137, 42161, 43114, 10].includes(chainId)) {
+      if (![1, 137, 42161, 43114, 10, 250].includes(chainId)) {
         throw new Error(`chainId '${_chainId}' is not supported.`)
       } else {
         this.instance.chainId = _chainId as ChainId
