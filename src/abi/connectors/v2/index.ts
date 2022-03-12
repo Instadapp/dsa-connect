@@ -73,7 +73,9 @@ import { MSTABLE_A } from './MSTABLE-A'
 import { LIDO_STETH_A } from './LIDO-STETH-A'
 import {AAVE_V3_A} from './AAVE-V3-A'
 import {AAVE_V2_V3_IMPORT_A} from './AAVE-V2-V3-IMPORT-A'
+import {AAVE_V3_IMPORT_A} from './AAVE-V3-IMPORT-A'
 export const connectorsV2_M1 = {
+    "AAVE-V3-IMPORT-A": AAVE_V3_IMPORT_A,
     "AAVE-V2-V3-IMPORT-A": AAVE_V2_V3_IMPORT_A,
     "AAVE-V3-A": AAVE_V3_A,
   'WFTM-A': WFTM_A,
