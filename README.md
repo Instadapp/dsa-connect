@@ -6,6 +6,10 @@
 
 The official DSA SDK for JavaScript, available for browsers and Node.js backends.
 
+
+[![Build status](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml/badge.svg?branch=master&event=push)](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml)
+
+
 ## Installation
 
 To get started, install the DSA Connect package from npm:
