@@ -1,13 +1,12 @@
 
 
-# DSA Connect [![Build Status](https://travis-ci.com/InstaDApp/dsa-connect.svg?branch=master)](https://travis-ci.com/InstaDApp/dsa-connect)
+# DSA Connect [![Build status](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml/badge.svg?branch=master&event=push)](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml)
 
 <img src="https://raw.githubusercontent.com/InstaDApp/dsa-connect/master/src/data/img.svg">
 
 The official DSA SDK for JavaScript, available for browsers and Node.js backends.
 
 
-[![Build status](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml/badge.svg?branch=master&event=push)](https://github.com/Instadapp/dsa-connect/actions/workflows/build.yml)
 
 
 ## Installation
@@ -223,7 +222,7 @@ spells.cast({
 ```
 
 | **Parameter (optional)** | **Type**        | **Description**                                                                                                                                                                |
-|--------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|                                                                                                       
+|--------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `gasPrice`               | *string/number* | The gas price in gwei. Mostly used in Node implementation to configure the transaction confirmation speed.                                                                     |
 | `value`                  | *string/number* | Amount of ETH which you want to send along with the transaction (in wei).                                                                                                      |
 | `nonce`                  | *string/number* | Nonce of your sender account. Mostly used in Node implementation to send transaction with a particular nonce either to override unconfirmed transaction or some other purpose. |
