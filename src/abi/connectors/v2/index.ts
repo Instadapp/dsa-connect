@@ -75,7 +75,8 @@ import { AAVE_V3_A } from './AAVE-V3-A'
 import { AAVE_IMPORT_V2_V3_A } from './AAVE-IMPORT-V2-V3-A'
 import { AAVE_V3_IMPORT_A } from './AAVE-V3-IMPORT-A'
 import { COMPOUND_IMPORT_D } from './COMPOUND-IMPORT-D'
-import { INSTALITE_A } from './INSTALITE-A'
+import { LITE_A } from './LITE-A'
+
 export const connectorsV2_M1 = {
   'LITE-A': LITE_A,
   'COMPOUND-IMPORT-D': COMPOUND_IMPORT_D,
