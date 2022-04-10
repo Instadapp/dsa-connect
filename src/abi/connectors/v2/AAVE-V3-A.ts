@@ -27,6 +27,12 @@ export const AAVE_V3_A: AbiItem[] = [
   {
     anonymous: false,
     inputs: [{ indexed: false, internalType: 'address[]', name: 'tokens', type: 'address[]' }],
+    name: 'LogDisableCollateral',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [{ indexed: false, internalType: 'address[]', name: 'tokens', type: 'address[]' }],
     name: 'LogEnableCollateral',
     type: 'event',
   },
@@ -101,6 +107,16 @@ export const AAVE_V3_A: AbiItem[] = [
   },
   {
     inputs: [{ internalType: 'address[]', name: 'tokens', type: 'address[]' }],
+    name: 'disableCollateral',
+    outputs: [
+      { internalType: 'string', name: '_eventName', type: 'string' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address[]', name: 'tokens', type: 'address[]' }],
     name: 'enableCollateral',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
@@ -155,7 +171,7 @@ export const AAVE_V3_A: AbiItem[] = [
       { internalType: 'string', name: '_eventName', type: 'string' },
       { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
     ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
