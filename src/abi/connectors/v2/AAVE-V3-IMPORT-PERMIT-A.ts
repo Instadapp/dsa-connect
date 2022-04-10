@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const AAVE_IMPORT_V2_V3_PERMIT_A: AbiItem[] = [
+export const AAVE_V3_IMPORT_PERMIT_A: AbiItem[] = [
   {
     inputs: [
       { internalType: 'address', name: 'userAccount', type: 'address' },
