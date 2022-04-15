@@ -77,7 +77,10 @@ import { AAVE_V3_IMPORT_A } from './AAVE-V3-IMPORT-A'
 import { COMPOUND_IMPORT_D } from './COMPOUND-IMPORT-D'
 import { LITE_A } from './LITE-A'
 import { AAVE_V3_IMPORT_PERMIT_A } from './AAVE-V3-IMPORT-PERMIT-A'
+import { HOP_A } from './HOP-A'
+
 export const connectorsV2_M1 = {
+  'HOP-A': HOP_A,
   'AAVE-V3-IMPORT-PERMIT-A': AAVE_V3_IMPORT_PERMIT_A,
   'LITE-A': LITE_A,
   'COMPOUND-IMPORT-D': COMPOUND_IMPORT_D,
