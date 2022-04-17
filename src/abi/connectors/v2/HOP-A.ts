@@ -6,13 +6,13 @@ export const HOP_A: AbiItem[] = [
       {
         components: [
           { internalType: 'address', name: 'token', type: 'address' },
-          { internalType: 'address', name: 'hopRouter', type: 'address' },
+          { internalType: 'address', name: 'router', type: 'address' },
           { internalType: 'address', name: 'recipient', type: 'address' },
-          { internalType: 'uint256', name: 'chainId', type: 'uint256' },
+          { internalType: 'uint256', name: 'targetChainId', type: 'uint256' },
           { internalType: 'uint256', name: 'amount', type: 'uint256' },
           { internalType: 'uint256', name: 'bonderFee', type: 'uint256' },
-          { internalType: 'uint256', name: 'amountOutMin', type: 'uint256' },
-          { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+          { internalType: 'uint256', name: 'sourceAmountOutMin', type: 'uint256' },
+          { internalType: 'uint256', name: 'sourceDeadline', type: 'uint256' },
           { internalType: 'uint256', name: 'destinationAmountOutMin', type: 'uint256' },
           { internalType: 'uint256', name: 'destinationDeadline', type: 'uint256' },
         ],
