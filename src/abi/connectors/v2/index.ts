@@ -80,7 +80,10 @@ import { AAVE_V3_IMPORT_PERMIT_A } from './AAVE-V3-IMPORT-PERMIT-A'
 import { HOP_A } from './HOP-A'
 import { AAVE_V3_CLAIM_A } from './AAVE-V3-CLAIM-A'
 import { NOTIONAL_V2_A } from './NOTIONAL-V2-A'
+import { HOP_MAINNET_A } from './HOP-MAINNET-A'
+
 export const connectorsV2_M1 = {
+  'HOP-MAINNET-A': HOP_MAINNET_A,
   'NOTIONAL-V2-A': NOTIONAL_V2_A,
   'AAVE-V3-CLAIM-A': AAVE_V3_CLAIM_A,
   'HOP-A': HOP_A,
