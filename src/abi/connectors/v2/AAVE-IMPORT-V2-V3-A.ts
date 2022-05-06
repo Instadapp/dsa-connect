@@ -16,7 +16,7 @@ export const AAVE_IMPORT_V2_V3_A: AbiItem[] = [
         type: 'tuple',
       },
     ],
-    name: 'importAaveV2ToV3',
+    name: 'importAave',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
       { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
@@ -26,6 +26,7 @@ export const AAVE_IMPORT_V2_V3_A: AbiItem[] = [
   },
   {
     inputs: [
+      { internalType: 'address', name: 'userAccount', type: 'address' },
       {
         components: [
           { internalType: 'address[]', name: 'supplyTokens', type: 'address[]' },
@@ -37,8 +38,9 @@ export const AAVE_IMPORT_V2_V3_A: AbiItem[] = [
         name: 'inputData',
         type: 'tuple',
       },
+      { internalType: 'bool[]', name: 'enableCollateral', type: 'bool[]' },
     ],
-    name: 'migrateAaveV2ToV3',
+    name: 'importAaveWithCollateral',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
       { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
