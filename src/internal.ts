@@ -2,13 +2,14 @@ import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
 import DSA from '.'
 import { Abi } from './abi'
-import { Connector } from "./abi/connectors";
+import { Connector } from './abi/connectors'
 import { Addresses } from './addresses'
 import { TokenInfo } from './data/token-info'
 import { EstimatedGasException } from './exceptions/estimated-gas-exception'
 import { Spells } from './spells'
 import { hasKey } from './utils/typeHelper'
-import connectorV2Mapping from "./data/connectorsV2_M1_mapping";
+import connectorV2Mapping from './data/connectorsV2_M1_mapping'
+import { ethers } from 'ethers'
 
 export interface GetTransactionConfigParams {
   from: NonNullable<TransactionConfig['from']>
@@ -18,10 +19,12 @@ export interface GetTransactionConfigParams {
   gas?: TransactionConfig['gas']
   gasPrice?: TransactionConfig['gasPrice']
   nonce?: TransactionConfig['nonce']
+  maxPriorityFeePerGas?: TransactionConfig['maxPriorityFeePerGas']
+  maxFeePerGas?: TransactionConfig['maxFeePerGas']
 }
 
 export type Version = keyof typeof Abi.connectors.versions
-export { Connector } from './abi/connectors';
+export { Connector } from './abi/connectors'
 
 export type EstimateGasParams = {
   abi: AbiItem
@@ -45,26 +48,40 @@ export class Internal {
    * @param params.gas (optional)
    * @param params.gasPrice (optional only for "browser" mode)
    * @param params.nonce (optional) mostly for "node" mode
+   * @param params.maxPriorityFeePerGas (optional) mostly for "node" mode
+   * @param params.maxFeePerGas (optional) mostly for "node" mode
+   * @param txType 0 for legacy, 1 for EIP 1559
    */
-  getTransactionConfig = async (params: GetTransactionConfigParams) => {
+  getTransactionConfig = async (params: GetTransactionConfigParams, txType: number) => {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
     if (!params.to) throw new Error("Parameter 'to' is not defined.")
     if (!params.data) throw new Error("Parameter 'data' is not defined.")
+
+    let gas, maxPriorityFeePerGas, maxFeePerGas
 
     const from = params.from
     const to = params.to
     const data = params.data !== '0x' ? params.data : '0x'
     const value = params.value ?? 0
-    const gas = params.gas ?? (await this.getGas({ from, to, data, value }))
 
-    const transactionConfig: TransactionConfig = { from, to, data, value, gas }
+    if (txType === 0) gas = params.gas ?? (await this.getGas({ from, to, data, value }))
+    else if (txType === 1) {
+      const feeData = await this.getPriorityGas()
+      maxPriorityFeePerGas = Number(params.maxPriorityFeePerGas) ?? Number(feeData.maxPriorityFeePerGas)
+      maxFeePerGas = Number(params.maxFeePerGas) ?? Number(feeData.maxFeePerGas)
+    } else {
+      throw new Error(`transaction type ${txType} not supported`)
+    }
+
+    const transactionConfig: TransactionConfig = { from, to, data, value, gas, maxPriorityFeePerGas, maxFeePerGas }
 
     if (params.gasPrice) {
       transactionConfig.gasPrice = params.gasPrice
     }
 
     if (this.dsa.mode === 'node') {
-      if (!params.gasPrice) throw new Error("Parameter 'gasPrice' must be defined when using mode 'node'.")
+      if (!params.gasPrice && txType === 0)
+        throw new Error("Parameter 'gasPrice' must be defined when using mode 'node'.")
 
       transactionConfig.nonce = params.nonce ?? (await this.getNonce(from))
     } else if (!!params.nonce) {
@@ -80,6 +97,11 @@ export class Internal {
 
   private getGas = async (transactionConfig: TransactionConfig) => {
     return ((await this.dsa.web3.eth.estimateGas(transactionConfig)) * 1.1).toFixed(0) // increasing gas cost by 10% for margin
+  }
+
+  private getPriorityGas = async () => {
+    const provider = new ethers.providers.JsonRpcProvider(this.dsa.web3.currentProvider.host)
+    return await provider.getFeeData()
   }
 
   /**
@@ -99,8 +121,10 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[]}, version: Version = this.dsa.instance.version) => {
-
+  encodeMethod = (
+    params: { connector: Connector; method: string; args: string[] },
+    version: Version = this.dsa.instance.version
+  ) => {
     // type check that object has the required properties
     if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
       throw new Error(`ConnectorInterface '${params.method}' not found`)
@@ -124,13 +148,14 @@ export class Internal {
     let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
 
     // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
-    spells.data = spells.data.map(spell => Number(version) === 1 ?
-      {...spell, connector: spell.connector} :
-      hasKey(connectorV2Mapping, spell.connector) ? 
-        {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
-        {...spell, connector: spell.connector}
+    spells.data = spells.data.map((spell) =>
+      Number(version) === 1
+        ? { ...spell, connector: spell.connector }
+        : hasKey(connectorV2Mapping, spell.connector)
+        ? { ...spell, connector: connectorV2Mapping[spell.connector] as Connector }
+        : { ...spell, connector: spell.connector }
     )
-    
+
     const targets = spells.data.map((spell) => this.getTarget(spell.connector, version))
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell, version))
 
@@ -145,33 +170,33 @@ export class Internal {
    * Returns the input interface required for cast().
    */
   private getTarget = (connector: Connector, version: Version = this.dsa.instance.version) => {
-    const chainId = this.dsa.instance.chainId;
+    const chainId = this.dsa.instance.chainId
 
     // type check that object has the required properties
     if (
-      !(hasKey(Addresses.connectors.chains[chainId].versions, version) && 
-      hasKey(Addresses.connectors.chains[chainId].versions[version], connector))
+      !(
+        hasKey(Addresses.connectors.chains[chainId].versions, version) &&
+        hasKey(Addresses.connectors.chains[chainId].versions[version], connector)
+      )
     ) {
       return console.error(`${connector} is invalid connector.`)
-    } 
+    }
 
     const target = Addresses.connectors.chains[chainId].versions[version][connector]
 
     if (!target) return console.error(`${connector} is invalid connector.`)
 
     // return target address for version 1 and connector name for version 2
-    return version === 2 ? connector : target;
+    return version === 2 ? connector : target
   }
 
   /**
    * Returns the input interface required for cast().
    */
   getAddress = async () => {
-    if (this.dsa.config.mode == "node")
-      return this.dsa.web3.eth.accounts.privateKeyToAccount(this.dsa.config.privateKey)
-        .address;
-    else if (this.dsa.config.mode == "simulation") 
-      return this.dsa.config.publicKey
+    if (this.dsa.config.mode == 'node')
+      return this.dsa.web3.eth.accounts.privateKeyToAccount(this.dsa.config.privateKey).address
+    else if (this.dsa.config.mode == 'simulation') return this.dsa.config.publicKey
 
     // otherwise, browser
     const addresses = await this.dsa.web3.eth.getAccounts()
