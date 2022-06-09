@@ -37,5 +37,5 @@ jobs:
           set -e
           set -o pipefail
 
-          npm install
+          npm install --legacy-peer-deps
           npm run build
