@@ -69,7 +69,6 @@
     "jest": "^26.5.2",
     "light-server": "^2.8.0",
     "node-fetch": "^2.6.1",
-    "prettier": "^2.0.5",
     "prettier-webpack-plugin": "^1.2.0",
     "rollup": "^2.28.2",
     "rollup-plugin-replace": "^2.2.0",
