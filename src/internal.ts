@@ -50,7 +50,7 @@ export class Internal {
    * @param params.nonce (optional) mostly for "node" mode
    * @param params.maxPriorityFeePerGas (optional) mostly for "node" mode
    * @param params.maxFeePerGas (optional) mostly for "node" mode
-   * @param txType 0 for legacy, 1 for EIP 1559
+   * @param txType 0 for legacy, 2 for EIP 1559
    */
   getTransactionConfig = async (params: GetTransactionConfigParams, txType: number) => {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
