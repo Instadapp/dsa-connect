@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const SWAP_AGGREGATE_A: AbiItem[] = [
+export const SWAP_AGGREGATOR_A: AbiItem[] = [
   {
     inputs: [],
     name: 'name',
