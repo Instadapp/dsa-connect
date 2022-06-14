@@ -82,7 +82,9 @@ import { AAVE_V3_CLAIM_A } from './AAVE-V3-CLAIM-A'
 import { NOTIONAL_V2_A } from './NOTIONAL-V2-A'
 import { HOP_MAINNET_A } from './HOP-MAINNET-A'
 import { UNISWAP_V3_SWAP_A } from './UNISWAP-V3-SWAP-A'
+import { SWAP_AGGREGATE_A } from './SWAP-AGGREGATE-A'
 export const connectorsV2_M1 = {
+  'SWAP-AGGREGATE-A': SWAP_AGGREGATE_A,
   'UNISWAP-V3-SWAP-A': UNISWAP_V3_SWAP_A,
   'HOP-MAINNET-A': HOP_MAINNET_A,
   'NOTIONAL-V2-A': NOTIONAL_V2_A,
