@@ -16,12 +16,49 @@ export const AAVE_V3_A: AbiItem[] = [
   {
     anonymous: false,
     inputs: [
+      { indexed: false, internalType: 'address', name: 'token', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { indexed: false, internalType: 'address', name: 'onBehalfOf', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'LogBorrowOnBehalfOf',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'address', name: 'token', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { indexed: false, internalType: 'address', name: 'delegateTo', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'LogDelegateBorrow',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: true, internalType: 'address', name: 'token', type: 'address' },
       { indexed: false, internalType: 'uint256', name: 'tokenAmt', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
       { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
     ],
     name: 'LogDeposit',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'address', name: 'token', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'LogDepositWithoutCollateral',
     type: 'event',
   },
   {
@@ -46,6 +83,19 @@ export const AAVE_V3_A: AbiItem[] = [
       { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
     ],
     name: 'LogPayback',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: 'address', name: 'token', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { indexed: false, internalType: 'address', name: 'onBehalfOf', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { indexed: false, internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'LogPaybackOnBehalfOf',
     type: 'event',
   },
   {
@@ -94,10 +144,59 @@ export const AAVE_V3_A: AbiItem[] = [
     inputs: [
       { internalType: 'address', name: 'token', type: 'address' },
       { internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { internalType: 'address', name: 'onBehalfOf', type: 'address' },
+      { internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'borrowOnBehalfOf',
+    outputs: [
+      { internalType: 'string', name: '_eventName', type: 'string' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { internalType: 'address', name: 'delegateTo', type: 'address' },
+      { internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'delegateBorrow',
+    outputs: [
+      { internalType: 'string', name: '_eventName', type: 'string' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'uint256', name: 'amt', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
       { internalType: 'uint256', name: 'setId', type: 'uint256' },
     ],
     name: 'deposit',
+    outputs: [
+      { internalType: 'string', name: '_eventName', type: 'string' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'depositWithoutCollateral',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
       { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
@@ -141,6 +240,23 @@ export const AAVE_V3_A: AbiItem[] = [
       { internalType: 'uint256', name: 'setId', type: 'uint256' },
     ],
     name: 'payback',
+    outputs: [
+      { internalType: 'string', name: '_eventName', type: 'string' },
+      { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'uint256', name: 'amt', type: 'uint256' },
+      { internalType: 'uint256', name: 'rateMode', type: 'uint256' },
+      { internalType: 'address', name: 'onBehalfOf', type: 'address' },
+      { internalType: 'uint256', name: 'getId', type: 'uint256' },
+      { internalType: 'uint256', name: 'setId', type: 'uint256' },
+    ],
+    name: 'paybackOnBehalfOf',
     outputs: [
       { internalType: 'string', name: '_eventName', type: 'string' },
       { internalType: 'bytes', name: '_eventParam', type: 'bytes' },
