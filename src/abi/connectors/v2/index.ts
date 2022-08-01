@@ -89,6 +89,7 @@ import { SOCKET_A } from './SOCKET-A'
 import { AAVE_V3_AUTOMATION_A } from './AAVE-V3-AUTOMATION-A'
 import { AAVE_V3_AUTOMATION_STAGING_A } from './AAVE-V3-AUTOMATION-STAGING-A'
 import {EULER_A} from './EULER-A'
+
 export const connectorsV2_M1 = {
   'EULER-A': EULER_A,
   'AAVE-V3-AUTOMATION-STAGING-A': AAVE_V3_AUTOMATION_STAGING_A,
