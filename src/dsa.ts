@@ -10,6 +10,7 @@ import { Transaction, TransactionCallbacks } from './transaction'
 import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
 import { Erc20 } from './utils/erc20'
+import { Erc20Euler } from './utils/erc20Euler'
 import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
@@ -105,6 +106,7 @@ export class DSA {
 
   // Extensions
   readonly erc20 = new Erc20(this)
+  readonly erc20Euler = new Erc20Euler(this)
   readonly erc721 = new Erc721(this)
   readonly internal = new Internal(this)
   readonly castHelpers = new CastHelpers(this)
