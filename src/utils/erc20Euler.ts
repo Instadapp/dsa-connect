@@ -141,8 +141,11 @@ type Erc20EulerApproveSubAccountInputParams = {
     if (!params.from) {
       params.from = await this.dsa.internal.getAddress()
     }
-    if ((typeof params.id === 'string' && params.id >= "256") || (typeof params.id === 'number' && params.id >= 256)) {
-        throw new Error("'id' cannot be greater than 255")
+    if (
+      (typeof params.subAccountId === 'string' && params.subAccountId >= "256") 
+      || (typeof params.subAccountId === 'number' && params.subAccountId >= 256)
+    ) {
+        throw new Error("'subAccountId' cannot be greater than 255")
     }
 
     let txObj: TransactionConfig;
@@ -154,7 +157,7 @@ type Erc20EulerApproveSubAccountInputParams = {
       params.to = this.dsa.internal.filterAddress(params.token)
       const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
       const data: string = contract.methods
-        .approveSubAccount(params.id, toAddr, params.amount)
+        .approveSubAccount(params.subAccountId, toAddr, params.amount)
         .encodeABI()
 
       txObj = await this.dsa.internal.getTransactionConfig({
