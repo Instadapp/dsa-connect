@@ -21,8 +21,18 @@ type Erc20EulerInputParams = {
   amount: string,
 } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
 
+/**
+ * @param {number|string} _d.id subaccount id (0 for primary and 1 - 255 for sub-account)
+ * @param {address} _d.token token address or symbol
+ * @param {string} _d.amount token amount
+ * @param {address|string} _d.from (optional) token 
+ * @param {number|string} _d.to (optional) 
+ * @param {number|string} _d.gasPrice (optional) not optional in "node"
+ * @param {number|string} _d.gas (optional) not optional in "node"
+ * @param {number|string} _d.nonce (optional) not optional in "node"
+ */
 type Erc20EulerApproveSubAccountInputParams = {
-    id: number,
+    id: number | string,
     token: keyof typeof TokenInfo | string,
     amount: string,
   } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
@@ -113,53 +123,6 @@ type Erc20EulerApproveSubAccountInputParams = {
    }
 
    /**
-    * Approve
-    */
-   async approve(params: Erc20EulerInputParams): Promise<string> {
-    
-    const txObj: TransactionConfig = await this.approveTxObj(params);
-    
-    return this.dsa.sendTransaction(txObj);
-   }
-
-   /**
-    * Approve Token Tx Obj
-    */
-   async approveTxObj(params: Erc20EulerInputParams): Promise<TransactionConfig> {
-     if (!params.to) {
-       throw new Error("Parameter 'to' is missing")
-     }
-     if (!params.from) {
-       params.from = await this.dsa.internal.getAddress()
-     }
-
-     let txObj: TransactionConfig;
-
-     if (["eth", TokenInfo.eth.address].includes(params.token.toLowerCase())) {
-       throw new Error("ETH does not require approve.") 
-     } else {
-       const toAddr: string = params.to
-       params.to = this.dsa.internal.filterAddress(params.token)
-       const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
-       const data: string = contract.methods
-         .approve(toAddr, params.amount)
-         .encodeABI()
-
-       txObj = await this.dsa.internal.getTransactionConfig({
-        from: params.from,
-        to: params.to,
-        data: data,
-        gas: params.gas,
-        gasPrice: params.gasPrice,
-        nonce: params.nonce,
-        value: 0,
-      } as GetTransactionConfigParams)
-     }
-
-     return txObj
-   }
-
-   /**
     * Approve Sub Account
     */
     async approveSubAccount(params: Erc20EulerApproveSubAccountInputParams): Promise<string> {
@@ -178,7 +141,7 @@ type Erc20EulerApproveSubAccountInputParams = {
     if (!params.from) {
       params.from = await this.dsa.internal.getAddress()
     }
-    if (params.id >= 256) {
+    if ((typeof params.id === 'string' && params.id >= "256") || (typeof params.id === 'number' && params.id >= 256)) {
         throw new Error("'id' cannot be greater than 255")
     }
 
