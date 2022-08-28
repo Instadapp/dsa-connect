@@ -32,7 +32,7 @@ type Erc20EulerInputParams = {
  * @param {number|string} _d.nonce (optional) not optional in "node"
  */
 type Erc20EulerApproveSubAccountInputParams = {
-    id: number | string,
+    subAccountId: number | string,
     token: keyof typeof TokenInfo | string,
     amount: string,
   } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
