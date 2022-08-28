@@ -22,7 +22,7 @@ type Erc20EulerInputParams = {
 } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
 
 /**
- * @param {number|string} _d.id subaccount id (0 for primary and 1 - 255 for sub-account)
+ * @param {number|string} _d. subAccountId subaccount id (0 for primary and 1 - 255 for sub-account)
  * @param {address} _d.token token address or symbol
  * @param {string} _d.amount token amount
  * @param {address|string} _d.from (optional) token 
