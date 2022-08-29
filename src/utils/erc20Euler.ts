@@ -155,7 +155,7 @@ type Erc20EulerApproveSubAccountInputParams = {
     } else {
       const toAddr: string = params.to
       params.to = this.dsa.internal.filterAddress(params.token)
-      const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20, params.to)
+      const contract = new this.dsa.web3.eth.Contract(Abi.basics.erc20Euler, params.to)
       const data: string = contract.methods
         .approveSubAccount(params.subAccountId, toAddr, params.amount)
         .encodeABI()
