@@ -6,6 +6,7 @@ import * as Math from './math';
 import { TransactionConfig } from 'web3-core'
 import { GetTransactionConfigParams } from '../internal'
 import { Contract } from 'web3-eth-contract';
+import BigNumber from 'bignumber.js'
 
 /**
  * @param {address} _d.token token address or symbol
@@ -142,8 +143,7 @@ type Erc20EulerApproveSubAccountInputParams = {
       params.from = await this.dsa.internal.getAddress()
     }
     if (
-      (typeof params.subAccountId === 'string' && params.subAccountId >= "256") 
-      || (typeof params.subAccountId === 'number' && params.subAccountId >= 256)
+      (new BigNumber(params.subAccountId).gte(256))
     ) {
         throw new Error("'subAccountId' cannot be greater than 255")
     }
