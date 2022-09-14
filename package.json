@@ -43,7 +43,7 @@
     "dapps"
   ],
   "peerDependencies": {
-    "web3": "^1.8.0"
+    "web3": "^1.5.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
