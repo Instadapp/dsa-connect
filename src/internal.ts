@@ -18,6 +18,8 @@ export interface GetTransactionConfigParams {
   gas?: TransactionConfig['gas']
   gasPrice?: TransactionConfig['gasPrice']
   nonce?: TransactionConfig['nonce']
+  maxPriorityFeePerGas?: TransactionConfig['maxPriorityFeePerGas']
+  maxFeePerGas?: TransactionConfig['maxFeePerGas']
 }
 
 export type Version = keyof typeof Abi.connectors.versions
@@ -29,7 +31,7 @@ export type EstimateGasParams = {
 } & Required<Pick<TransactionConfig, 'from' | 'to' | 'value'>>
 
 export class Internal {
-  constructor(private dsa: DSA) {}
+  constructor(private dsa: DSA) { }
 
   /**
    * Returns TransactionObject for any calls.
@@ -45,6 +47,8 @@ export class Internal {
    * @param params.gas (optional)
    * @param params.gasPrice (optional only for "browser" mode)
    * @param params.nonce (optional) mostly for "node" mode
+   * @param params.maxFeePerGas (optional only for "browser" mode)
+   * @param params.maxPriorityFeePerGas (optional only for "browser" mode)
    */
   getTransactionConfig = async (params: GetTransactionConfigParams) => {
     if (!params.from) throw new Error("Parameter 'from' is not defined.")
@@ -63,8 +67,18 @@ export class Internal {
       transactionConfig.gasPrice = params.gasPrice
     }
 
+    if (params.maxFeePerGas) {
+      transactionConfig.maxFeePerGas = params.maxFeePerGas
+    }
+
+    if (params.maxPriorityFeePerGas) {
+      transactionConfig.maxPriorityFeePerGas = params.maxPriorityFeePerGas
+    }
+
     if (this.dsa.mode === 'node') {
-      if (!params.gasPrice) throw new Error("Parameter 'gasPrice' must be defined when using mode 'node'.")
+      if (!(params.maxFeePerGas && params.maxPriorityFeePerGas) && !params.gasPrice) {
+        throw new Error("Parameter 'gasPrice' or `maxFeePerGas` and `maxPriorityFeePerGas` must be defined when using mode 'node'.")
+      }
 
       transactionConfig.nonce = params.nonce ?? (await this.getNonce(from))
     } else if (!!params.nonce) {
@@ -99,7 +113,7 @@ export class Internal {
   /**
    * Returns encoded data of any calls.
    */
-  encodeMethod = (params: { connector: Connector; method: string; args: string[]}, version: Version = this.dsa.instance.version) => {
+  encodeMethod = (params: { connector: Connector; method: string; args: string[] }, version: Version = this.dsa.instance.version) => {
 
     // type check that object has the required properties
     if (!(hasKey(Abi.connectors.versions, version) && hasKey(Abi.connectors.versions[version], params.connector))) {
@@ -125,12 +139,12 @@ export class Internal {
 
     // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
     spells.data = spells.data.map(spell => Number(version) === 1 ?
-      {...spell, connector: spell.connector} :
-      hasKey(connectorV2Mapping, spell.connector) ? 
-        {...spell, connector: connectorV2Mapping[spell.connector] as Connector} :
-        {...spell, connector: spell.connector}
+      { ...spell, connector: spell.connector } :
+      hasKey(connectorV2Mapping, spell.connector) ?
+        { ...spell, connector: connectorV2Mapping[spell.connector] as Connector } :
+        { ...spell, connector: spell.connector }
     )
-    
+
     const targets = spells.data.map((spell) => this.getTarget(spell.connector, version))
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell, version))
 
@@ -149,11 +163,11 @@ export class Internal {
 
     // type check that object has the required properties
     if (
-      !(hasKey(Addresses.connectors.chains[chainId].versions, version) && 
-      hasKey(Addresses.connectors.chains[chainId].versions[version], connector))
+      !(hasKey(Addresses.connectors.chains[chainId].versions, version) &&
+        hasKey(Addresses.connectors.chains[chainId].versions[version], connector))
     ) {
       return console.error(`${connector} is invalid connector.`)
-    } 
+    }
 
     const target = Addresses.connectors.chains[chainId].versions[version][connector]
 
@@ -170,7 +184,7 @@ export class Internal {
     if (this.dsa.config.mode == "node")
       return this.dsa.web3.eth.accounts.privateKeyToAccount(this.dsa.config.privateKey)
         .address;
-    else if (this.dsa.config.mode == "simulation") 
+    else if (this.dsa.config.mode == "simulation")
       return this.dsa.config.publicKey
 
     // otherwise, browser

@@ -20,7 +20,7 @@ import BigNumber from 'bignumber.js'
 type Erc20EulerInputParams = {
   token: keyof typeof TokenInfo | string,
   amount: string,
-} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
+} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas'| 'maxPriorityFeePerGas' | 'nonce' | 'to'>
 
 /**
  * @param {number|string} _d. subaccount id (0 for primary and 1 - 255 for sub-account)
@@ -36,7 +36,7 @@ type Erc20EulerApproveSubAccountInputParams = {
     subAccountId: number | string,
     token: keyof typeof TokenInfo | string,
     amount: string,
-  } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
+  } & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce' | 'to'>
 
 /**
  * generic ERC20 token methods
@@ -86,6 +86,8 @@ type Erc20EulerApproveSubAccountInputParams = {
         data: "0x",
         gas: params.gas,
         gasPrice: params.gasPrice,
+        maxFeePerGas: params.maxFeePerGas,
+        maxPriorityFeePerGas: params.maxPriorityFeePerGas,
         nonce: params.nonce,
         value: params.amount,
       } as GetTransactionConfigParams)
@@ -115,6 +117,8 @@ type Erc20EulerApproveSubAccountInputParams = {
         data: data,
         gas: params.gas,
         gasPrice: params.gasPrice,
+        maxFeePerGas: params.maxFeePerGas,
+        maxPriorityFeePerGas: params.maxPriorityFeePerGas,
         nonce: params.nonce,
         value: 0
       } as GetTransactionConfigParams);
@@ -166,6 +170,8 @@ type Erc20EulerApproveSubAccountInputParams = {
        data: data,
        gas: params.gas,
        gasPrice: params.gasPrice,
+       maxFeePerGas: params.maxFeePerGas,
+       maxPriorityFeePerGas: params.maxPriorityFeePerGas,
        nonce: params.nonce,
        value: 0,
      } as GetTransactionConfigParams)
