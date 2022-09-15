@@ -19,7 +19,7 @@ import { Contract } from 'web3-eth-contract';
 type Erc721InputParams = {
   token: keyof typeof TokenInfo | string,
   tokenId: number,
-} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce' | 'to'>
+} & Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas'| 'maxPriorityFeePerGas' | 'nonce' | 'to'>
 
 /**
  * generic ERC20 token methods
@@ -72,6 +72,8 @@ type Erc721InputParams = {
     data: data,
     gas: params.gas,
     gasPrice: params.gasPrice,
+    maxFeePerGas: params.maxFeePerGas,
+    maxPriorityFeePerGas: params.maxPriorityFeePerGas,
     nonce: params.nonce,
     value: 0
     } as GetTransactionConfigParams);
@@ -114,6 +116,8 @@ type Erc721InputParams = {
       data: data,
       gas: params.gas,
       gasPrice: params.gasPrice,
+      maxFeePerGas: params.maxFeePerGas,
+      maxPriorityFeePerGas: params.maxPriorityFeePerGas,
       nonce: params.nonce,
       value: 0,
     } as GetTransactionConfigParams)

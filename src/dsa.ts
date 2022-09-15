@@ -15,19 +15,19 @@ import { Erc721 } from './utils/erc721'
 
 export type DSAConfig =
   | {
-      web3: Web3
-      mode: 'node'
-      privateKey: string
-    }
+    web3: Web3
+    mode: 'node'
+    privateKey: string
+  }
   | {
-      web3: Web3
-      mode: 'simulation'
-      publicKey: string
-    }
+    web3: Web3
+    mode: 'simulation'
+    publicKey: string
+  }
   | {
-      web3: Web3
-      mode?: 'browser'
-    }
+    web3: Web3
+    mode?: 'browser'
+  }
 
 // ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism, 250 = fantom
 export type ChainId = 1 | 137 | 42161 | 43114 | 10 | 250
@@ -46,6 +46,8 @@ export interface Instance {
  * @param _d.from (optional)
  * @param _d.value (optional)
  * @param _d.gasPrice (optional only for "browser" mode)
+ * @param _d.maxFeePerGas (optional only for "browser" mode)
+ * @param _d.maxPriorityFeePerGas (optional only for "browser" mode)
  * @param _d.gas (optional)
  * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
  */
@@ -53,7 +55,7 @@ type CastParams = {
   spells: Spells
   origin?: string
 } & TransactionCallbacks &
-  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'nonce'>
+  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
 /**
  * @param {address} _d.authority (optional)
@@ -61,6 +63,8 @@ type CastParams = {
  * @param {address} _d.from (optional)
  * @param {number} _d.version (optional)
  * @param {number|string} _d.gasPrice (optional) not optional in "node"
+ * @param {number|string} _d.maxFeePerGas (optional)
+ * @param {number|string} _d.maxPriorityFeePerGas (optional)
  * @param {number|string} _d.gas (optional) not optional in "node"
  * @param {number|string} _d.nonce (optional) not optional in "node"
  */
@@ -69,7 +73,7 @@ type BuildParams = {
   origin?: string
   version?: Instance['version']
 } & TransactionCallbacks &
-  Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'nonce'>
+  Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
 export class DSA {
   static readonly version: string = '__REPLACE_VERSION__'
@@ -228,6 +232,8 @@ export class DSA {
       data,
       gas: mergedParams.gas,
       gasPrice: mergedParams.gasPrice,
+      maxFeePerGas: mergedParams.maxFeePerGas,
+      maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
       nonce: mergedParams.nonce,
     })
 
@@ -258,6 +264,8 @@ export class DSA {
       data,
       gas: params.gas,
       gasPrice: params.gasPrice,
+      maxFeePerGas: params.maxFeePerGas,
+      maxPriorityFeePerGas: params.maxPriorityFeePerGas,
       nonce: params.nonce,
     })
   }
@@ -275,7 +283,7 @@ export class DSA {
     params: {
       authority?: string
       origin?: string
-    } & Pick<TransactionConfig, 'from' | 'gasPrice' | 'gas' | 'nonce'>
+    } & Pick<TransactionConfig, 'from' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'gas' | 'nonce'>
   ) {
     const defaultAddress = await this.internal.getAddress()
 
@@ -300,6 +308,8 @@ export class DSA {
       data,
       gas: mergedParams.gas,
       gasPrice: mergedParams.gasPrice,
+      maxFeePerGas: mergedParams.maxFeePerGas,
+      maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
       nonce: mergedParams.nonce,
     })
 
@@ -380,6 +390,8 @@ export class DSA {
       to: mergedParams.to,
       gas: mergedParams.gas,
       gasPrice: mergedParams.gasPrice,
+      maxFeePerGas: mergedParams.maxFeePerGas,
+      maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
       nonce: mergedParams.nonce,
       value: mergedParams.value,
       data: data,

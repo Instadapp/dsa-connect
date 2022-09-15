@@ -495,13 +495,13 @@ describe('DSA v2', function () {
 
     try {
       await spells.estimateCastGas({ from: account })
-    } catch (e) {
+    } catch (e: any) {
         expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account })
-    } catch (e) {
+    } catch (e: any) {
       expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
   })
@@ -517,13 +517,13 @@ describe('DSA v2', function () {
 
     try {
       await spells.estimateCastGas({ from: account })
-    } catch (e) {
+    } catch (e: any) {
         expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
 
     try {
       const txHash = await spells.cast({ from: account })
-    } catch (e) {
+    } catch (e: any) {
       console.log("EADD", e.message)
         expect(e.message).toBe("Returned error: VM Exception while processing transaction: revert 1Inch-swap-failed");
     }
