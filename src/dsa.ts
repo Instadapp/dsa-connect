@@ -434,7 +434,7 @@ export class DSA {
       origin: this.origin,
     }
 
-    const mergedParams = Object.assign(defaults, params instanceof String ? {castData: params} : params) as CastDataParams
+    const mergedParams = Object.assign(defaults, typeof params === "string" ? {castData: params} : params) as CastDataParams
 
     if (!mergedParams.from) throw new Error(`Parameter 'from' is not defined.`)
     if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
