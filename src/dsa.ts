@@ -57,6 +57,25 @@ type CastParams = {
 } & TransactionCallbacks &
   Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
+
+/**
+ * @param _d.castData cast calldata
+ * @param _d.origin (optional)
+ * @param _d.to (optional)
+ * @param _d.from (optional)
+ * @param _d.value (optional)
+ * @param _d.gasPrice (optional only for "browser" mode)
+ * @param _d.maxFeePerGas (optional only for "browser" mode)
+ * @param _d.maxPriorityFeePerGas (optional only for "browser" mode)
+ * @param _d.gas (optional)
+ * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
+ */
+type CastDataParams = {
+  castData: string
+  origin?: string
+} & TransactionCallbacks &
+  Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
+
 /**
  * @param {address} _d.authority (optional)
  * @param {address} _d.origin (optional)
@@ -399,6 +418,42 @@ export class DSA {
 
     console.log(`DSA config:\n version: ${this.instance.version}\n chainId: ${this.instance.chainId}`)
     console.log(`Casting spells to DSA(#${this.instance.id})...`)
+
+    const transaction = await this.transaction.send(transactionConfig, {
+      onReceipt: mergedParams.onReceipt,
+      onConfirmation: mergedParams.onConfirmation,
+    })
+
+    return transaction
+  } 
+  
+  async castData(params: string | CastDataParams) {
+    const defaults = {
+      to: this.instance.address,
+      from: await this.internal.getAddress(),
+      origin: this.origin,
+    }
+
+    const mergedParams = Object.assign(defaults, typeof params === "string" ? {castData: params} : params) as CastDataParams
+
+    if (!mergedParams.from) throw new Error(`Parameter 'from' is not defined.`)
+    if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
+    if (!mergedParams.castData) throw new Error(`Parameter 'castData' is not defined.`)
+
+    const transactionConfig = await this.internal.getTransactionConfig({
+      from: mergedParams.from,
+      to: mergedParams.to,
+      gas: mergedParams.gas,
+      gasPrice: mergedParams.gasPrice,
+      maxFeePerGas: mergedParams.maxFeePerGas,
+      maxPriorityFeePerGas: mergedParams.maxPriorityFeePerGas,
+      nonce: mergedParams.nonce,
+      value: mergedParams.value,
+      data: mergedParams.castData,
+    })
+
+    console.log(`DSA config:\n version: ${this.instance.version}\n chainId: ${this.instance.chainId}`)
+    console.log(`Casting castData to DSA(#${this.instance.id})...`)
 
     const transaction = await this.transaction.send(transactionConfig, {
       onReceipt: mergedParams.onReceipt,
