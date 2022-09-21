@@ -390,7 +390,7 @@ export class DSA {
     })()
   }
 
-  async cast(params: Spells | CastParams) {
+  async cast(params: string | Spells | CastParams) {
     const defaults = {
       to: this.instance.address,
       from: await this.internal.getAddress(),
@@ -463,12 +463,12 @@ export class DSA {
     return transaction
   }
 
-  private getData(params: { spells: Spells | string; origin?: string }) {
+  private getData(params: { spells: Spells | string; origin?: string }) : string {
 
-    if (typeof params.spells == "string") {
+    if (typeof params.spells === "string") {
       return params.spells
     } else {
-      const encodedSpells = this.internal.encodeSpells(params)
+      const encodedSpells = this.internal.encodeSpells(params as { spells: Spells, origin?: string})
   
       const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
       const data = contract.methods
