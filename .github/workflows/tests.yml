@@ -1,0 +1,44 @@
+name: Run Tests
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head_sha }}
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Use Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install
+        run: npm install
+
+      - name: Fork
+        run: npm run ganache:fork &
+        env:
+          PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
+          ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
+
+      - name: Tests
+        run: npm run test -- --runInBand --detectOpenHandles --forceExit
+        env:
+          PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
+          ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
