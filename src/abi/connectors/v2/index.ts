@@ -96,7 +96,9 @@ import { AAVE_V2_AUTOMATION_A } from './AAVE-V2-AUTOMATION-A'
 import { COMPOUND_V3_A } from './COMPOUND-V3-A'
 import { WSTETH_A } from './WSTETH-A'
 import { COMPOUND_V3_REWARDS_A } from './COMPOUND-V3-REWARDS-A'
+import { LITE_B } from './LITE-B'
 export const connectorsV2_M1 = {
+  'LITE-B': LITE_B,
   'COMPOUND-V3-REWARDS-A': COMPOUND_V3_REWARDS_A,
   'COMPOUND-V3-A': COMPOUND_V3_A,
   'AAVE-V2-AUTOMATION-A': AAVE_V2_AUTOMATION_A,
