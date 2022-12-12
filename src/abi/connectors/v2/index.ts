@@ -100,6 +100,7 @@ import { LITE_B } from './LITE-B'
 import { MORPHO_AAVE_V2_A } from './MORPHO-AAVE-V2-A'
 import { MORPHO_COMPOUND_V2_A } from './MORPHO-COMPOUND-V2-A'
 import { MORPHO_REWARDS_A } from './MORPHO-REWARDS-A'
+import { ONEINCH_V5_A } from './1INCH-V5-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -145,6 +146,7 @@ export const connectorsV2_M1 = {
   '1INCH-B': ONEINCH_B,
   '1INCH-V3-A': ONEINCH_V3_A,
   '1INCH-V4-A': ONEINCH_V4_A,
+  '1INCH-V5-A': ONEINCH_V5_A,
   'QUICKSWAP-A': QUICKSWAP_A,
   'INSTAPOOL-C': INSTAPOOL_C,
   'UNISWAP-SELL-BETA': UNISWAP_SELL_BETA,
