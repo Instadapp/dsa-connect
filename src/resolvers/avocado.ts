@@ -21,7 +21,7 @@ export class Avocado {
    *
    * @param spells The spells instance
    */
-  async convertToActions(spells: Spells, version: Version = this.dsa.instance.version, chainId: ChainId = this.dsa.instance.chainId) {
+  async convertToActions(spells: Spells, version: Version, chainId: ChainId) {
     const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version);
     let targets: string[];
     if (version === 1) {

@@ -396,7 +396,7 @@ export class DSA {
           console.log('No spells casted. Add spells with `.add(...)`.')
           return
         }
-        return await vm.convertToAvocadoActions(this)
+        return await vm.convertToAvocadoActions(this, vm.instance.version, vm.instance.chainId)
       }
     })()
   }
