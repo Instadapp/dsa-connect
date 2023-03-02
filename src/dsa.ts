@@ -9,6 +9,7 @@ import { Spells } from './spells'
 import { Transaction, TransactionCallbacks } from './transaction'
 import { wrapIfSpells } from './utils'
 import { Instapool_v2 } from './resolvers/instapool_v2'
+import { Avocado } from './resolvers/avocado'
 import { Erc20 } from './utils/erc20'
 import { Erc20Euler } from './utils/erc20Euler'
 import { Erc721 } from './utils/erc721'
@@ -135,6 +136,7 @@ export class DSA {
   readonly castHelpers = new CastHelpers(this)
   readonly transaction = new Transaction(this)
   readonly instapool_v2 = new Instapool_v2(this)
+  readonly avocado = new Avocado(this)
   readonly accounts = new Accounts(this)
 
   // Aliases
@@ -148,6 +150,7 @@ export class DSA {
   public estimateCastGas = (...args: Parameters<CastHelpers['estimateGas']>) => {
     return this.castHelpers.estimateGas(...args)
   }
+  public convertToAvocadoActions = (...args: Parameters<Avocado['convertToActions']>) => this.avocado.convertToActions(...args)
 
   /**
    * @param config A `web3` instance or a DSAConfig
@@ -386,6 +389,14 @@ export class DSA {
           return
         }
         return await vm.encodeSpells({ spells: this, ...params })
+      }
+
+      convertToAvocadoActions = async () => {
+        if (!this.data.length) {
+          console.log('No spells casted. Add spells with `.add(...)`.')
+          return
+        }
+        return await vm.convertToAvocadoActions(this)
       }
     })()
   }
