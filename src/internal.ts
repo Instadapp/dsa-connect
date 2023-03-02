@@ -145,7 +145,7 @@ export class Internal {
         { ...spell, connector: spell.connector }
     )
 
-    const targets = spells.data.map((spell) => this.getTarget(spell.connector, version))
+    const targets = spells.data.map((spell) => this.getTarget(spell.connector, version) as string)
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell, version))
 
     return { targets, spells: encodedMethods }
