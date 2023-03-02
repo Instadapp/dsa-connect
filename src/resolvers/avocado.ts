@@ -23,14 +23,14 @@ export class Avocado {
    */
   async convertToActions(spells: Spells, version: Version = this.dsa.instance.version, chainId: ChainId = this.dsa.instance.chainId) {
     const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version);
-    let targets;
+    let targets: string[];
     if (version === 1) {
         if (encodeSpellsData.targets.length === 0) throw new Error("Targets length is zero")
         targets = encodeSpellsData.targets
     } else {
         try {
             const contract = new this.dsa.web3.eth.Contract(
-                Abi.core.versions[2].connectors as any,
+                Abi.core.versions[2].connectors,
                 Addresses.core[chainId].versions[version].connectors
             )
             const {isOk, _connectors} = await contract.methods.isConnectors(encodeSpellsData.targets).call()
