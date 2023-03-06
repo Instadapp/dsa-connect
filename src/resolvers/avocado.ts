@@ -50,13 +50,11 @@ export class Avocado {
             
             // If the connector matches the key in AvoConnectorMapping, replace the target address
             // with the Avocado connector address.
-            _connectors = _connectors.map((a: string, i: number) => {
-                hasKey(AvoConnectorMapping, spells.data[i].connector)
+            targets = _connectors.map((a: string, i: number) => 
+                (hasKey(AvoConnectorMapping, spells.data[i].connector)
                     ? AvoConnectorMapping[encodeSpellsData.targets[i]]
-                    : a
-            })
-
-            targets = _connectors;
+                    : a)
+            )
         } catch (err) {
             throw new Error("Error: not able to resolver connectorName")
         }
@@ -69,5 +67,54 @@ export class Avocado {
     }))
 
     return actions;
+  }
+
+  async convertToFlashloanActions(spells: Spells, version: Version, chainId: ChainId) {
+    const actions = await this.convertToActions(spells, version, chainId)
+
+    return actions.map((a, i) => 
+        spells.data[i].connector === "INSTAPOOL-C" ?
+            { 
+                data: a.data.replace("4cb38df5", "095627e9"),
+                operation: 2,
+                target: "0xedA71945e047B9FC1B7758937409865f9e33fa9D",
+                value: 0
+            } :
+            a
+        )
+  }
+
+  async encodeFlashCastData(spells: Spells, version: Version, chainId: ChainId) {
+    const flashloanActions = await this.convertToActions(spells, version, chainId)
+
+    const actionsType = [{
+        components: [
+            {
+                internalType: "address",
+                name: "target",
+                type: "address"
+            },
+            {
+                internalType: "bytes",
+                name: "data",
+                type: "bytes"
+            },
+            {
+                internalType: "uint256",
+                name: "value",
+                type: "uint256"
+            },
+            {
+                internalType: "uint256",
+                name: "operation",
+                type: "uint256"
+            }
+        ],
+        internalType: "struct IAvoWalletV2.Action[]",
+        name: "actions",
+        type: "tuple[]"
+    }]
+
+    return this.dsa.web3.eth.abi.encodeParameters(actionsType, [flashloanActions]);
   }
 }
