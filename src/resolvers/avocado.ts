@@ -6,14 +6,18 @@ import { Addresses } from '../addresses'
 import { Abi } from '../abi'
 import { hasKey } from '../utils/typeHelper'
 
-interface AvoConnectorMapping {
-    [key: string]: string;
+const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
+    1: {},
+    137: {
+        "AAVE-V3-IMPORT-A": "0x6F836B972129a525615452b1Bd80a0F4EcF94fEd",
+    },
+    42161: {},
+    43114: {},
+    10: {},
+    250: {}
 }
 
-const AvoConnectorMapping: AvoConnectorMapping = {
-    "AAVE-V3-IMPORT-A": "0x6F836B972129a525615452b1Bd80a0F4EcF94fEd",
-    "INSTAPOOL-C": "0xb00e715E0752232dB3AC121ed86c6e23422a5675"
-}
+const FLA_V2_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a"
 
 export interface AvocadoAction {
     target: string;
@@ -51,37 +55,62 @@ export class Avocado {
             // If the connector matches the key in AvoConnectorMapping, replace the target address
             // with the Avocado connector address.
             targets = _connectors.map((a: string, i: number) => 
-                (hasKey(AvoConnectorMapping, spells.data[i].connector)
-                    ? AvoConnectorMapping[encodeSpellsData.targets[i]]
+                (hasKey(AvoConnectorMapping[chainId], spells.data[i].connector)
+                    ? AvoConnectorMapping[chainId][encodeSpellsData.targets[i]]
                     : a)
             )
         } catch (err) {
             throw new Error("Error: not able to resolver connectorName")
         }
     }
-    const actions: AvocadoAction[] = targets.map((target, i) => ({
-        target,
-        data: encodeSpellsData.spells[i],
-        operation: 1,
-        value: 0
-    }))
+    const flaV2ABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
+    const erc20ABI = {"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
+    
+    const actions: AvocadoAction[] =  targets.flatMap((target, i) => {
+        const isFlashloanSpell = spells.data[i].connector === "INSTAPOOL-C"
+        const isMultiFlashloanSpell = spells.data[i].method === "flashMultiBorrowAndCast" || spells.data[i].method === "flashMultiPayback"
+        const isPaybackFlashloanSpell = spells.data[i].method === "flashPayback" || spells.data[i].method === "flashMultiPayback"
+        
+        if (isFlashloanSpell) {
+            const spellsArgs = spells.data[i].args
+            const tokens = isMultiFlashloanSpell ? spellsArgs[0] : [spellsArgs[0]]
+            const amounts = isMultiFlashloanSpell ? spellsArgs[1] : [spellsArgs[1]]
 
-    return actions;
-  }
-
-  async convertToFlashloanActions(spells: Spells, version: Version, chainId: ChainId) {
-    const actions = await this.convertToActions(spells, version, chainId)
-
-    return actions.map((a, i) => 
-        spells.data[i].connector === "INSTAPOOL-C" ?
-            { 
-                data: a.data.replace("4cb38df5", "095627e9"),
-                operation: 2,
-                target: "0xedA71945e047B9FC1B7758937409865f9e33fa9D",
+            if (!isPaybackFlashloanSpell) {
+                const params = [
+                    tokens,
+                    amounts,
+                    spellsArgs[2],
+                    spellsArgs[3],
+                    spellsArgs[4],
+                ]
+    
+                return  { 
+                    target: FLA_V2_ADDRESS,
+                    data: this.dsa.web3.eth.abi.encodeFunctionCall(flaV2ABI as any, params),
+                    operation: 2,
+                    value: 0
+                }
+            } else {
+                return tokens.map((token: string, i: number) => {
+                    return {
+                        data: this.dsa.web3.eth.abi.encodeFunctionCall(erc20ABI as any, [FLA_V2_ADDRESS, amounts[i]]),
+                        target: token,
+                        operation: 0,
+                        value: 0
+                    }
+                })
+            }
+        } else {
+            return {
+                target,
+                data: encodeSpellsData.spells[i],
+                operation: 1,
                 value: 0
-            } :
-            a
-        )
+            }
+        }
+    })
+    return actions
   }
 
   async encodeFlashCastData(spells: Spells, version: Version, chainId: ChainId) {
