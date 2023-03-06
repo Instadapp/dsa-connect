@@ -4,7 +4,6 @@ import { Spells } from '../spells'
 import { Version } from '../internal'
 import { Addresses } from '../addresses'
 import { Abi } from '../abi'
-import { connector } from '../abi/core/v1/connector'
 import { hasKey } from '../utils/typeHelper'
 
 interface AvoConnectorMapping {
@@ -40,8 +39,6 @@ export class Avocado {
         targets = encodeSpellsData.targets
     } else {
         try {
-            // let spellsDSA = spells.data
-
             // InstaConnectorsV2 Contract
             const contract = new this.dsa.web3.eth.Contract(
                 Abi.core.versions[2].connectors,
