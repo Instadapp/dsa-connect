@@ -7,13 +7,27 @@ import { Abi } from '../abi'
 import { hasKey } from '../utils/typeHelper'
 
 const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
-    1: {},
+    1: {
+        "AAVE-V3-IMPORT-A": "0xb3612a0a7C2DF55D5bD9A3343F3dAe2037cbB5e0",
+        "COMPOUND-V2-IMPORT-A": "0xfcC6De9477DfcaB473021F4743FA0ec5Cec73417",
+        "EULER-IMPORT-A": "0x1Df3C8AC7BA672F060DbC088352965dB862f98d8"
+    },
     137: {
         "AAVE-V3-IMPORT-A": "0x6F836B972129a525615452b1Bd80a0F4EcF94fEd",
+        "AAVE-V3-IMPORT-PERMIT-A": "0xa3770b566c8C14b3191eD46c3E1BE1B2d153CFFC",
     },
-    42161: {},
-    43114: {},
-    10: {},
+    42161: {
+        "AAVE-V3-IMPORT-A": "0x6773Ee66207B2322053C399C670973C63Aa80BFc",
+        "AAVE-V3-IMPORT-PERMIT-A": "0xFc563b347874a4A456dD389F9dE56fbe55e6E196"
+    },
+    43114: {
+        "AAVE-V3-IMPORT-A": "0xa066Bd18446cb56C020623784A1B86A69d6DA45d",
+        "AAVE-V3-IMPORT-PERMIT-A": "0x67a3C4Df395c01CfB107eD9447242C136D1523A6"
+    },
+    10: {
+        "AAVE-V3-IMPORT-A": "0x0030D79aF00325A5B4577a7d5976492A93db114B",
+        "AAVE-V3-IMPORT-PERMIT-A": "0x1814d6E8E85bd58C6fccC9Bdf82a6d1931A825Bd"
+    },
     250: {}
 }
 
