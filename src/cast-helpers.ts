@@ -8,6 +8,8 @@ import { wrapIfSpells } from './utils'
 type EncodeAbiParams = {
   spells: Spells
   origin?: string
+  version?: 1 | 2
+  to?: string
 } & Pick<TransactionConfig, 'to'>
 
 export class CastHelpers {
@@ -62,6 +64,7 @@ export class CastHelpers {
     const defaults = {
       to: this.dsa.instance.address,
       origin: this.dsa.origin,
+      version: this.dsa.instance.version,
     }
 
     const mergedParams = Object.assign(defaults, wrapIfSpells(params)) as EncodeAbiParams
@@ -71,10 +74,9 @@ export class CastHelpers {
         `Please configure the DSA instance by calling dsa.setInstance(dsaId). More details: https://docs.instadapp.io/setup`
       )
 
-    
-    const contract = new this.dsa.config.web3.eth.Contract(Abi.core.versions[this.dsa.instance.version].account, mergedParams.to)
+    const contract = new this.dsa.config.web3.eth.Contract(Abi.core.versions[mergedParams.version!].account, mergedParams.to)
 
-    const { targets, spells } = this.dsa.internal.encodeSpells(mergedParams.spells)
+    const { targets, spells } = this.dsa.internal.encodeSpells(mergedParams.spells, mergedParams.version)
     //TODO @thrilok: check about return type.
     const encodedAbi: string = contract.methods.cast(targets, spells, mergedParams.origin).encodeABI()
     return encodedAbi
