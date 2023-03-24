@@ -1,7 +1,8 @@
 import { TransactionConfig } from 'web3-core'
-import DSA from '.'
+import DSA, { ChainId } from '.'
 import { Abi } from './abi'
 import { Addresses } from './addresses'
+import { Version } from './internal'
 import { Spells } from './spells'
 import { wrapIfSpells } from './utils'
 
@@ -83,7 +84,7 @@ export class CastHelpers {
   }
 
   
-  flashBorrowSpellsConvert = (params: Spells): Spells => {
+  flashBorrowSpellsConvert = (params: Spells, version: Version, chainId: ChainId): Spells => {
     const arr = params.data;
     const spellsLength = arr.length;
     const spells = this.dsa.Spell()
@@ -102,7 +103,7 @@ export class CastHelpers {
         const subSpells = this.dsa.Spell()
         arr.slice(i, spellsLength).forEach(b => subSpells.add(b))
 
-        const encodedFlashloanSpells = this.flashBorrowSpellsConvert(subSpells)
+        const encodedFlashloanSpells = this.flashBorrowSpellsConvert(subSpells, version, chainId)
         i = spellsLength - encodedFlashloanSpells.data.length - 2
 
         spells2.add(encodedFlashloanSpells.data[0])
@@ -112,7 +113,7 @@ export class CastHelpers {
       if (a.connector === "instapool_v2" && a.method === "flashPayback" && isFlashloanPool) {
         isFlashloanPool = false
         spells2.add(a)
-        const encodedSpells = this.dsa.instapool_v2.encodeFlashCastData(spells2)
+        const encodedSpells = this.dsa.instapool_v2.encodeFlashCastData(spells2, version, chainId)
 
         spells.add({
           connector: 'instapool_v2',

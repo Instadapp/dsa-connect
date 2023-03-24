@@ -54,7 +54,7 @@ export class Avocado {
    * @param spells The spells instance
    */
   async convertToActions(spells: Spells, version: Version, chainId: ChainId) {
-    const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version);
+    const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version, chainId);
     let targets: string[];
     if (version === 1) {
         if (encodeSpellsData.targets.length === 0) throw new Error("Targets length is zero")
