@@ -18,7 +18,7 @@ import * as connectorsV1 from './v1/connector'
 import * as eventsV1 from './v1/events'
 
 import {accountM1 as accountV2_M1} from './v2/accountM1'
-import * as connectorsV2_M1 from './v2/connectorsM1'
+import {connectorM1 as connectorsV2_M1 } from './v2/connectorsM1'
 import * as accountProxy from './v2/accountProxy'
 import * as implementations from './v2/implementations'
 import * as accountDefault from './v2/accountDefault'

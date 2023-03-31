@@ -2,7 +2,6 @@ import { Abi } from '../abi'
 import { DSA } from '../dsa'
 import { Addresses } from '../addresses'
 import { TokenInfo } from '../data/token-info'
-import * as Math from './math';
 import { TransactionConfig } from 'web3-core'
 import { GetTransactionConfigParams } from '../internal'
 import { Contract } from 'web3-eth-contract';

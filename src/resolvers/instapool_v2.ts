@@ -1,4 +1,4 @@
-import { DSA } from '../dsa'
+import { ChainId, DSA } from '../dsa'
 import { Spells } from '../spells'
 
 import { Version } from '../internal'
@@ -11,8 +11,8 @@ export class Instapool_v2 {
    *
    * @param spells The spells instance
    */
-  encodeFlashCastData(spells: Spells, version: Version = this.dsa.instance.version) {
-    const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version);
+  encodeFlashCastData(spells: Spells, version: Version = this.dsa.instance.version, chainId: ChainId = this.dsa.instance.chainId) {
+    const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version, chainId);
     const targetType = Number(version) === 1 ? "address[]" : "string[]"
     let argTypes = [targetType, "bytes[]"];
     return this.dsa.web3.eth.abi.encodeParameters(argTypes, [encodeSpellsData.targets, encodeSpellsData.spells]);

@@ -1,6 +1,6 @@
 import { TransactionConfig } from 'web3-core'
 import { AbiItem } from 'web3-utils'
-import DSA from '.'
+import DSA, { ChainId } from '.'
 import { Abi } from './abi'
 import { Connector } from "./abi/connectors";
 import { Addresses } from './addresses'
@@ -134,8 +134,8 @@ export class Internal {
    * OR
    * @param params.spells the spells instance
    */
-  encodeSpells = (params: Spells | { spells: Spells }, version: Version = this.dsa.instance.version) => {
-    let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params))
+  encodeSpells = (params: Spells | { spells: Spells }, version: Version = this.dsa.instance.version, chainId: ChainId = this.dsa.instance.chainId) => {
+    let spells = this.dsa.castHelpers.flashBorrowSpellsConvert(this.getSpells(params), version, chainId)
 
     // Convert the spell.connector into required version. Eg: compound => COMPOUND-A for DSAv2
     spells.data = spells.data.map(spell => Number(version) === 1 ?
@@ -145,7 +145,7 @@ export class Internal {
         { ...spell, connector: spell.connector }
     )
 
-    const targets = spells.data.map((spell) => this.getTarget(spell.connector, version))
+    const targets = spells.data.map((spell) => this.getTarget(spell.connector, version) as string)
     const encodedMethods = spells.data.map((spell) => this.encodeMethod(spell, version))
 
     return { targets, spells: encodedMethods }
@@ -158,8 +158,7 @@ export class Internal {
   /**
    * Returns the input interface required for cast().
    */
-  private getTarget = (connector: Connector, version: Version = this.dsa.instance.version) => {
-    const chainId = this.dsa.instance.chainId;
+  private getTarget = (connector: Connector, version: Version = this.dsa.instance.version, chainId: ChainId = this.dsa.instance.chainId) => {
 
     // type check that object has the required properties
     if (
