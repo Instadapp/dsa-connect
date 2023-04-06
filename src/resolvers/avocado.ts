@@ -36,6 +36,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
 }
 
 const FLA_V2_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a"
+const FLA_V2_PAYBACK_ADDRESS = "0xb7930452B8549bab5A588fd2E8757962C28a5D03"
 
 export interface AvocadoAction {
     target: string;
@@ -82,8 +83,8 @@ export class Avocado {
         }
     }
     const flaV2ABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
-    const erc20ABI = {"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
-    
+    const flaV2PaybackABI = {"inputs":[{"internalType":"address[]","name":"tokens","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"payback","outputs":[],"stateMutability":"nonpayable","type":"function"}
+
     const actions: AvocadoAction[] =  targets.flatMap((target, i) => {
         const isFlashloanSpell = spells.data[i].connector === "INSTAPOOL-C"
         const isMultiFlashloanSpell = spells.data[i].method === "flashMultiBorrowAndCast" || spells.data[i].method === "flashMultiPayback"
@@ -110,14 +111,12 @@ export class Avocado {
                     value: 0
                 }
             } else {
-                return tokens.map((token: string, i: number) => {
-                    return {
-                        data: this.dsa.web3.eth.abi.encodeFunctionCall(erc20ABI as any, [FLA_V2_ADDRESS, amounts[i]]),
-                        target: token,
-                        operation: 0,
-                        value: 0
-                    }
-                })
+                return {
+                    data: this.dsa.web3.eth.abi.encodeFunctionCall(flaV2PaybackABI as any, [tokens, amounts]),
+                    target: FLA_V2_PAYBACK_ADDRESS,
+                    operation: 1,
+                    value: 0
+                }
             }
         } else {
             return {
