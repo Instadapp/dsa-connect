@@ -36,7 +36,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
 }
 
 const FLA_V2_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a"
-const FLA_V2_PAYBACK_ADDRESS = "0xb7930452B8549bab5A588fd2E8757962C28a5D03"
+const FLA_V2_PAYBACK_ADDRESS = "0x60d0DfAa7D6389C7a90C8FD2efAbB3162047adcd"
 
 export interface AvocadoAction {
     target: string;
