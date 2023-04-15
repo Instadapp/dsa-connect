@@ -101,6 +101,8 @@ import { MORPHO_AAVE_V2_A } from './MORPHO-AAVE-V2-A'
 import { MORPHO_COMPOUND_V2_A } from './MORPHO-COMPOUND-V2-A'
 import { MORPHO_REWARDS_A } from './MORPHO-REWARDS-A'
 import { ONEINCH_V5_A } from './1INCH-V5-A'
+import { AVO_APPROVE_A } from './AVO-APPROVE-A'
+import { AVO_APPROVE_STAGING_A } from './AVO-APPROVE-STAGING-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -203,4 +205,6 @@ export const connectorsV2_M1 = {
   'WAVAX-A': WAVAX_A,
   'UNIVERSE-A': UNIVERSE_A,
   'UBIQUITY-A': UBIQUITY_A,
+  'AVO-APPROVE-A': AVO_APPROVE_A,
+  'AVO-APPROVE-STAGING-A': AVO_APPROVE_STAGING_A,
 }
