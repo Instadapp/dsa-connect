@@ -103,6 +103,8 @@ import { MORPHO_REWARDS_A } from './MORPHO-REWARDS-A'
 import { ONEINCH_V5_A } from './1INCH-V5-A'
 import { AVO_APPROVE_A } from './AVO-APPROVE-A'
 import { AVO_APPROVE_STAGING_A } from './AVO-APPROVE-STAGING-A'
+import { AVO_MAKER_A } from './AVO-MAKER-A'
+import { AVO_MAKER_STAGING_A } from './AVO-MAKER-STAGING-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -207,4 +209,6 @@ export const connectorsV2_M1 = {
   'UBIQUITY-A': UBIQUITY_A,
   'AVO-APPROVE-A': AVO_APPROVE_A,
   'AVO-APPROVE-STAGING-A': AVO_APPROVE_STAGING_A,
+  'AVO-MAKER-A': AVO_MAKER_A,
+  'AVO-MAKER-STAGING-A': AVO_MAKER_STAGING_A,
 }
