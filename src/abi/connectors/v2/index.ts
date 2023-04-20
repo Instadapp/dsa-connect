@@ -105,6 +105,7 @@ import { AVO_APPROVE_A } from './AVO-APPROVE-A'
 import { AVO_APPROVE_STAGING_A } from './AVO-APPROVE-STAGING-A'
 import { AVO_MAKER_A } from './AVO-MAKER-A'
 import { AVO_MAKER_STAGING_A } from './AVO-MAKER-STAGING-A'
+import { ARB_CLAIM_A } from './ARB-CLAIM-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -211,4 +212,5 @@ export const connectorsV2_M1 = {
   'AVO-APPROVE-STAGING-A': AVO_APPROVE_STAGING_A,
   'AVO-MAKER-A': AVO_MAKER_A,
   'AVO-MAKER-STAGING-A': AVO_MAKER_STAGING_A,
+  'ARB-CLAIM-A': ARB_CLAIM_A,
 }
