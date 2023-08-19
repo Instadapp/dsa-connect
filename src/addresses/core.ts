@@ -4,6 +4,7 @@ import { core as arbitrumCore } from './arbitrum/core'
 import { core as avalancheCore } from './avalanche/core'
 import { core as optimismCore } from './optimism/core'
 import { core as fantomCore } from './fantom/core'
+import { core as baseCore } from './base/core'
 
 export const core = {
   1: mainnetCore,
@@ -12,4 +13,5 @@ export const core = {
   43114: avalancheCore,
   10: optimismCore,
   250: fantomCore,
+  8453: baseCore,
 }
