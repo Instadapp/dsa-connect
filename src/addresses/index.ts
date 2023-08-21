@@ -11,6 +11,7 @@ import { connectorsV2_M1 as connectorsV2_M1_Arbitrum } from './arbitrum/connecto
 import { connectorsV2_M1 as connectorsV2_M1_Avalanche } from './avalanche/connectorsV2_M1'
 import { connectorsV2_M1 as connectorsV2_M1_Optimism } from './optimism/connectorsV2_M1'
 import { connectorsV2_M1 as connectorsV2_M1_Fantom } from './fantom/connectorsV2_M1'
+import { connectorsV2_M1 as connectorsV2_M1_Base } from './base/connectorsV2_M1'
 
 export const Addresses = {
   genesis: '0x0000000000000000000000000000000000000000',
@@ -49,6 +50,11 @@ export const Addresses = {
           2: connectorsV2_M1_Fantom,
         },
       },
+      8453: {
+        versions: {
+          2: connectorsV2_M1_Base,
+        }
+      }
     },
   },
 }
