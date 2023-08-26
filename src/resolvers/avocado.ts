@@ -32,7 +32,8 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
         "AAVE-V3-IMPORT-A": "0x0030D79aF00325A5B4577a7d5976492A93db114B",
         "AAVE-V3-IMPORT-PERMIT-A": "0x1814d6E8E85bd58C6fccC9Bdf82a6d1931A825Bd"
     },
-    250: {}
+    250: {},
+    8453: {},
 }
 
 const FLA_V2_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a"
