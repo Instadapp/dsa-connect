@@ -31,7 +31,7 @@ export type DSAConfig =
   }
 
 // ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism, 250 = fantom
-export type ChainId = 1 | 137 | 42161 | 43114 | 10 | 250
+export type ChainId = 1 | 137 | 42161 | 43114 | 10 | 250 | 8453
 
 export interface Instance {
   id: number
@@ -165,7 +165,7 @@ export class DSA {
         )
       }
 
-      if (![1, 137, 42161, 43114, 10, 250].includes(chainId)) {
+      if (![1, 137, 42161, 43114, 10, 250, 8453].includes(chainId)) {
         throw new Error(`chainId '${_chainId}' is not supported.`)
       } else {
         this.instance.chainId = _chainId as ChainId
