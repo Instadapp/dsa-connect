@@ -30,7 +30,7 @@ export type DSAConfig =
     mode?: 'browser'
   }
 
-// ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism, 250 = fantom
+// ChainId 1 = mainnet, ChainId 137 = matic, 42161 = arbitrum, 43114 = avalanche, 10 = optimism, 250 = fantom, 8453 = base
 export type ChainId = 1 | 137 | 42161 | 43114 | 10 | 250 | 8453
 
 export interface Instance {
