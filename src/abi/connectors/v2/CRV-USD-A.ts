@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const CURVE_USD_A: AbiItem[] = [
+export const CRV_USD_A: AbiItem[] = [
   {
     inputs: [
       { internalType: 'address', name: 'market', type: 'address' },
