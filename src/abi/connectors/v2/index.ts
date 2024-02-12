@@ -117,6 +117,7 @@ import { AVO_APPROVE_MULTISIG_STAGING_A } from './AVO-APPROVE-MULTISIG-STAGING-A
 import { CURVE_USD_A } from './CURVE-USD-A'
 import { FLUID_A } from './FLUID-A'
 import { MORPHO_BLUE_A } from './MORPHO-BLUE-A'
+import { BASIC_D_V2 } from './BASIC-D-V2'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -234,5 +235,6 @@ export const connectorsV2_M1 = {
   'AVO-APPROVE-MULTISIG-STAGING-A': AVO_APPROVE_MULTISIG_STAGING_A,
   'CURVE-USD-A': CURVE_USD_A,
   'FLUID-A': FLUID_A,
-  'MORPHO-BLUE-A': MORPHO_BLUE_A
+  'MORPHO-BLUE-A': MORPHO_BLUE_A,
+  'BASIC-D-V2': BASIC_D_V2
 }
