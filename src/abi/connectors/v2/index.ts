@@ -118,6 +118,9 @@ import { CURVE_USD_A } from './CURVE-USD-A'
 import { FLUID_A } from './FLUID-A'
 import { MORPHO_BLUE_A } from './MORPHO-BLUE-A'
 import { BASIC_D_V2 } from './BASIC-D-V2'
+import { INSTAPOOL_D } from './INSTAPOOL-D';
+import { SPARK_IMPORT_A } from './SPARK-IMPORT-A'
+import { SPARK_IMPORT_PERMIT_A } from './SPARK-IMPORT-PERMIT-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -236,5 +239,8 @@ export const connectorsV2_M1 = {
   'CURVE-USD-A': CURVE_USD_A,
   'FLUID-A': FLUID_A,
   'MORPHO-BLUE-A': MORPHO_BLUE_A,
-  'BASIC-D-V2': BASIC_D_V2
+  'BASIC-D-V2': BASIC_D_V2,
+  'INSTAPOOL-D': INSTAPOOL_D,
+  'SPARK-IMPORT-A': SPARK_IMPORT_A,
+  'SPARK-IMPORT-PERMIT-A': SPARK_IMPORT_PERMIT_A,
 }
