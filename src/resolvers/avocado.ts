@@ -87,7 +87,7 @@ export class Avocado {
     const flaV2PaybackABI = {"inputs":[{"internalType":"address[]","name":"tokens","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"payback","outputs":[],"stateMutability":"nonpayable","type":"function"}
 
     const actions: AvocadoAction[] =  targets.flatMap((target, i) => {
-        const isFlashloanSpell = spells.data[i].connector === "INSTAPOOL-C"
+        const isFlashloanSpell = spells.data[i].connector === "INSTAPOOL-C" || spells.data[i].connector === "INSTAPOOL-D"
         const isMultiFlashloanSpell = spells.data[i].method === "flashMultiBorrowAndCast" || spells.data[i].method === "flashMultiPayback"
         const isPaybackFlashloanSpell = spells.data[i].method === "flashPayback" || spells.data[i].method === "flashMultiPayback"
         
