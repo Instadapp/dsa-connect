@@ -119,7 +119,7 @@ export class Avocado {
                     if (!isMultiFlashloanSpell) {
                         return {
                             data: this.dsa.web3.eth.abi.encodeFunctionCall(tokenTransferABI as any, [FLUID_FLA_ADDRESS, amounts[0]]),
-                            target: FLA_V2_PAYBACK_ADDRESS,
+                            target: FLUID_FLA_ADDRESS,
                             operation: 1,
                             value: 0
                         }
