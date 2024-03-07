@@ -120,7 +120,7 @@ export class Avocado {
                         return {
                             data: this.dsa.web3.eth.abi.encodeFunctionCall(tokenTransferABI as any, [FLUID_FLA_ADDRESS, amounts[0]]),
                             target: tokens[0],
-                            operation: 1,
+                            operation: 0,
                             value: 0
                         }
                     } else {
