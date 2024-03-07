@@ -146,8 +146,8 @@ export class Avocado {
     return actions
   }
 
-  async encodeFlashCastData(spells: Spells, version: Version, chainId: ChainId) {
-    const flashloanActions = await this.convertToActions(spells, version, chainId)
+  async encodeFlashCastData(spells: Spells, version: Version, chainId: ChainId, isFluid: Boolean = false) {
+    const flashloanActions = await this.convertToActions(spells, version, chainId, isFluid)
 
     const actionsType = [{
         components: [
