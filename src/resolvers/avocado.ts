@@ -37,6 +37,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
 }
 
 const FLA_V2_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a"
+const FLUID_FLA_ADDRESS = "0xAB50Dd1C57938218627Df2311ef65b4e2e84aF48"
 const FLA_V2_PAYBACK_ADDRESS = "0x60d0DfAa7D6389C7a90C8FD2efAbB3162047adcd"
 
 export interface AvocadoAction {
@@ -55,7 +56,7 @@ export class Avocado {
    *
    * @param spells The spells instance
    */
-  async convertToActions(spells: Spells, version: Version, chainId: ChainId) {
+  async convertToActions(spells: Spells, version: Version, chainId: ChainId, isFluid: Boolean = false) {
     const encodeSpellsData = this.dsa.internal.encodeSpells(spells, version, chainId);
     let targets: string[];
     if (version === 1) {
@@ -85,7 +86,9 @@ export class Avocado {
     }
     const flaV2ABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
     const flaV2PaybackABI = {"inputs":[{"internalType":"address[]","name":"tokens","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"payback","outputs":[],"stateMutability":"nonpayable","type":"function"}
+    const tokenTransferABI = {"constant":false,"inputs":[{"internalType":"address","name":"dst","type":"address"},{"internalType":"uint256","name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"}
 
+    
     const actions: AvocadoAction[] =  targets.flatMap((target, i) => {
         const isFlashloanSpell = spells.data[i].connector === "INSTAPOOL-C" || spells.data[i].connector === "INSTAPOOL-D"
         const isMultiFlashloanSpell = spells.data[i].method === "flashMultiBorrowAndCast" || spells.data[i].method === "flashMultiPayback"
@@ -106,12 +109,24 @@ export class Avocado {
                 ]
     
                 return  { 
-                    target: FLA_V2_ADDRESS,
+                    target: isFluid ? FLUID_FLA_ADDRESS : FLA_V2_ADDRESS,
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(flaV2ABI as any, params),
                     operation: 2,
                     value: 0
                 }
             } else {
+                if (isFluid) {
+                    if (!isMultiFlashloanSpell) {
+                        return {
+                            data: this.dsa.web3.eth.abi.encodeFunctionCall(tokenTransferABI as any, [FLUID_FLA_ADDRESS, amounts[0]]),
+                            target: FLA_V2_PAYBACK_ADDRESS,
+                            operation: 1,
+                            value: 0
+                        }
+                    } else {
+                        throw new Error("Multi Flashloan is not support for Fluid FLA")
+                    }
+                }
                 return {
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(flaV2PaybackABI as any, [tokens, amounts]),
                     target: FLA_V2_PAYBACK_ADDRESS,
