@@ -122,6 +122,7 @@ import { INSTAPOOL_D } from './INSTAPOOL-D';
 import { SPARK_IMPORT_A } from './SPARK-IMPORT-A'
 import { SPARK_IMPORT_PERMIT_A } from './SPARK-IMPORT-PERMIT-A'
 import { FLUID_STAKING_A } from './FLUID-STAKING-A'
+import { FLUID_STETH_A } from './FLUID-STETH-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -245,4 +246,5 @@ export const connectorsV2_M1 = {
   'SPARK-IMPORT-A': SPARK_IMPORT_A,
   'SPARK-IMPORT-PERMIT-A': SPARK_IMPORT_PERMIT_A,
   'FLUID-STAKING-A': FLUID_STAKING_A,
+  'FLUID-STETH-A': FLUID_STETH_A
 }
