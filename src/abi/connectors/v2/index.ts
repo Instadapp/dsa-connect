@@ -123,6 +123,7 @@ import { SPARK_IMPORT_A } from './SPARK-IMPORT-A'
 import { SPARK_IMPORT_PERMIT_A } from './SPARK-IMPORT-PERMIT-A'
 import { FLUID_STAKING_A } from './FLUID-STAKING-A'
 import { FLUID_STETH_A } from './FLUID-STETH-A'
+import { ONEINCH_V6_A } from './1INCH-V6-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -171,6 +172,7 @@ export const connectorsV2_M1 = {
   '1INCH-V3-A': ONEINCH_V3_A,
   '1INCH-V4-A': ONEINCH_V4_A,
   '1INCH-V5-A': ONEINCH_V5_A,
+  '1INCH-V6-A': ONEINCH_V6_A,
   'QUICKSWAP-A': QUICKSWAP_A,
   'INSTAPOOL-C': INSTAPOOL_C,
   'UNISWAP-SELL-BETA': UNISWAP_SELL_BETA,
