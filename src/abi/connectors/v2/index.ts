@@ -125,6 +125,9 @@ import { FLUID_STAKING_A } from './FLUID-STAKING-A'
 import { FLUID_STETH_A } from './FLUID-STETH-A'
 import { ONEINCH_V6_A } from './1INCH-V6-A'
 
+import { WEETH_A } from "./WEETH-A"
+import { EETH_A } from "./EETH-A"
+
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
   'LITE-B': LITE_B,
@@ -248,5 +251,7 @@ export const connectorsV2_M1 = {
   'SPARK-IMPORT-A': SPARK_IMPORT_A,
   'SPARK-IMPORT-PERMIT-A': SPARK_IMPORT_PERMIT_A,
   'FLUID-STAKING-A': FLUID_STAKING_A,
-  'FLUID-STETH-A': FLUID_STETH_A
+  'FLUID-STETH-A': FLUID_STETH_A,
+  'WEETH-A': WEETH_A,
+  'EETH-A': EETH_A,
 }
