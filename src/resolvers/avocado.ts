@@ -37,7 +37,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
 }
 
 const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
-const FLUID_FLA_ADDRESS = "0xAB50Dd1C57938218627Df2311ef65b4e2e84aF48"
+const FLA_FLUID_ADDRESS = "0xAB50Dd1C57938218627Df2311ef65b4e2e84aF48" // Fluid
 const MULTI_PAYBACK_ADDRESS = "0xb03922E93c386B045b2a7f7e6732Ef4F3B93f993"
 
 export interface AvocadoAction {
@@ -84,7 +84,7 @@ export class Avocado {
             throw new Error("Error: not able to resolver connectorName")
         }
     }
-    const flaAvocadoABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
+    const flaAvocadoOrFluidABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
     const multiTransferABI = {"inputs":[{"internalType":"address","name":"flashloanAggregator_","type":"address"},{"internalType":"address[]","name":"tokens","type":"address[]"},{"internalType":"uint256[]","name":"amounts","type":"uint256[]"}],"name":"payback","outputs":[],"stateMutability":"nonpayable","type":"function"}
 
     
@@ -108,8 +108,8 @@ export class Avocado {
                 ]
     
                 return  { 
-                    target: isFluid ? FLUID_FLA_ADDRESS : FLA_AVOCADO_ADDRESS,
-                    data: this.dsa.web3.eth.abi.encodeFunctionCall(flaAvocadoABI as any, params),
+                    target: isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
+                    data: this.dsa.web3.eth.abi.encodeFunctionCall(flaAvocadoOrFluidABI as any, params),
                     operation: 2,
                     value: 0
                 }
@@ -118,7 +118,7 @@ export class Avocado {
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(
                         multiTransferABI as any,
                         [
-                            isFluid ? FLUID_FLA_ADDRESS : FLA_AVOCADO_ADDRESS,
+                            isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
                             tokens,
                             amounts
                         ]
