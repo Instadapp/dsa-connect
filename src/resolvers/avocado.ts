@@ -114,16 +114,15 @@ export class Avocado {
                     value: 0
                 }
             } else {
-                if (isFluid) {
-                    return {
-                        data: this.dsa.web3.eth.abi.encodeFunctionCall(multiTransferABI as any, [FLUID_FLA_ADDRESS, tokens, amounts]),
-                        target: MULTI_PAYBACK_ADDRESS,
-                        operation: 0, // TODO: Confirm
-                        value: 0
-                    }
-                }
                 return {
-                    data: this.dsa.web3.eth.abi.encodeFunctionCall(multiTransferABI as any, [FLA_AVOCADO_ADDRESS, tokens, amounts]),
+                    data: this.dsa.web3.eth.abi.encodeFunctionCall(
+                        multiTransferABI as any,
+                        [
+                            isFluid ? FLUID_FLA_ADDRESS : FLA_AVOCADO_ADDRESS,
+                            tokens,
+                            amounts
+                        ]
+                    ),
                     target: MULTI_PAYBACK_ADDRESS,
                     operation: 1,
                     value: 0
