@@ -128,6 +128,8 @@ import { ONEINCH_V6_A } from './1INCH-V6-A'
 import { WEETH_A } from "./WEETH-A"
 import { EETH_A } from "./EETH-A"
 
+import { FLUID_INST_CLAIM_A } from "./FLUID-INST-CLAIM-A"
+
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
   'LITE-B': LITE_B,
@@ -254,4 +256,5 @@ export const connectorsV2_M1 = {
   'FLUID-STETH-A': FLUID_STETH_A,
   'WEETH-A': WEETH_A,
   'EETH-A': EETH_A,
+  'FLUID-INST-CLAIM-A': FLUID_INST_CLAIM_A,
 }
