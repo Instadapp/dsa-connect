@@ -81,7 +81,7 @@ export class Avocado {
                     : a)
             )
         } catch (err) {
-            throw new Error("Error: not able to resolver connectorName")
+            throw new Error(`Error: not able to resolver connectorName: ${err}`)
         }
     }
     const flaAvocadoOrFluidABI = {"inputs":[{"internalType":"address[]","name":"_tokens","type":"address[]"},{"internalType":"uint256[]","name":"_amounts","type":"uint256[]"},{"internalType":"uint256","name":"_route","type":"uint256"},{"internalType":"bytes","name":"_data","type":"bytes"},{"internalType":"bytes","name":"_instadata","type":"bytes"}],"name":"flashLoan","outputs":[],"stateMutability":"nonpayable","type":"function"}
