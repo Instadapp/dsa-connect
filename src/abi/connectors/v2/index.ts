@@ -129,6 +129,7 @@ import { WEETH_A } from "./WEETH-A"
 import { EETH_A } from "./EETH-A"
 
 import { FLUID_INST_CLAIM_A } from "./FLUID-INST-CLAIM-A"
+import { PARASWAP_V6_A } from "./PARASWAP-V6-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -257,4 +258,5 @@ export const connectorsV2_M1 = {
   'WEETH-A': WEETH_A,
   'EETH-A': EETH_A,
   'FLUID-INST-CLAIM-A': FLUID_INST_CLAIM_A,
+  'PARASWAP-V6-A': PARASWAP_V6_A,
 }
