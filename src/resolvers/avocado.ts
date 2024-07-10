@@ -123,18 +123,25 @@ export class Avocado {
                     value: 0
                 }
             } else {
-                return {
-                    data: this.dsa.web3.eth.abi.encodeFunctionCall(
-                        multiTransferABI as any,
-                        [
-                            isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
-                            tokens,
-                            amounts
-                        ]
-                    ),
-                    target: AvoMultiPaybackMapping[chainId],
-                    operation: 1,
-                    value: 0
+                if(
+                    AvoMultiPaybackMapping[chainId] !== "" 
+                    || AvoMultiPaybackMapping[chainId] !== undefined
+                ) {
+                    return {
+                        data: this.dsa.web3.eth.abi.encodeFunctionCall(
+                            multiTransferABI as any,
+                            [
+                                isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
+                                tokens,
+                                amounts
+                            ]
+                        ),
+                        target: AvoMultiPaybackMapping[chainId],
+                        operation: 1,
+                        value: 0
+                    }
+                } else {
+                    throw new Error(`Error: Multi payback does not exist on this chainID: ${chainId}`)
                 }
             }
         } else {
