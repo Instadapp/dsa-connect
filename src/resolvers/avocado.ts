@@ -36,9 +36,19 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
     8453: {},
 }
 
+const AvoMultiPaybackMapping: Record<ChainId, string> = {
+    1: "0xb03922E93c386B045b2a7f7e6732Ef4F3B93f993",
+    137: "",
+    42161: "0x62750CfEbDB196CAe6DD6956c13AD60682a614d0",
+    43114: "",
+    10: "",
+    250: "",
+    8453: "",
+}
+
 const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
 const FLA_FLUID_ADDRESS = "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7" // Fluid
-const MULTI_PAYBACK_ADDRESS = "0xb03922E93c386B045b2a7f7e6732Ef4F3B93f993"
+// const MULTI_PAYBACK_ADDRESS = "0xb03922E93c386B045b2a7f7e6732Ef4F3B93f993"
 
 export interface AvocadoAction {
     target: string;
@@ -123,7 +133,7 @@ export class Avocado {
                             amounts
                         ]
                     ),
-                    target: MULTI_PAYBACK_ADDRESS,
+                    target: AvoMultiPaybackMapping[chainId],
                     operation: 1,
                     value: 0
                 }
