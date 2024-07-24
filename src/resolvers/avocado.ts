@@ -46,7 +46,7 @@ const AvoMultiPaybackMapping: Record<ChainId, string> = {
     8453: "0xa35369EE97c9C64623262D625d697a7CaaB69Ea2", // Base
 }
 
-const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
+// const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
 const FLA_FLUID_ADDRESS = "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7" // Fluid
 
 export interface AvocadoAction {
@@ -117,7 +117,7 @@ export class Avocado {
                 ]
     
                 return  { 
-                    target: isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
+                    target: FLA_FLUID_ADDRESS,
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(flaAvocadoOrFluidABI as any, params),
                     operation: 2,
                     value: 0
@@ -131,7 +131,7 @@ export class Avocado {
                         data: this.dsa.web3.eth.abi.encodeFunctionCall(
                             multiTransferABI as any,
                             [
-                                isFluid ? FLA_FLUID_ADDRESS : FLA_AVOCADO_ADDRESS,
+                                FLA_FLUID_ADDRESS,
                                 tokens,
                                 amounts
                             ]
