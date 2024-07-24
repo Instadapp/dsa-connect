@@ -117,7 +117,7 @@ export class Avocado {
                 ]
     
                 return  { 
-                    target: isFluid ? FLA_FLUID_ADDRESS : FLA_FLUID_ADDRESS,
+                    target: FLA_FLUID_ADDRESS,
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(flaAvocadoOrFluidABI as any, params),
                     operation: 2,
                     value: 0
