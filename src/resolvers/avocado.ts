@@ -131,7 +131,7 @@ export class Avocado {
                         data: this.dsa.web3.eth.abi.encodeFunctionCall(
                             multiTransferABI as any,
                             [
-                                isFluid ? FLA_FLUID_ADDRESS : FLA_FLUID_ADDRESS,
+                                FLA_FLUID_ADDRESS,
                                 tokens,
                                 amounts
                             ]
