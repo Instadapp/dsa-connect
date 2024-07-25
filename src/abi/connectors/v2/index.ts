@@ -131,6 +131,7 @@ import { EETH_A } from "./EETH-A"
 import { FLUID_INST_CLAIM_A } from "./FLUID-INST-CLAIM-A"
 import { PARASWAP_V6_A } from "./PARASWAP-V6-A"
 import { MERKLE_CLAIM_A } from "./MERKLE-CLAIM-A"
+import { SPARK_CLAIM_A } from "./SPARK-CLAIM-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -261,4 +262,5 @@ export const connectorsV2_M1 = {
   'FLUID-INST-CLAIM-A': FLUID_INST_CLAIM_A,
   'PARASWAP-V6-A': PARASWAP_V6_A,
   'MERKLE-CLAIM-A': MERKLE_CLAIM_A,
+  'SPARK-CLAIM-A': SPARK_CLAIM_A
 }
