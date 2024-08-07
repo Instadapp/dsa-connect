@@ -72,6 +72,7 @@ import { PANGOLIN_STAKE_A } from './PANGOLIN-STAKE-A'
 import { MSTABLE_A } from './MSTABLE-A'
 import { LIDO_STETH_A } from './LIDO-STETH-A'
 import { AAVE_V3_A } from './AAVE-V3-A'
+import { AAVE_V3_LIDO_A } from './AAVE-V3-LIDO-A'
 import { AAVE_IMPORT_V2_V3_A } from './AAVE-IMPORT-V2-V3-A'
 import { AAVE_V3_IMPORT_A } from './AAVE-V3-IMPORT-A'
 import { COMPOUND_IMPORT_D } from './COMPOUND-IMPORT-D'
@@ -164,6 +165,7 @@ export const connectorsV2_M1 = {
   'AAVE-V3-IMPORT-A': AAVE_V3_IMPORT_A,
   'AAVE-IMPORT-V2-V3-A': AAVE_IMPORT_V2_V3_A,
   'AAVE-V3-A': AAVE_V3_A,
+  'AAVE-V3-LIDO-A': AAVE_V3_LIDO_A,
   'WFTM-A': WFTM_A,
   'MSTABLE-A': MSTABLE_A,
   'LIDO-STETH-A': LIDO_STETH_A,
