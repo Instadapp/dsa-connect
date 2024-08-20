@@ -134,6 +134,7 @@ import { PARASWAP_V6_A } from "./PARASWAP-V6-A"
 import { MERKLE_CLAIM_A } from "./MERKLE-CLAIM-A"
 import { SPARK_CLAIM_A } from "./SPARK-CLAIM-A"
 import { FLUID_ARB_CLAIM_A } from "./FLUID-ARB-CLAIM-A"
+import { WEETHS_A } from "./WEETHS-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -266,5 +267,6 @@ export const connectorsV2_M1 = {
   'PARASWAP-V6-A': PARASWAP_V6_A,
   'MERKLE-CLAIM-A': MERKLE_CLAIM_A,
   'SPARK-CLAIM-A': SPARK_CLAIM_A,
-  'FLUID-ARB-CLAIM-A': FLUID_ARB_CLAIM_A
+  'FLUID-ARB-CLAIM-A': FLUID_ARB_CLAIM_A,
+  'WEETHS-A': WEETHS_A
 }
