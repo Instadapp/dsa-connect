@@ -136,6 +136,7 @@ import { SPARK_CLAIM_A } from "./SPARK-CLAIM-A"
 import { FLUID_ARB_CLAIM_A } from "./FLUID-ARB-CLAIM-A"
 import { WEETHS_A } from "./WEETHS-A"
 import { ODOS_V2_A } from "./ODOS-V2-A"
+import { OKX_A } from "./OKX-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -270,5 +271,6 @@ export const connectorsV2_M1 = {
   'SPARK-CLAIM-A': SPARK_CLAIM_A,
   'FLUID-ARB-CLAIM-A': FLUID_ARB_CLAIM_A,
   'WEETHS-A': WEETHS_A,
-  'ODOS-V2-A': ODOS_V2_A
+  'ODOS-V2-A': ODOS_V2_A,
+  'OKX-A': OKX_A,
 }
