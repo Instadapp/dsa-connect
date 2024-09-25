@@ -138,6 +138,7 @@ import { WEETHS_A } from "./WEETHS-A"
 import { ODOS_V2_A } from "./ODOS-V2-A"
 import { OKX_A } from "./OKX-A"
 import { FLUID_MERKLE_CLAIM_A } from "./FLUID-MERKLE-CLAIM-A"
+import { USDS_A } from "./USDS-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -275,4 +276,5 @@ export const connectorsV2_M1 = {
   'ODOS-V2-A': ODOS_V2_A,
   'OKX-A': OKX_A,
   'FLUID-MERKLE-CLAIM-A': FLUID_MERKLE_CLAIM_A,
+  'USDS-A': USDS_A,
 }
