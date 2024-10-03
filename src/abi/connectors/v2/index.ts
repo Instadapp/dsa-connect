@@ -139,7 +139,7 @@ import { ODOS_V2_A } from "./ODOS-V2-A"
 import { OKX_A } from "./OKX-A"
 import { FLUID_MERKLE_CLAIM_A } from "./FLUID-MERKLE-CLAIM-A"
 import { USDS_A } from "./USDS-A"
-import { AAVE_V3_ETHERFI_A } from "./AAVE-V3-ETHERFI-A"
+import { AAVE_V3_ETHERFI } from "./AAVE-V3-ETHERFI"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -278,5 +278,5 @@ export const connectorsV2_M1 = {
   'OKX-A': OKX_A,
   'FLUID-MERKLE-CLAIM-A': FLUID_MERKLE_CLAIM_A,
   'USDS-A': USDS_A,
-  'AAVE-V3-ETHERFI-A': AAVE_V3_ETHERFI_A
+  'AAVE-V3-ETHERFI': AAVE_V3_ETHERFI
 }
