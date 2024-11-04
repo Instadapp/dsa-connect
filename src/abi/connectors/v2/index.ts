@@ -140,6 +140,8 @@ import { OKX_A } from "./OKX-A"
 import { FLUID_MERKLE_CLAIM_A } from "./FLUID-MERKLE-CLAIM-A"
 import { USDS_A } from "./USDS-A"
 import { AAVE_V3_ETHERFI } from "./AAVE-V3-ETHERFI"
+import { FLUID_VAULT_T2_A } from "./FLUID-VAULT-T2-A"
+import { FLUID_VAULT_T3_A } from "./FLUID-VAULT-T3-A"
 import { FLUID_VAULT_T4_A } from "./FLUID-VAULT-T4-A"
 
 export const connectorsV2_M1 = {
@@ -280,5 +282,7 @@ export const connectorsV2_M1 = {
   'FLUID-MERKLE-CLAIM-A': FLUID_MERKLE_CLAIM_A,
   'USDS-A': USDS_A,
   'AAVE-V3-ETHERFI': AAVE_V3_ETHERFI,
+  'FLUID-VAULT-T2-A': FLUID_VAULT_T2_A,
+  'FLUID-VAULT-T3-A': FLUID_VAULT_T3_A,
   'FLUID-VAULT-T4-A': FLUID_VAULT_T4_A
 }
