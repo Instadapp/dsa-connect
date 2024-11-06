@@ -143,6 +143,7 @@ import { AAVE_V3_ETHERFI } from "./AAVE-V3-ETHERFI"
 import { FLUID_VAULT_T2_A } from "./FLUID-VAULT-T2-A"
 import { FLUID_VAULT_T3_A } from "./FLUID-VAULT-T3-A"
 import { FLUID_VAULT_T4_A } from "./FLUID-VAULT-T4-A"
+import { ZEROX_V5_A } from "./ZEROX-V5-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -284,5 +285,6 @@ export const connectorsV2_M1 = {
   'AAVE-V3-ETHERFI': AAVE_V3_ETHERFI,
   'FLUID-VAULT-T2-A': FLUID_VAULT_T2_A,
   'FLUID-VAULT-T3-A': FLUID_VAULT_T3_A,
-  'FLUID-VAULT-T4-A': FLUID_VAULT_T4_A
+  'FLUID-VAULT-T4-A': FLUID_VAULT_T4_A,
+  'ZEROX-V5-A': ZEROX_V5_A
 }
