@@ -1,6 +1,5 @@
 import { AbiItem } from 'web3-utils'
 export const MORPHO_TOKEN_WRAPPER_A: AbiItem[] = [
-  { inputs: [], name: 'LessTokensReceived', type: 'error' },
   {
     anonymous: false,
     inputs: [{ indexed: true, internalType: 'uint256', name: 'newTokensReceived', type: 'uint256' }],
