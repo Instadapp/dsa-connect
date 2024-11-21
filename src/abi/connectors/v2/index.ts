@@ -146,6 +146,7 @@ import { FLUID_VAULT_T4_A } from "./FLUID-VAULT-T4-A"
 import { ZEROX_V5_A } from "./ZEROX-V5-A"
 import { MERKLE_CLAIM_LRT_A } from "./MERKLE-CLAIM-LRT-A"
 import { ZEROX_V2_A } from './ZEROX-V2-A'
+import { MORPHO_TOKEN_WRAPPER_A } from "./MORPHO-TOKEN-WRAPPER-A"
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -290,5 +291,6 @@ export const connectorsV2_M1 = {
   'FLUID-VAULT-T4-A': FLUID_VAULT_T4_A,
   'ZEROX-V5-A': ZEROX_V5_A,
   'MERKLE-CLAIM-LRT-A': MERKLE_CLAIM_LRT_A,
-  'ZEROX-V2-A': ZEROX_V2_A
+  'ZEROX-V2-A': ZEROX_V2_A,
+  'MORPHO-TOKEN-WRAPPER-A': MORPHO_TOKEN_WRAPPER_A
 }
