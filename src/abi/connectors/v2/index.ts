@@ -119,35 +119,36 @@ import { CURVE_USD_A } from './CURVE-USD-A'
 import { FLUID_A } from './FLUID-A'
 import { MORPHO_BLUE_A } from './MORPHO-BLUE-A'
 import { BASIC_D_V2 } from './BASIC-D-V2'
-import { INSTAPOOL_D } from './INSTAPOOL-D';
+import { INSTAPOOL_D } from './INSTAPOOL-D'
 import { SPARK_IMPORT_A } from './SPARK-IMPORT-A'
 import { SPARK_IMPORT_PERMIT_A } from './SPARK-IMPORT-PERMIT-A'
 import { FLUID_STAKING_A } from './FLUID-STAKING-A'
 import { FLUID_STETH_A } from './FLUID-STETH-A'
 import { ONEINCH_V6_A } from './1INCH-V6-A'
 
-import { WEETH_A } from "./WEETH-A"
-import { EETH_A } from "./EETH-A"
+import { WEETH_A } from './WEETH-A'
+import { EETH_A } from './EETH-A'
 
-import { FLUID_INST_CLAIM_A } from "./FLUID-INST-CLAIM-A"
-import { PARASWAP_V6_A } from "./PARASWAP-V6-A"
-import { MERKLE_CLAIM_A } from "./MERKLE-CLAIM-A"
-import { SPARK_CLAIM_A } from "./SPARK-CLAIM-A"
-import { FLUID_ARB_CLAIM_A } from "./FLUID-ARB-CLAIM-A"
-import { WEETHS_A } from "./WEETHS-A"
-import { ODOS_V2_A } from "./ODOS-V2-A"
-import { OKX_A } from "./OKX-A"
-import { FLUID_MERKLE_CLAIM_A } from "./FLUID-MERKLE-CLAIM-A"
-import { USDS_A } from "./USDS-A"
-import { AAVE_V3_ETHERFI } from "./AAVE-V3-ETHERFI"
-import { FLUID_VAULT_T2_A } from "./FLUID-VAULT-T2-A"
-import { FLUID_VAULT_T3_A } from "./FLUID-VAULT-T3-A"
-import { FLUID_VAULT_T4_A } from "./FLUID-VAULT-T4-A"
-import { ZEROX_V5_A } from "./ZEROX-V5-A"
-import { MERKLE_CLAIM_LRT_A } from "./MERKLE-CLAIM-LRT-A"
+import { FLUID_INST_CLAIM_A } from './FLUID-INST-CLAIM-A'
+import { PARASWAP_V6_A } from './PARASWAP-V6-A'
+import { MERKLE_CLAIM_A } from './MERKLE-CLAIM-A'
+import { SPARK_CLAIM_A } from './SPARK-CLAIM-A'
+import { FLUID_ARB_CLAIM_A } from './FLUID-ARB-CLAIM-A'
+import { WEETHS_A } from './WEETHS-A'
+import { ODOS_V2_A } from './ODOS-V2-A'
+import { OKX_A } from './OKX-A'
+import { FLUID_MERKLE_CLAIM_A } from './FLUID-MERKLE-CLAIM-A'
+import { USDS_A } from './USDS-A'
+import { AAVE_V3_ETHERFI } from './AAVE-V3-ETHERFI'
+import { FLUID_VAULT_T2_A } from './FLUID-VAULT-T2-A'
+import { FLUID_VAULT_T3_A } from './FLUID-VAULT-T3-A'
+import { FLUID_VAULT_T4_A } from './FLUID-VAULT-T4-A'
+import { ZEROX_V5_A } from './ZEROX-V5-A'
+import { MERKLE_CLAIM_LRT_A } from './MERKLE-CLAIM-LRT-A'
 import { ZEROX_V2_A } from './ZEROX-V2-A'
-import { MORPHO_TOKEN_WRAPPER_A } from "./MORPHO-TOKEN-WRAPPER-A"
-import { SPARK_PSM_A } from "./SPARK-PSM-A"
+import { MORPHO_TOKEN_WRAPPER_A } from './MORPHO-TOKEN-WRAPPER-A'
+import { SPARK_PSM_A } from './SPARK-PSM-A'
+import { MORPHO_CLAIM_A } from './MORPHO-CLAIM-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -295,4 +296,5 @@ export const connectorsV2_M1 = {
   'ZEROX-V2-A': ZEROX_V2_A,
   'MORPHO-TOKEN-WRAPPER-A': MORPHO_TOKEN_WRAPPER_A,
   'SPARK-PSM-A': SPARK_PSM_A,
+  'MORPHO-CLAIM-A': MORPHO_CLAIM_A
 }
