@@ -149,6 +149,7 @@ import { ZEROX_V2_A } from './ZEROX-V2-A'
 import { MORPHO_TOKEN_WRAPPER_A } from './MORPHO-TOKEN-WRAPPER-A'
 import { SPARK_PSM_A } from './SPARK-PSM-A'
 import { MORPHO_CLAIM_A } from './MORPHO-CLAIM-A'
+import { SUSDS_A } from './SUSDS-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -296,5 +297,6 @@ export const connectorsV2_M1 = {
   'ZEROX-V2-A': ZEROX_V2_A,
   'MORPHO-TOKEN-WRAPPER-A': MORPHO_TOKEN_WRAPPER_A,
   'SPARK-PSM-A': SPARK_PSM_A,
-  'MORPHO-CLAIM-A': MORPHO_CLAIM_A
+  'MORPHO-CLAIM-A': MORPHO_CLAIM_A,
+  'SUSDS-A': SUSDS_A,
 }
