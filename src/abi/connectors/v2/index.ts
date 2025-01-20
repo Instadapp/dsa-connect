@@ -151,6 +151,7 @@ import { SPARK_PSM_A } from './SPARK-PSM-A'
 import { MORPHO_CLAIM_A } from './MORPHO-CLAIM-A'
 import { SUSDS_A } from './SUSDS-A'
 import { AAVE_MERIT_CLAIM_A } from "./AAVE-V3-MERIT-CLAIM-A"
+import { DELEGATE_A } from './DELEGATE-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -300,5 +301,6 @@ export const connectorsV2_M1 = {
   'SPARK-PSM-A': SPARK_PSM_A,
   'MORPHO-CLAIM-A': MORPHO_CLAIM_A,
   'SUSDS-A': SUSDS_A,
-  'AAVE-V3-MERIT-CLAIM-A': AAVE_MERIT_CLAIM_A
+  'AAVE-V3-MERIT-CLAIM-A': AAVE_MERIT_CLAIM_A,
+  'DELEGATE-A': DELEGATE_A,
 }

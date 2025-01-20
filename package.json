@@ -1,6 +1,6 @@
 {
   "name": "dsa-connect",
-  "version": "0.7.19",
+  "version": "0.7.20",
   "description": "DSA connect",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
