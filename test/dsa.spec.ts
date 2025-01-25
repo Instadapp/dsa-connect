@@ -22,7 +22,7 @@ beforeAll(() => {
 })
 
 describe('Basic', function () {
-  test('initalization of DSA', () => {
+  test('initialization of DSA', () => {
     expect(dsa).toBeDefined()
   })
   
