@@ -10,7 +10,8 @@ export const SUSDS_A: AbiItem[] = [
   },
   {
     inputs: [
-      { internalType: 'address', name: 'assetAddr', type: 'address' },
+      { internalType: 'address', name: 'assetInAddr', type: 'address' },
+      { internalType: 'address', name: 'assetOutAddr', type: 'address' },
       { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
       { internalType: 'uint256', name: 'setId', type: 'uint256' }
@@ -25,7 +26,8 @@ export const SUSDS_A: AbiItem[] = [
   },
   {
     inputs: [
-      { internalType: 'address', name: 'assetAddr', type: 'address' },
+      { internalType: 'address', name: 'assetInAddr', type: 'address' },
+      { internalType: 'address', name: 'assetOutAddr', type: 'address' },
       { internalType: 'uint256', name: 'amountOut', type: 'uint256' },
       { internalType: 'uint256', name: 'getId', type: 'uint256' },
       { internalType: 'uint256', name: 'setId', type: 'uint256' }
