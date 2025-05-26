@@ -95,6 +95,11 @@ type BuildParams = {
 } & TransactionCallbacks &
   Pick<TransactionConfig, 'from' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
 
+
+type Options = {
+  skipChainIdValidation?: boolean
+}
+
 export class DSA {
   static readonly version: string = '__REPLACE_VERSION__'
   readonly config: DSAConfig
@@ -155,22 +160,27 @@ export class DSA {
   /**
    * @param config A `web3` instance or a DSAConfig
    */
-  constructor(config: Web3 | DSAConfig, chainId: ChainId = 1) {
+  constructor(config: Web3 | DSAConfig, chainId: ChainId = 1, options: Options = { skipChainIdValidation: false }) {
     this.instance.chainId = chainId
     this.config = getDSAConfig(config)
-    this.config.web3.eth.getChainId().then((_chainId) => {
-      if (this.instance.chainId != _chainId) {
-        throw new Error(
-          `chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`
-        )
-      }
 
-      if (![1, 137, 42161, 43114, 10, 250, 8453].includes(chainId)) {
-        throw new Error(`chainId '${_chainId}' is not supported.`)
-      } else {
-        this.instance.chainId = _chainId as ChainId
-      }
-    })
+    if(!options.skipChainIdValidation) {
+      this.config.web3.eth.getChainId().then((_chainId) => {
+        if (this.instance.chainId != _chainId) {
+          throw new Error(
+            `chainId doesn't match with the web3. Initiate 'dsa' like this: 'const dsa = new DSA(web3, chainId)'`
+          )
+        }
+
+        if (![1, 137, 42161, 43114, 10, 250, 8453].includes(chainId)) {
+          throw new Error(`chainId '${_chainId}' is not supported.`)
+        } else {
+          this.instance.chainId = _chainId as ChainId
+        }
+      })
+    }
+
+    
   }
 
   /**
