@@ -152,6 +152,7 @@ import { MORPHO_CLAIM_A } from './MORPHO-CLAIM-A'
 import { SUSDS_A } from './SUSDS-A'
 import { AAVE_MERIT_CLAIM_A } from "./AAVE-V3-MERIT-CLAIM-A"
 import { DELEGATE_A } from './DELEGATE-A'
+import { ETHERFI_MINT_A } from './ETHERFI-MINT-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -303,4 +304,5 @@ export const connectorsV2_M1 = {
   'SUSDS-A': SUSDS_A,
   'AAVE-V3-MERIT-CLAIM-A': AAVE_MERIT_CLAIM_A,
   'DELEGATE-A': DELEGATE_A,
+  'ETHERFI-MINT-A': ETHERFI_MINT_A
 }
