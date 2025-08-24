@@ -53,7 +53,7 @@ export interface Instance {
  * @param {number|string} _d.nonce (optional) txn nonce (mostly for node implementation)
  */
 type CastParams = {
-  spells: Spells
+  spells: Spells | string
   origin?: string
 } & TransactionCallbacks &
   Pick<TransactionConfig, 'from' | 'to' | 'value' | 'gas' | 'gasPrice' | 'maxFeePerGas' | 'maxPriorityFeePerGas' | 'nonce'>
@@ -411,19 +411,19 @@ export class DSA {
     })()
   }
 
-  async cast(params: Spells | CastParams) {
+  async cast(params: string | Spells | CastParams) {
     const defaults = {
       to: this.instance.address,
       from: await this.internal.getAddress(),
       origin: this.origin,
     }
-
+    
     const mergedParams = Object.assign(defaults, wrapIfSpells(params)) as CastParams
-
+    
+    const data = this.getData(mergedParams)
+    
     if (!mergedParams.from) throw new Error(`Parameter 'from' is not defined.`)
     if (!mergedParams.to) throw new Error(`Parameter 'to' is not defined.`)
-
-    const data = await this.getData(mergedParams)
 
     const transactionConfig = await this.internal.getTransactionConfig({
       from: mergedParams.from,
@@ -484,15 +484,20 @@ export class DSA {
     return transaction
   }
 
-  private async getData(params: { spells: Spells; origin?: string }) {
-    const encodedSpells = this.internal.encodeSpells(params)
+  private getData(params: { spells: Spells | string; origin?: string }) : string {
 
-    const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
-    const data = contract.methods
-      .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
-      .encodeABI()
-
-    return data
+    if (typeof params.spells === "string") {
+      return params.spells
+    } else {
+      const encodedSpells = this.internal.encodeSpells(params as { spells: Spells, origin?: string})
+  
+      const contract = new this.web3.eth.Contract(Abi.core.versions[this.instance.version].account, this.instance.address)
+      const data = contract.methods
+        .cast(encodedSpells.targets, encodedSpells.spells, params.origin || Addresses.genesis)
+        .encodeABI()
+  
+      return data
+    }
   }
 }
 
