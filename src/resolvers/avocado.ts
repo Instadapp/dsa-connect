@@ -34,6 +34,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
     },
     250: {},
     8453: {},
+    9745: {},
 }
 
 const AvoMultiPaybackMapping: Record<ChainId, string> = {

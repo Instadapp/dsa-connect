@@ -172,7 +172,7 @@ export class DSA {
           )
         }
 
-        if (![1, 137, 42161, 43114, 10, 250, 8453].includes(chainId)) {
+        if (![1, 137, 42161, 43114, 10, 250, 8453, 9745].includes(chainId)) {
           throw new Error(`chainId '${_chainId}' is not supported.`)
         } else {
           this.instance.chainId = _chainId as ChainId
