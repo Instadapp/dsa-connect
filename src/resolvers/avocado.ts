@@ -34,6 +34,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
     },
     250: {},
     8453: {},
+    9745: {},
 }
 
 const AvoMultiPaybackMapping: Record<ChainId, string> = {
@@ -44,6 +45,7 @@ const AvoMultiPaybackMapping: Record<ChainId, string> = {
     10: "0x1b5687b3132a88120Cf41B58d6d454A6015ea0a2", // Optimism
     250: "",
     8453: "0xa35369EE97c9C64623262D625d697a7CaaB69Ea2", // Base
+    9745: "0x38bB93A31D4e0A42C64AfB874227dAe214A0BF25", // Plasma
 }
 
 // const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
