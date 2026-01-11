@@ -6,6 +6,7 @@ import { core as optimismCore } from './optimism/core'
 import { core as fantomCore } from './fantom/core'
 import { core as baseCore } from './base/core'
 import { core as plasmaCore } from './plasma/core'
+import { core as bscCore } from './bsc/core'
 
 export const core = {
   1: mainnetCore,
@@ -16,4 +17,5 @@ export const core = {
   250: fantomCore,
   8453: baseCore,
   9745: plasmaCore,
+  56: bscCore,
 }
