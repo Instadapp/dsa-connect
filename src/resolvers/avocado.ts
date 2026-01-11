@@ -35,6 +35,7 @@ const AvoConnectorMapping: Record<ChainId, Record<string, string>> = {
     250: {},
     8453: {},
     9745: {},
+    56: {},
 }
 
 const AvoMultiPaybackMapping: Record<ChainId, string> = {
@@ -46,10 +47,21 @@ const AvoMultiPaybackMapping: Record<ChainId, string> = {
     250: "",
     8453: "0xa35369EE97c9C64623262D625d697a7CaaB69Ea2", // Base
     9745: "0x38bB93A31D4e0A42C64AfB874227dAe214A0BF25", // Plasma
+    56: "0xcA8ed249530D8DbC6dB8062A9ABB5b324964AbeF", // BSC
 }
 
 // const FLA_AVOCADO_ADDRESS = "0x8d8B52e9354E2595425D00644178E2bA2257f42a" // Avocado
-const FLA_FLUID_ADDRESS = "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7" // Fluid
+const FLA_FLUID_ADDRESS: Record<ChainId, string> = {
+    1: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Mainnet
+    137: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Polygon
+    42161: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Arbitrum
+    43114: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Avalanche
+    10: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Optimism
+    250: "", // Fantom
+    8453: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Base
+    9745: "0x352423e2fA5D5c99343d371C9e3bC56C87723Cc7", // Plasma
+    56: "0xe620726686B480d955E63b9c7c1f93c2f8c1aCf4", // BSC
+}
 
 export interface AvocadoAction {
     target: string;
@@ -119,7 +131,7 @@ export class Avocado {
                 ]
     
                 return  { 
-                    target: FLA_FLUID_ADDRESS,
+                    target: FLA_FLUID_ADDRESS[chainId],
                     data: this.dsa.web3.eth.abi.encodeFunctionCall(flaAvocadoOrFluidABI as any, params),
                     operation: 2,
                     value: 0
@@ -133,7 +145,7 @@ export class Avocado {
                         data: this.dsa.web3.eth.abi.encodeFunctionCall(
                             multiTransferABI as any,
                             [
-                                FLA_FLUID_ADDRESS,
+                                FLA_FLUID_ADDRESS[chainId],
                                 tokens,
                                 amounts
                             ]
