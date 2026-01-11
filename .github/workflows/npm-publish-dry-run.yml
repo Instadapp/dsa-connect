@@ -1,4 +1,4 @@
-name: npm-publish-dry-run
+NPM_AUTH_TOKEN_V2name: npm-publish-dry-run
 
 on:
   push:
@@ -20,6 +20,6 @@ jobs:
           PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
           ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.NPM_AUTH_TOKEN_V2 }}
           tag: dev
           dry-run: true

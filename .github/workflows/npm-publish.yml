@@ -21,7 +21,7 @@ jobs:
           PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
           ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.NPM_AUTH_TOKEN_V2 }}
           tag: latest
       - name: Publish Beta Release
         if: "contains(github.ref, 'beta')"
@@ -30,7 +30,7 @@ jobs:
           PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
           ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.NPM_AUTH_TOKEN_V2 }}
           tag: beta
       - name: Publish Dev Release
         if: "contains(github.ref, 'dev')"
@@ -39,5 +39,5 @@ jobs:
           PUBLIC_ADDRESS: ${{ secrets.PUBLIC_ADDRESS }}
           ETH_NODE_URL: ${{ secrets.ETH_NODE_URL }}
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN }}
+          token: ${{ secrets.NPM_AUTH_TOKEN_V2 }}
           tag: dev
