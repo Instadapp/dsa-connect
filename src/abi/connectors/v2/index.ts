@@ -155,6 +155,7 @@ import { DELEGATE_A } from './DELEGATE-A'
 import { ETHERFI_MINT_A } from './ETHERFI-MINT-A'
 import { SPK_CLAIM_A } from './SPK-CLAIM-A'
 import { OKX_V6_A } from './OKX-V6-A'
+import { WBNB_A } from './WBNB-A'
 
 export const connectorsV2_M1 = {
   'MORPHO-REWARDS-A': MORPHO_REWARDS_A,
@@ -309,4 +310,5 @@ export const connectorsV2_M1 = {
   'ETHERFI-MINT-A': ETHERFI_MINT_A,
   'SPK-CLAIM-A': SPK_CLAIM_A,
   'OKX-V6-A': OKX_V6_A,
+  'WBNB-A': WBNB_A,
 }
