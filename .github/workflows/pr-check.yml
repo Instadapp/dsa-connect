@@ -1,7 +1,7 @@
 name: Build PR
 
 on:
-  pull_request_target:
+  pull_request:
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+
     strategy:
       matrix:
         node-version: [16.x]
+
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head_sha }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
@@ -33,9 +33,7 @@ jobs:
       - name: Install and build
         run: |
           #!/bin/bash
-
           set -e
           set -o pipefail
-
           npm install
           npm run build
