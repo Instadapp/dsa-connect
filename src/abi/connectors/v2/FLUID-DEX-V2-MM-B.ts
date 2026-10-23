@@ -1,6 +1,6 @@
 import { AbiItem } from 'web3-utils'
 
-export const FLUID_DEX_V2_MM_A: AbiItem[] = [
+export const FLUID_DEX_V2_MM_B: AbiItem[] = [
   {
     anonymous: false,
     inputs: [
